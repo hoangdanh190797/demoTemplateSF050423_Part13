@@ -1,0 +1,14 @@
+.selectPosition{
+    display: flex;
+    div{
+        height: 150px;
+        width: 150px;
+        background-color: pink;
+        margin-right: 20px;
+        text-align: center;
+        span{
+            display: block;
+            padding-top: 50%;
+        }
+    }
+}

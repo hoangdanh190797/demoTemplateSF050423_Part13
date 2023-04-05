@@ -1,0 +1,17 @@
+#footer_{
+    display: flex;
+    justify-content: space-around;
+    text-align: left;
+    div{
+        h1{
+            font-size: medium;
+        }
+        ul{
+            padding: 0px;
+            li{
+                list-style-type: none;
+                line-height: 30px;
+            }
+        }
+    }
+}
