@@ -1,0 +1,12 @@
+#locationComponent_{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    .locationComponent_container{
+        height: 440px;
+        width: 90%;
+        .locationComponent_item{
+            text-align: center;
+        }
+    }
+}

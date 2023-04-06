@@ -5,10 +5,10 @@ const initialState = {
     isGetRooms:false,
     rooms:[],
     //
-    isGetRoomsByPosition:false,
-    idGetPosition: '',
-    arrGetPosition:[],
-    roomsByPosition: [],
+    isGetRoomsByLocation:false,
+    idGetLocation: '',
+    arrGetLocation:[],
+    roomsByLocation: [],
 }
 
 export const getRooms = createAsyncThunk('rooms/getRooms', async() => {
@@ -20,9 +20,9 @@ export const getRooms = createAsyncThunk('rooms/getRooms', async() => {
     }
 })
 //--- --- --- --- --- --- --- --- --- --- --- ---
-export const getRoomsByPosition = createAsyncThunk('rooms/getRoomsByPosition', async(value) => {
+export const getRoomsByLocation = createAsyncThunk('rooms/getRoomsByLocation', async(value) => {
     try {
-        const response = await roomsAPI.getRoomsByPosition(value);
+        const response = await roomsAPI.getRoomsByLocation(value);
         return response.data
     } catch (error) {
         
@@ -33,7 +33,7 @@ const RoomSlices = createSlice({
   name: "rooms",
   initialState,
   reducers: {
-        getPosition:(state, action) => {
+        getLocation:(state, action) => {
             
         }
   },
@@ -46,12 +46,12 @@ const RoomSlices = createSlice({
       })
       .addCase(getRooms.rejected,(state, action)=>{})
       //--- --- --- --- --- --- --- --- --- --- --- ---
-      .addCase(getRoomsByPosition.pending,(state)=>{})
-      .addCase(getRoomsByPosition.fulfilled,(state, action)=>{
-            state.isGetRoomsByPosition = true;
-            state.roomsByPosition = action.payload;
+      .addCase(getRoomsByLocation.pending,(state)=>{})
+      .addCase(getRoomsByLocation.fulfilled,(state, action)=>{
+            state.isGetRoomsByLocation = true;
+            state.roomsByLocation = action.payload;
       })
-      .addCase(getRoomsByPosition.rejected,(state, action)=>{})
+      .addCase(getRoomsByLocation.rejected,(state, action)=>{})
   },
 });
 

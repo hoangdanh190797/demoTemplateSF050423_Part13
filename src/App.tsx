@@ -2,18 +2,18 @@ import React from 'react';
 // import logo from './logo.svg';
 // import './App.css';
 // ---
-import Footer from './components/Footer';
-import Header from './components/Header';
-import ListRooms from './components/ListRooms';
-import ListRoomsByPosition from './components/ListRoomsByPosition';
+import { Route, Routes } from "react-router-dom";
+import HomeTemplate from './template/HomeTemplate';
+import Home from './pages/Home';
+
 function App() {
   return (
-    <>
-      <Header></Header>
-      <ListRoomsByPosition></ListRoomsByPosition>
-      <ListRooms></ListRooms>
-      <Footer></Footer>
-    </>
+    <Routes>
+      <Route path='/' element={<HomeTemplate />}>
+        <Route index element={<Home />} />
+        <Route path='detail/:'/>
+      </Route >
+    </Routes>
   );
 }
 

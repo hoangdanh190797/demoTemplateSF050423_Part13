@@ -1,0 +1,17 @@
+h1{
+    text-align: center;
+}
+#listRooms_ {
+  height: 640px;
+  display: flex;
+  justify-content: center;
+  .listRooms_content {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 120px;
+    .listRooms_items{
+        flex-basis: calc(25% - 0px);
+        margin: 0 auto;
+    }
+  }
+}

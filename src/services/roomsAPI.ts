@@ -5,8 +5,8 @@ const roomsAPI = {
     getRooms: () => {
         return baseAPI.get('/phong-thue');
     },
-    getRoomsByPosition:(getPosition:any) => {
-        return baseAPI.get(`/phong-thue/lay-phong-theo-vi-tri?maViTri=${getPosition}`);
+    getRoomsByLocation:(getLocation:any) => {
+        return baseAPI.get(`/phong-thue/lay-phong-theo-vi-tri?maViTri=${getLocation}`);
     }
 }
 

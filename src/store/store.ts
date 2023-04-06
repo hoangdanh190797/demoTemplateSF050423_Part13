@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import RoomSlices from './slices/RoomSlices'
+import LocationSlices from './slices/LocationSlices'
 
 export const store = configureStore({
   reducer: {
-    rooms : RoomSlices,
+    rooms: RoomSlices,
+    location: LocationSlices,
   },
 })
 

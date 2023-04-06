@@ -1,0 +1,32 @@
+#banner_{
+    position: relative;
+    height: 620px;
+    .banner_background{
+        img{
+            width: 100%;
+            height: 320px;
+        }
+    }
+    .banner_search{
+        border-radius: 0.5rem;
+        position: absolute;
+        top: 60%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        height: 420px;
+        width: 70%;
+        background-color: #fee0e6;
+        .banner_form{
+            .fieldset_one{
+                .input_one{
+                    width: 70%;
+                }
+            }
+            .fieldset_two{
+                .input_two{
+                    width: 30%;
+                }
+            }
+        }
+    }
+}

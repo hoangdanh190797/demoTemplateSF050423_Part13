@@ -1,4 +1,46 @@
-#header_{
+#header_ {
+  display: flex;
+  justify-content: space-around;
+  height: 80px;
+  background-color: pink;
+  .header_left {
+    .header_left_box_img {
+      padding-top: 20px;
+    }
+  }
+  .header_center {
+    padding-top: 30px;
+    width: 420px;
+    .header_center_box_center {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 600;
+    }
+  }
+  .header_right {
+    padding-top: 30px;
     display: flex;
-    justify-content: space-between;
+    width: 260px;
+    button {
+      background-color: #ffc0cb;
+      border-style: none;
+    }
+    .header_right_title {
+        button{
+            font-weight: 600;
+        }
+    }
+    .header_right_global {
+    }
+    .header_right_login {
+      button {
+        .header_login_box {
+          display: flex;
+          div {
+            margin-left: 10px;
+          }
+        }
+      }
+    }
+  }
 }
