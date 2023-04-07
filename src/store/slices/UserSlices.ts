@@ -1,0 +1,42 @@
+import { createSlice, createAsyncThunk, PayloadAction, createAction } from '@reduxjs/toolkit'
+import userAPI from 'services/userAPI'
+
+const initialState = {
+    isGetProfileUser: false,
+    profileUser: {}
+}
+
+export const getUserByIdForProfile = createAsyncThunk('user/getUserByIdForProfile', async(idUser:any) => {
+    const response = await userAPI.getUserByIdForProfile(idUser)
+    return response.data.content;
+})
+
+export const putUserEditForProfile = createAsyncThunk('user/putUserEditForProfile', async(userNew:any) => {
+    const response = await userAPI.putUserEditForProfile(userNew)
+    return response.data.content;
+})
+
+const UserSlices = createSlice({
+  name: "user",
+  initialState,
+  reducers: {},
+  extraReducers(builder) {
+      builder
+      .addCase(getUserByIdForProfile.pending, (state) => {})
+      .addCase(getUserByIdForProfile.fulfilled, (state, action) =>{
+            state.isGetProfileUser = true;
+            state.profileUser = action.payload
+      })
+      .addCase(getUserByIdForProfile.rejected, (state, aciton) => {})
+      //--- --- ---
+      .addCase(putUserEditForProfile.pending, (state) => {})
+      .addCase(putUserEditForProfile.fulfilled, (state, action) => {
+            state.profileUser = action.payload
+      })
+      .addCase(putUserEditForProfile.rejected, (state, action) => {}) 
+  },
+});
+
+export const {} = UserSlices.actions
+
+export default UserSlices.reducer

@@ -1,0 +1,43 @@
+#signin_pages{
+    background-color: #fee0e6;
+    .signin_container{
+        .signin_box{
+            width: 30%;
+            height: 420px;
+            margin-left: auto;
+            margin-right: auto;
+            .signin_content{
+                h1{
+                    text-align: center;
+                    margin-top: 0px;
+                    padding-top: 20px;
+                }
+                p{
+                    text-align: center;
+                    a{
+                        text-decoration: none;
+                    }
+                }
+                .form_group{
+                    margin-bottom: 20px;
+                    border: none;
+                    .form_control{
+                        border-radius: 0.5rem;
+                        height: 60px;
+                        width: 100%;
+                    }
+                }
+                .btn_{
+                    button{
+                        margin-left: 40%;
+                        height: 60px;
+                        width: 120px;
+                        border-radius: 0.5rem;
+                        background-color: #fec0cb;
+                    }
+                }
+            }
+        }
+    }
+}
+// col-md-6 offset-md-3 col-xs-12

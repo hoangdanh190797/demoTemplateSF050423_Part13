@@ -1,0 +1,43 @@
+#signup_pages{
+    background-color: #fee0e6;
+    .signup_container{
+        .signup_box{
+            width: 30%;
+            height: 520px;
+            margin-left: auto;
+            margin-right: auto;
+            .signup_content{
+                h1{
+                    text-align: center;
+                    margin-top: 0px;
+                    padding-top: 20px;
+                }
+                p{
+                    text-align: center;
+                    a{
+                        text-decoration: none;
+                    }
+                }
+                .form_group{
+                    margin-bottom: 0px;
+                    border: none;
+                    .form_control{
+                        border-radius: 0.5rem;
+                        height: 20px;
+                        width: 100%;
+                    }
+                }
+                .btn_{
+                    button{
+                        margin-left: 40%;
+                        height: 60px;
+                        width: 120px;
+                        border-radius: 0.5rem;
+                        background-color: #fec0cb;
+                    }
+                }
+            }
+        }
+    }
+}
+// col-md-6 offset-md-3 col-xs-12

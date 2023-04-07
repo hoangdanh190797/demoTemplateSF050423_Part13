@@ -24,11 +24,14 @@ export default function LocationComponent() {
 
     useEffect(() => {
         dispatch(getLocation())
+        .unwrap()
+        .then((payload) => console.log('fulfilled', payload))
+        .catch((error) => console.error('rejected', error));
     }, [dispatch]);
 
-    if (isGetLocation) {
-        console.log(location);
-    }
+    // if (isGetLocation) {
+    //     console.log(location);
+    // }
 
     const settings = {
         dots: true,

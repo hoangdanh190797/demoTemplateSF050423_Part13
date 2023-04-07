@@ -35,9 +35,9 @@ export default function Banner() {
         dispatch(getLocation())
     }, [dispatch]);
 
-    if (isGetLocation) {
-        console.log(location);
-    }
+    // if (isGetLocation) {
+    //     console.log(location);
+    // }
     const [value, setValue] = React.useState<Dayjs | null>(dayjs('2022-04-17'));
     return (
         <div id='banner_'>
