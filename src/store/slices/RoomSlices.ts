@@ -8,34 +8,39 @@ const initialState = {
     isGetRoomsByLocation:false,
     idGetLocation: '',
     arrGetLocation:[],
-    roomsByLocation: [],
+    roomsByLocation:[],
+    //
+    isGetRoomDetail:false,
+    roomDetail:{},
+    //
+    isPostInfoBooking: false,
+    infoBooking:{}
 }
 
 export const getRooms = createAsyncThunk('rooms/getRooms', async() => {
-    try {
         const response = await roomsAPI.getRooms();
         return response.data.content
-    } catch (error) {
-        
-    }
 })
 //--- --- --- --- --- --- --- --- --- --- --- ---
 export const getRoomsByLocation = createAsyncThunk('rooms/getRoomsByLocation', async(value) => {
-    try {
         const response = await roomsAPI.getRoomsByLocation(value);
         return response.data
-    } catch (error) {
-        
-    }
 })
-
+//--- --- --- --- --- --- --- --- --- --- --- ---
+export const getRoomByIdForDetail = createAsyncThunk('rooms/getRoomByIdForDetail', async(idUser: any) => {
+        const response = await roomsAPI.getRoomByIdForDetail(idUser);
+        return response.data.content
+    })
+//--- --- --- --- --- --- --- --- --- --- --- ---
+export const postRoomBooking = createAsyncThunk('rooms/postRoomBooking', async(infoBooking: any) => {
+      const response = await roomsAPI.postRoomBooking(infoBooking);
+      return response.data.content
+})
 const RoomSlices = createSlice({
   name: "rooms",
   initialState,
   reducers: {
-        getLocation:(state, action) => {
-            
-        }
+        getLocation:(state, action) => {}
   },
   extraReducers(builder) {
       builder
@@ -52,6 +57,21 @@ const RoomSlices = createSlice({
             state.roomsByLocation = action.payload;
       })
       .addCase(getRoomsByLocation.rejected,(state, action)=>{})
+      //--- --- --- --- --- --- --- --- --- --- --- ---
+      .addCase(getRoomByIdForDetail.pending, (state) => {})
+      .addCase(getRoomByIdForDetail.fulfilled, (state, action) => {
+            state.isGetRoomDetail = true;
+            state.roomDetail = action.payload;
+      })
+      .addCase(getRoomByIdForDetail.rejected, (state, action) => {})
+      //--- --- --- --- --- --- --- --- --- --- --- ---
+      .addCase(postRoomBooking.pending, (state) => {})
+      .addCase(postRoomBooking.fulfilled, (state, action) => {
+            state.isPostInfoBooking = true;
+            state.infoBooking = action.payload
+      })
+      .addCase(postRoomBooking.rejected, (state, action) => {})
+
   },
 });
 

@@ -37,7 +37,7 @@ export default function SignIn() {
 
   if (isStatusSignin) {
     navigate('/');
-    localStorage.setItem('accessToken', JSON.stringify(userCurrent.token))
+    localStorage.setItem('accessToken', userCurrent.token)
   }
 
   return (

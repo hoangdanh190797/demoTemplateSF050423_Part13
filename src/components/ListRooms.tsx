@@ -18,7 +18,7 @@ export default function ListRooms() {
 
     let newListRooms: any = []
     if (isGetRooms) {
-        newListRooms = rooms.slice(-8);
+        newListRooms = rooms.slice(0,8);
     }
 
     return (

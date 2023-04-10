@@ -15,6 +15,10 @@ export const putUserEditForProfile = createAsyncThunk('user/putUserEditForProfil
     const response = await userAPI.putUserEditForProfile(userNew)
     return response.data.content;
 })
+export const postAvatarUserEditProfile = createAsyncThunk('user/postAvatarUserEditProfile', async(imgUser: any) => {
+    const response = await userAPI.postAvatarUserEditProfile(imgUser)
+    return response.data.content;
+})
 
 const UserSlices = createSlice({
   name: "user",
@@ -34,6 +38,12 @@ const UserSlices = createSlice({
             state.profileUser = action.payload
       })
       .addCase(putUserEditForProfile.rejected, (state, action) => {}) 
+      //--- --- ---
+      .addCase(postAvatarUserEditProfile.pending, (state) => {})
+      .addCase(postAvatarUserEditProfile.fulfilled, (state, action) => {
+            state.profileUser = action.payload
+      })
+      .addCase(postAvatarUserEditProfile.rejected, (state, action) => {})
   },
 });
 

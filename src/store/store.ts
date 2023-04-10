@@ -3,6 +3,7 @@ import RoomSlices from './slices/RoomSlices'
 import LocationSlices from './slices/LocationSlices'
 import AuthSlices from './slices/AuthSlices'
 import UserSlices from './slices/UserSlices'
+import CommentsSlices from './slices/CommentsSlices'
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     location: LocationSlices,
     auth: AuthSlices,
     user: UserSlices,
+    comments: CommentsSlices,
   },
 })
 
