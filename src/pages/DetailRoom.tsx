@@ -6,19 +6,31 @@ import { getRoomByIdForDetail, postRoomBooking } from '../store/slices/RoomSlice
 //
 import { getCommentsByIDRoom, postCommentsByIDRoom } from 'store/slices/CommentsSlices';
 //
-import dayjs, { Dayjs } from 'dayjs';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { DatePicker, Space } from 'antd';
+import type { DatePickerProps } from 'antd';
+//
+import  moment  from 'moment';
+import dayjs from 'dayjs';
+import type { Dayjs } from 'dayjs';
+
+// import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+// import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+// import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+// import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+// import { TextFields } from '@mui/icons-material';
 
 
 export default function DetailRoom() {
-    const { id } = useParams<any>();
+    const { RangePicker } = DatePicker;
+    const dateFormat = 'DD/MM/YYYY';
+    const customFormat: DatePickerProps['format'] = (value) =>
+    `custom format: ${value.format(dateFormat)}`;
+
+    const { idRoom } = useParams<any>();
     const dispatch = useAppDispatch();
     useEffect(() => {
-        dispatch(getRoomByIdForDetail(id));
-        dispatch(getCommentsByIDRoom(id));
+        dispatch(getRoomByIdForDetail(idRoom));
+        dispatch(getCommentsByIDRoom(idRoom));
     }, [dispatch])
 
     // Room
@@ -62,23 +74,84 @@ export default function DetailRoom() {
         let day = date.getDate();
         dispatch(
             postCommentsByIDRoom({
-                'id': '0', 'maPhong': `${id}`,
+                'id': '0', 
+                'maPhong': `${idRoom}`,
                 'maNguoiBinhLuan': `${idUser}`,
                 'ngayBinhLuan': `${day}`,
                 'noiDung': `${contentComment}`,
                 'saoBinhLuan': '0'
             }));
-        dispatch(getCommentsByIDRoom(id));
+        dispatch(getCommentsByIDRoom(idRoom));
     }
     // Booking Room
-    const [departureDate, setDepartureDate] = useState();
+    // const today = dayjs();
+    // const tomorrow = dayjs().add(1, 'day');
+    //
+    // const [departureDate, setDepartureDate] = useState<Dayjs | null>(null);
+    // const handleDepartureData = (dateNew: any | null) => {
+    //     setDepartureDate(dateNew);
+    // }
+    // console.log(departureDate)
+
+    const [dateFrom, setDateFrom] = useState<any | null>(null);
+    const [dateTo, setDateTo] = useState<any | null>(null);
+
+    const handleDepartureData = (date: any) => {
+        if (date) {
+          console.log('Date: ', date);
+          localStorage.setItem('dateNeed', date);
+        } else {
+          console.log('Clear');
+        }
+      };
+
+    const handleDateArray = (dates: null | (Dayjs | null)[], dateStrings: string[]) => {
+        if (dates) {
+          console.log('From: ', dates[0], ', to: ', dates[1]);
+          console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
+
+          localStorage.setItem('dateFrom', dateStrings[0])
+          localStorage.setItem('dateTo', dateStrings[1])
+          
+          setDateFrom(dates[0]);
+          setDateTo(dates[1]);
+        } else {
+          console.log('Clear');
+        }
+      };
+
+
+
+    // --- --- ---
     const [returnDate, setReturnDate] = useState();
-    const today = dayjs();
-    const tomorrow = dayjs().add(1, 'day');
-    console.log(departureDate);
+    const handleReturnDate = (dateR: any) => {
+        setReturnDate(dateR);
+        let dateNN = returnDate;
+        let formattedDateNN = moment(dateNN).format('DD-MM-YYYY');
+        console.log(formattedDateNN)
+    }
+    
+    const firstDay = localStorage.getItem('dateNeed')
+    console.log(firstDay);
+    
+    const [count, setCount] = useState(1);
 
-    const [count, setCount] = useState(0);
-
+    const postInfoBooking = () => {}
+        const idUser = localStorage.getItem('idUser')
+        const GetdateFrom = localStorage.getItem('dateFrom')
+        const GetdateTo = localStorage.getItem('dateTo')
+        // console.log('GetdateFrom:', GetdateFrom);
+        // console.log('GetdateTo:', GetdateTo);
+        useEffect(() => {
+            dispatch(postRoomBooking({
+                "id":"0", 
+                "maPhong":`${idRoom}`, 
+                "ngayDen": dateFrom, 
+                "ngayDi": dateTo, 
+                "soLuongKhach": `${count}`, 
+                "maNguoiDung":`${idUser}`}));
+        }, [dispatch])
+            
     return (
         <>
             {/*Thong tin chi tiet cua phong  */}
@@ -126,40 +199,24 @@ export default function DetailRoom() {
             </div>
             {/* Dat phong */}
             <div>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DemoContainer components={['DatePicker', 'DatePicker']}>
-                        <DatePicker
-                            label="Controlled picker"
-                            defaultValue={today}
-                            minDate={tomorrow}
-                            value={departureDate}
-                            views={['year', 'month', 'day']}
-                            onChange={(newValue: any) => setDepartureDate(newValue)}
-                        />
-                    </DemoContainer>
-                    <DemoContainer components={['DatePicker', 'DatePicker']}>
-                        <DatePicker
-                            label="Controlled picker"
-                            defaultValue={today}
-                            minDate={tomorrow}
-                            value={returnDate}
-                            views={['year', 'month', 'day']}
-                            onChange={(newValue: any) => setReturnDate(newValue)}
-                        />
-                    </DemoContainer>
-                </LocalizationProvider>
+                <RangePicker 
+                defaultValue={[dayjs('11/04/2023', dateFormat), dayjs('11/04/2023', dateFormat)]}
+                format={dateFormat}
+                onChange={handleDateArray}
+                />
             </div>
             <div>
                 <div>
                     <div>
-                        <button onClick={()=> setCount(count - 1)}>-</button>
+                        <button onClick={() => setCount(count - 1)}>-</button>
                     </div>
                     <div><span>{count}</span></div>
                     <div>
-                        <button onClick={()=> setCount(count + 1)}>+</button>
+                        <button onClick={() => setCount(count + 1)}>+</button>
                     </div>
                 </div>
             </div>
+            <button onClick={() => postInfoBooking()}>Đặt phòng</button>
         </>
     )
 }

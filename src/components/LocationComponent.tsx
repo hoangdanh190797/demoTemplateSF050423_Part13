@@ -24,9 +24,9 @@ export default function LocationComponent() {
 
     useEffect(() => {
         dispatch(getLocation())
-        .unwrap()
-        .then((payload) => console.log('fulfilled', payload))
-        .catch((error) => console.error('rejected', error));
+            .unwrap()
+            .then((payload) => console.log('fulfilled', payload))
+            .catch((error) => console.error('rejected', error));
     }, [dispatch]);
 
     // if (isGetLocation) {
@@ -41,35 +41,38 @@ export default function LocationComponent() {
         slidesToScroll: 3
     };
     return (
-            <div id="locationComponent_">
-                <div className="locationComponent_container">
-                    <h1>Các điểm đến thu hút nhất Việt Nam</h1>
-                    <Link to={''}>
-                        <div><Slider {...settings}>
-                            {location.map((item: any) => {
-                                return (
-                                    <div>
-                                        <div className='locationComponent_item'>
-                                            <div 
-                                            style={{ 
+        <div id="locationComponent_">
+            <div className="locationComponent_container">
+                <h1>Các điểm đến thu hút nhất Việt Nam</h1>
+
+                <div><Slider {...settings}>
+                    {location.map((item: any) => {
+                        return (
+                            <Link to={`/roomsByLocation/${item.id}`}>
+                                <div>
+                                    <div className='locationComponent_item'>
+                                        <div
+                                            style={{
                                                 height: '250px',
                                                 width: '250px',
-                                                margin:'0 auto',
-                                                borderRadius: "100%", 
-                                                backgroundImage: `url(${item.hinhAnh})`, 
-                                                backgroundPosition: 'center', 
-                                                backgroundRepeat: 'no-repeat', 
-                                                backgroundSize: 'cover' }}>
-                                            </div>
-                                            <h1 style={{ color: '#fc4e71', fontSize: '24px', fontWeight: '600' }}>{item.tinhThanh}</h1>
+                                                margin: '0 auto',
+                                                borderRadius: "100%",
+                                                backgroundImage: `url(${item.hinhAnh})`,
+                                                backgroundPosition: 'center',
+                                                backgroundRepeat: 'no-repeat',
+                                                backgroundSize: 'cover'
+                                            }}>
                                         </div>
+                                        <h1 style={{ color: '#fc4e71', fontSize: '24px', fontWeight: '600' }}>{item.tinhThanh}</h1>
                                     </div>
-                                )
-                            })}
-                        </Slider>
-                        </div>
-                    </Link>
+                                </div>
+                            </Link>
+
+                        )
+                    })}
+                </Slider>
                 </div>
             </div>
+        </div>
     )
 }

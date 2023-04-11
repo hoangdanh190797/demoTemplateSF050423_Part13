@@ -9,6 +9,7 @@ import SignIn from 'pages/SignIn';
 import SignUp from 'pages/SignUp';
 import Profile from 'pages/Profile';
 import DetailRoom from 'pages/DetailRoom';
+import SearchRoomByLocation from 'pages/SearchRoomByLocation';
 
 function App() {
   return (
@@ -18,7 +19,8 @@ function App() {
         <Route path='profile' element={<Profile />} />
         <Route path='signin' element={<SignIn />} />
         <Route path='signup' element={<SignUp />} />
-        <Route path='detailRoom/:id' element={<DetailRoom />} />
+        <Route path='detailRoom/:idRoom' element={<DetailRoom />} />
+        <Route path='roomsByLocation/:idLocation' element={<SearchRoomByLocation/>}/>
       </Route >
     </Routes>
   );

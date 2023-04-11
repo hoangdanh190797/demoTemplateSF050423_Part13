@@ -12,7 +12,7 @@ const roomsAPI = {
         return baseAPI.get(`/phong-thue/${id}`)
     },
     postRoomBooking:(infoBooking: any) => {
-        return baseAPI.post('https://airbnbnew.cybersoft.edu.vn/api/dat-phong', infoBooking)
+        return baseAPI.post('/dat-phong', infoBooking)
     }
 }
 export default roomsAPI;

@@ -22,9 +22,9 @@ export const getRooms = createAsyncThunk('rooms/getRooms', async() => {
         return response.data.content
 })
 //--- --- --- --- --- --- --- --- --- --- --- ---
-export const getRoomsByLocation = createAsyncThunk('rooms/getRoomsByLocation', async(value) => {
-        const response = await roomsAPI.getRoomsByLocation(value);
-        return response.data
+export const getRoomsByLocation = createAsyncThunk('rooms/getRoomsByLocation', async(idLocation:any) => {
+        const response = await roomsAPI.getRoomsByLocation(idLocation);
+        return response.data.content
 })
 //--- --- --- --- --- --- --- --- --- --- --- ---
 export const getRoomByIdForDetail = createAsyncThunk('rooms/getRoomByIdForDetail', async(idUser: any) => {

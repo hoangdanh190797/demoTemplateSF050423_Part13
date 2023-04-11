@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import '../styles/components/_banner.scss';
 //
 import { useEffect } from 'react';
@@ -17,6 +17,7 @@ import Stack from '@mui/material/Stack';
 import Autocomplete from '@mui/material/Autocomplete';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+import { useParams, useNavigate, Link, NavLink } from "react-router-dom";
 
 export default function Banner() {
     const dispatch = useAppDispatch();
@@ -39,6 +40,22 @@ export default function Banner() {
     //     console.log(location);
     // }
     const [value, setValue] = React.useState<Dayjs | null>(dayjs('2022-04-17'));
+    const [valueOne, setValueOne] = React.useState<any | null>(null);
+    const [statusID, setStatusID] = useState(false)
+
+    
+
+
+    // console.log(valueOne);
+    // if(statusID){ 
+    //     let { id } = valueOne;
+    //     return id
+    // }
+
+    const handleSearch = () => {
+
+    }
+
     return (
         <div id='banner_'>
             <div className='banner_background'
@@ -52,7 +69,7 @@ export default function Banner() {
 
             }}></div>
                 <div className='banner_search'>
-                    <form className='banner_form' action="">
+                    <form className='banner_form' onSubmit={handleSearch}>
                         {/* --- */}
                         <div>
                             <Stack spacing={2} sx={{ width: 300 }} className='searchInput_content'>
@@ -60,10 +77,12 @@ export default function Banner() {
                                     freeSolo
                                     id="free-solo-2-demo"
                                     disableClearable
-                                    options={location.map((item: any) => item.tinhThanh)}
+                                    options={location.map((item: any) => item)}
+                                    getOptionLabel={(item) => item.tinhThanh}
                                     // value={value}
                                     onChange={(event: any, newValue: any | null) => {
-                                        setValue(newValue);
+                                        setValueOne(newValue);
+                                        setStatusID(true);
                                     }}
                                     // inputValue={inputValue}
                                     // onInputChange={(event, newInputValue) => {
@@ -109,7 +128,10 @@ export default function Banner() {
                             <input className='input_two' type="text" placeholder='Nhập số lượng khách' />
                         </fieldset>
                         {/* --- */}
-                        <button>Tìm</button>
+                        {/* {statusID ? <Link to={`/roomsByLocation/${id}`}>
+                            <button>Tìm</button>
+                        </Link>: <button>Tìm</button>} */}
+                        
                     </form>
                 </div>
             </div>

@@ -1,4 +1,3 @@
-import { SatelliteAlt } from "@mui/icons-material";
 import { createSlice, createAsyncThunk, PayloadAction, createAction } from "@reduxjs/toolkit";
 import commentsAPI from "services/commentAPI";
 const initialState = {
