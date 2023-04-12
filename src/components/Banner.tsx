@@ -43,9 +43,8 @@ export default function Banner() {
     const [valueOne, setValueOne] = React.useState<any | null>(null);
     const [statusID, setStatusID] = useState(false)
 
+    console.log(valueOne);
     
-
-
     // console.log(valueOne);
     // if(statusID){ 
     //     let { id } = valueOne;
@@ -128,9 +127,9 @@ export default function Banner() {
                             <input className='input_two' type="text" placeholder='Nhập số lượng khách' />
                         </fieldset>
                         {/* --- */}
-                        {/* {statusID ? <Link to={`/roomsByLocation/${id}`}>
+                        {statusID ? <Link to={`/roomsByLocation/${valueOne.id}`}>
                             <button>Tìm</button>
-                        </Link>: <button>Tìm</button>} */}
+                        </Link>: <button>Tìm</button>}
                         
                     </form>
                 </div>

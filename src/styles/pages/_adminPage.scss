@@ -1,0 +1,21 @@
+#adminPage_{
+    background-color: #fee0e6;
+    height: 760px;
+    .adminPage_block_left_{
+        border-style: none solid none none;
+        width: 20%;
+    }
+    .adminPage_title{
+        height: 60px;
+        background-color: #fc4e71;
+        display: flex;
+        align-items: center;
+        border-style: none none solid none;
+    }
+    .adminPage_tag{
+        height: 700px;
+    }
+    .tagRoute_{
+        margin-bottom: 20px;
+    }
+}

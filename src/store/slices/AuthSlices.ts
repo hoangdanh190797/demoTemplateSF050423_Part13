@@ -6,6 +6,7 @@ declare interface initialState {
     //
     isStatusSignin: boolean,
     userCurrent: any,
+    roleUser: string,
     //
     isStatusSignup: boolean,
     //use userCurrent agin
@@ -17,6 +18,7 @@ declare interface initialState {
 const initialState: initialState = {
     isStatusSignin: false,
     userCurrent: {},
+    roleUser: '',
     //
     isStatusSignup: false,
     //

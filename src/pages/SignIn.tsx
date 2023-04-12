@@ -38,6 +38,7 @@ export default function SignIn() {
   if (isStatusSignin) {
     navigate('/');
     localStorage.setItem('accessToken', userCurrent.token)
+    localStorage.setItem('isRole', userCurrent.user.role)
   }
 
   return (
