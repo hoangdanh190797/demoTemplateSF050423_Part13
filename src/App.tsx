@@ -20,6 +20,7 @@ import LocationManagement from 'components/Management/LocationManagement';
 import RoomsManagement from 'components/Management/RoomsManagement';
 import BookingManagement from 'components/Management/BookingManagement';
 import AddUserManagement from 'components/Management/AddUserManagement';
+import AddandEditLocationManagement from 'components/Management/AddandEditLocationManagement';
 
 function App() {
   const isRole = localStorage.getItem('isRole');
@@ -35,11 +36,12 @@ function App() {
       </Route >
       {/* --- */}
       <Route path='/admin' element={<ProtectedTemplate isAuth={isRole} component={<PageAdmin />} />}>
-          <Route path='userManagemet' element={<UserManagement />} />
-          <Route path='userManagemet/addUserManagemet/:idUser' element={<AddUserManagement />} />
-          <Route path='locationManagemet' element={<LocationManagement />} />
-          <Route path='roomsManagemet' element={<RoomsManagement />} />
-          <Route path='bookingManagemet' element={<BookingManagement />} />
+          <Route path='userManagement' element={<UserManagement />} />
+          <Route path='userManagement/addUserManagement/:idUser' element={<AddUserManagement />} />
+          <Route path='locationManagement' element={<LocationManagement />} />
+          <Route path='locationManagement/addAndeditLocationManagement/:idLocation' element={<AddandEditLocationManagement />} />
+          <Route path='roomsManagement' element={<RoomsManagement />} />
+          <Route path='bookingManagement' element={<BookingManagement />} />
       </Route>
 
       {/* Catch all */}

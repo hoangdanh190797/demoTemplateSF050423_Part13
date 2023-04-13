@@ -13,6 +13,9 @@ const roomsAPI = {
     },
     postRoomBooking:(infoBooking: any) => {
         return baseAPI.post('/dat-phong', infoBooking)
+    },
+    getListRoomManagement: (obj:{ pageIndex: any, pageSize: any}) =>{
+        return baseAPI.get(`/phong-thue/phan-trang-tim-kiem?pageIndex=${obj.pageIndex}&pageSize=${obj.pageSize}`)
     }
 }
 export default roomsAPI;

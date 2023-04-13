@@ -13,22 +13,22 @@ export default function PageAdmin() {
                     </div>
                     <div className='adminPage_tag'>
                         <div className='tagRoute_'>
-                            <Link to='userManagemet'>
+                            <Link to='userManagement'>
                                 <h2>Quản lý người dùng</h2>
                             </Link>
                         </div>
                         <div className='tagRoute_'>
-                            <Link to='locationManagemet'>
+                            <Link to='locationManagement'>
                                 <h2>Quản lý thông tin vị trí</h2>
                             </Link>
                         </div>
                         <div className='tagRoute_'>
-                            <Link to='roomsManagemet'>
+                            <Link to='roomsManagement'>
                                 <h2>Quản lý thông tin phòng</h2>
                             </Link>
                         </div>
                         <div className='tagRoute_'>
-                            <Link to='bookingManagemet'>
+                            <Link to='bookingManagement'>
                                 <h2>Quản lý đặt phòng</h2>
                             </Link>
                         </div>

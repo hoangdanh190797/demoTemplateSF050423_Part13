@@ -6,7 +6,13 @@ const initialState = {
     profileUser: {},
     // --- --- ---
     isGetListUserManagement: false,
-    listUserManagement: []
+    listUserManagement: [],
+    // --- --- ---
+    isPutUserEditManagement: false,
+    userEditManagement: {},
+    // --- --- ---
+    isGetUserSearchManagement: false,
+    listUserSearchManagement: []
 }
 
 export const getUserByIdForProfile = createAsyncThunk('user/getUserByIdForProfile', async (idUser: any) => {
@@ -21,8 +27,20 @@ export const postAvatarUserEditProfile = createAsyncThunk('user/postAvatarUserEd
     const response = await userAPI.postAvatarUserEditProfile(imgUser)
     return response.data.content;
 })
-export const getListUserManagement = createAsyncThunk('user/getListUserManagement', async (obj:any) => {
+export const putUserEditForManagement = createAsyncThunk('user/putUserEditForManagement', async (userEditManagement: any) => {
+    const response = await userAPI.putUserEditForManagement(userEditManagement)
+    return response.data.content;
+})
+export const getListUserManagement = createAsyncThunk('user/getListUserManagement', async (obj: any) => {
     const response = await userAPI.getListUserManagement(obj)
+    return response.data.content;
+})
+export const deleteUserManagement = createAsyncThunk('user/deleteUserManagement', async (idUserDelete: any) => {
+    const response = await userAPI.deleteUserManagement(idUserDelete)
+    return response.data.content;
+})
+export const getUserSearchManagement = createAsyncThunk('user/getUserSearchManagement', async( nameUser: any) => {
+    const response = await userAPI.getUserSearchManagement(nameUser)
     return response.data.content;
 })
 
@@ -57,6 +75,24 @@ const UserSlices = createSlice({
                 state.listUserManagement = action.payload
             })
             .addCase(getListUserManagement.rejected, (state, action) => { })
+            //--- --- ---
+            .addCase(putUserEditForManagement.pending, (state) => { })
+            .addCase(putUserEditForManagement.fulfilled, (state, action) => {
+                state.isPutUserEditManagement = true;
+                state.userEditManagement = action.payload
+            })
+            .addCase(putUserEditForManagement.rejected, (state, action) => { })
+            //--- --- ---
+            .addCase(deleteUserManagement.pending, (state) => { })
+            .addCase(deleteUserManagement.fulfilled, (state, action) => { })
+            .addCase(deleteUserManagement.rejected, (state) => { })
+            //--- --- ---
+            .addCase(getUserSearchManagement.pending, (state) => {})
+            .addCase(getUserSearchManagement.fulfilled, (state, aciton) => {
+                state.isGetUserSearchManagement = true;
+                state.listUserSearchManagement = aciton.payload
+            })
+            .addCase(getUserSearchManagement.rejected, (state) => {})
     },
 });
 

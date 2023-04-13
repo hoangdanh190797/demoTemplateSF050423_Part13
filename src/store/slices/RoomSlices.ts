@@ -14,7 +14,10 @@ const initialState = {
     roomDetail:{},
     //
     isPostInfoBooking: false,
-    infoBooking:{}
+    infoBooking:{},
+    //
+    isGetListRoomManagement: true,
+    listRoomManagement:[],
 }
 
 export const getRooms = createAsyncThunk('rooms/getRooms', async() => {
@@ -36,6 +39,12 @@ export const postRoomBooking = createAsyncThunk('rooms/postRoomBooking', async(i
       const response = await roomsAPI.postRoomBooking(infoBooking);
       return response.data.content
 })
+//--- --- --- --- --- --- --- --- --- --- --- ---
+export const getListRoomManagement = createAsyncThunk('rooms/createAsyncThunk', async(objPage: any) => {
+      const response = await roomsAPI.getListRoomManagement(objPage);
+      return response.data.content
+})
+
 const RoomSlices = createSlice({
   name: "rooms",
   initialState,
@@ -71,7 +80,13 @@ const RoomSlices = createSlice({
             state.infoBooking = action.payload
       })
       .addCase(postRoomBooking.rejected, (state, action) => {})
-
+      //--- --- --- --- --- --- --- --- --- --- --- ---
+      .addCase(getListRoomManagement.pending, (state) => {})
+      .addCase(getListRoomManagement.fulfilled, (state, action) => {
+            state.isGetListRoomManagement = true;
+            state.listRoomManagement = action.payload;
+      })
+      .addCase(getListRoomManagement.rejected, (state, action) => {})
   },
 });
 

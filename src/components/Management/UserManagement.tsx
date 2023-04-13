@@ -1,14 +1,18 @@
 import React from 'react'
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks'
-import { getListUserManagement } from '../../store/slices/UserSlices'
+import { getListUserManagement, deleteUserManagement, getUserSearchManagement } from '../../store/slices/UserSlices'
 import type { PaginationProps } from 'antd';
 import { Pagination } from 'antd';
 import { Link } from 'react-router-dom';
 
 export default function UserManagement() {
   const dispatch = useAppDispatch();
-  const { isGetListUserManagement, listUserManagement } = useAppSelector((state: any) => {
+  const { 
+    isGetListUserManagement, 
+    listUserManagement, 
+    isGetUserSearchManagement, 
+    listUserSearchManagement } = useAppSelector((state: any) => {
     return state.user
   })
 
@@ -32,17 +36,43 @@ export default function UserManagement() {
 
   const { data } = listUserManagement
 
+  // const [contentRender, SetContentRender] = useState<any>();
+  // useEffect(() => {
+  //   SetContentRender(data)
+  // },[])
+
+  const [statusSearch, setStatusSearch] = useState(false)
+
+  const handleDeleteUser = (idUserDelete: any) => {
+    dispatch(deleteUserManagement(idUserDelete))
+  }
+
+  const [nameSearch, setNameSearch] = useState();
+  const handleNameSearch = (event: any) => {
+    setNameSearch(event.target.value)
+  }
+  const handleSubmitNameSearch = (event: any) => {
+    event.preventDefault();
+    dispatch(getUserSearchManagement(nameSearch))
+    setStatusSearch(true);
+  }
+  // if(isGetUserSearchManagement){
+  //     console.log(listUserSearchManagement);
+  // }
+
+  
+
   return (
     <div>
       <div>
-        <Link to='addUserManagemet/0'>
+        <Link to='addUserManagement/0'>
           <button>Thêm quản trị viên</button>
         </Link>
       </div>
       <div>
-        <form action="">
-          <input type="text" placeholder='Nhập vào họ tên người dùng' />
-          <button>Tìm</button>
+        <form action="" onSubmit={handleSubmitNameSearch}>
+          <input type="text" placeholder='Nhập vào họ tên người dùng' onChange={handleNameSearch} />
+          <button type='submit'>Tìm</button>
         </form>
       </div>
       <div>
@@ -59,24 +89,44 @@ export default function UserManagement() {
             </tr>
           </thead>
           <tbody>
-            {data && data.map((user: any) => {
-              return (
-                <tr>
-                  <td>{user.id}</td>
-                  <td>{user.name}</td>
-                  <td>{user.email}</td>
-                  <td>{user.phone}</td>
-                  <td>{user.birthday}</td>
-                  <td>{user.role}</td>
-                  <td>
-                    <button>Xóa</button>
-                    <Link to={`addUserManagemet/${user.id}`}>
-                      <button>Sửa</button>
-                    </Link>
-                  </td>
-                </tr>
-              )
-            })}
+            {statusSearch ?
+              listUserSearchManagement.map((user: any) => {
+                return (
+                  <tr>
+                    <td>{user.id}</td>
+                    <td>{user.name}</td>
+                    <td>{user.email}</td>
+                    <td>{user.phone}</td>
+                    <td>{user.birthday}</td>
+                    <td>{user.role}</td>
+                    <td>
+                      <button onClick={() => handleDeleteUser(user.id)}>Xóa</button>
+                      <Link to={`addUserManagement/${user.id}`}>
+                        <button>Sửa</button>
+                      </Link>
+                    </td>
+                  </tr>
+                )
+              }) :
+              data && data.map((user: any) => {
+                return (
+                  <tr>
+                    <td>{user.id}</td>
+                    <td>{user.name}</td>
+                    <td>{user.email}</td>
+                    <td>{user.phone}</td>
+                    <td>{user.birthday}</td>
+                    <td>{user.role}</td>
+                    <td>
+                      <button onClick={() => handleDeleteUser(user.id)}>Xóa</button>
+                      <Link to={`addUserManagement/${user.id}`}>
+                        <button>Sửa</button>
+                      </Link>
+                    </td>
+                  </tr>
+                )
+              })
+            }
           </tbody>
         </table>
         <div>
