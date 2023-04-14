@@ -5,17 +5,35 @@ const roomsAPI = {
     getRooms: () => {
         return baseAPI.get('/phong-thue');
     },
-    getRoomsByLocation:(getLocation:any) => {
+    getRoomsByLocation: (getLocation: any) => {
         return baseAPI.get(`/phong-thue/lay-phong-theo-vi-tri?maViTri=${getLocation}`);
     },
-    getRoomByIdForDetail:(id: any) => {
+    getRoomByIdForDetail: (id: any) => {
         return baseAPI.get(`/phong-thue/${id}`)
     },
-    postRoomBooking:(infoBooking: any) => {
+    postRoomBooking: (infoBooking: any) => {
         return baseAPI.post('/dat-phong', infoBooking)
     },
-    getListRoomManagement: (obj:{ pageIndex: any, pageSize: any}) =>{
+    getListRoomManagement: (obj: { pageIndex: any, pageSize: any }) => {
         return baseAPI.get(`/phong-thue/phan-trang-tim-kiem?pageIndex=${obj.pageIndex}&pageSize=${obj.pageSize}`)
+    },
+    putRoomEditManagement: (infoRoomEdit: any) => {
+        let idRoomEdit = localStorage.getItem('idRoomEdit')
+        let tokenUser = localStorage.getItem('accessToken')
+        return baseAPI.put(`/phong-thue/${idRoomEdit}`, infoRoomEdit, { headers: { token: tokenUser } })
+    },
+    postNewRoomManagement: (infoRoomNew: any) => {
+        let tokenUser = localStorage.getItem('accessToken')
+        return baseAPI.post('/phong-thue', infoRoomNew, { headers: { token: tokenUser } })
+    },
+    deleteRoomManagement: (idRoomDelete: any) => {
+        let tokenUser = localStorage.getItem('accessToken')
+        return baseAPI.delete(`/phong-thue/${idRoomDelete}`, { headers: { token: tokenUser } })
+    },
+    postImageRoomManagement: (imageRoom: any) => {
+        let tokenUser = localStorage.getItem('accessToken')
+        let idRoomEdit = localStorage.getItem('idRoomEdit')
+        return baseAPI.post(`/phong-thue/upload-hinh-phong?maPhong=${idRoomEdit}`, imageRoom, { headers: { token: tokenUser } })
     }
 }
 export default roomsAPI;

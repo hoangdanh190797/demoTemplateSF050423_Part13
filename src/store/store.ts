@@ -4,6 +4,8 @@ import LocationSlices from './slices/LocationSlices'
 import AuthSlices from './slices/AuthSlices'
 import UserSlices from './slices/UserSlices'
 import CommentsSlices from './slices/CommentsSlices'
+import BookingSlices from './slices/BookingSlices'
+
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +14,7 @@ export const store = configureStore({
     auth: AuthSlices,
     user: UserSlices,
     comments: CommentsSlices,
+    booking: BookingSlices,
   },
 })
 

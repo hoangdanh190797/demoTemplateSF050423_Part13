@@ -21,6 +21,9 @@ import RoomsManagement from 'components/Management/RoomsManagement';
 import BookingManagement from 'components/Management/BookingManagement';
 import AddUserManagement from 'components/Management/AddUserManagement';
 import AddandEditLocationManagement from 'components/Management/AddandEditLocationManagement';
+import AddandEditRoomManagement from 'components/Management/AddandEditRoomManagement';
+import AddandEditBookingManagement from 'components/Management/AddandEditBookingManagement';
+
 
 function App() {
   const isRole = localStorage.getItem('isRole');
@@ -41,7 +44,9 @@ function App() {
           <Route path='locationManagement' element={<LocationManagement />} />
           <Route path='locationManagement/addAndeditLocationManagement/:idLocation' element={<AddandEditLocationManagement />} />
           <Route path='roomsManagement' element={<RoomsManagement />} />
+          <Route path='roomsManagement/addAndeditRoomManagement/:idRoom' element={<AddandEditRoomManagement/>}/>
           <Route path='bookingManagement' element={<BookingManagement />} />
+          <Route path='bookingManagement/addAndeditBookingManagement/:idBooking' element={<AddandEditBookingManagement />} />
       </Route>
 
       {/* Catch all */}
