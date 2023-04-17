@@ -2,12 +2,11 @@ import React from 'react'
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks'
 import { getUserSearchManagement } from '../../store/slices/UserSlices'
-import { getListRoomManagement, deleteRoomManagement } from '../../store/slices/RoomSlices';
-import { getListBookingManagement } from '../../store/slices/BookingSlices'
+import { getListBookingManagement, deleteBookingManagement } from '../../store/slices/BookingSlices'
 import type { PaginationProps } from 'antd';
 import { Pagination } from 'antd';
 import { Link } from 'react-router-dom';
-import { Room } from '@mui/icons-material';
+import dayjs from 'dayjs';
 
 export default function BookingManagement() {
   const dispatch = useAppDispatch();
@@ -15,44 +14,28 @@ export default function BookingManagement() {
     return state.booking
   })
 
+  const [posts, setPosts] = useState([])
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(10);
+
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = listBookingManagement.slice(indexOfFirstPost, indexOfLastPost)
+  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost)
 
-
-  const [current, setCurrent] = useState(1);
-
-  const onChange: PaginationProps['onChange'] = (page) => {
-    setCurrentPage(page)
-    // dispatch(getListRoomManagement(
-    //   {
-    //     pageIndex: `${current}`,
-    //     pageSize: 10
-    //   }))
+  const onChange: PaginationProps['onChange'] = (page, pageSize) => {
+    setCurrentPage(page);
+    setPostsPerPage(pageSize)
   };
 
   useEffect(() => {
-    // dispatch(getListRoomManagement(
-    //   {
-    //     pageIndex: `${current}`,
-    //     pageSize: 10
-    //   }))
     dispatch(getListBookingManagement())
+    setPosts(listBookingManagement)
   }, [dispatch]);
-
-  // const { data } = listBookingManagement
-
-  // const [contentRender, SetContentRender] = useState<any>();
-  // useEffect(() => {
-  //   SetContentRender(data)
-  // },[])
 
   const [statusSearch, setStatusSearch] = useState(false)
 
-  const handleDeleteUser = (idUserDelete: any) => {
-    dispatch(deleteRoomManagement(idUserDelete))
+  const handleDeleteBooking = (idBookingDelete: number) => {
+    dispatch(deleteBookingManagement(idBookingDelete))
   }
 
   const [nameSearch, setNameSearch] = useState();
@@ -64,12 +47,6 @@ export default function BookingManagement() {
     dispatch(getUserSearchManagement(nameSearch))
     setStatusSearch(true);
   }
-  // if(isGetUserSearchManagement){
-  //     console.log(listUserSearchManagement);
-  // }
-
-
-
   return (
     <div>
       <div>
@@ -87,7 +64,7 @@ export default function BookingManagement() {
         <table style={{ border: '1px solid black', borderCollapse: 'collapse' }}>
           <thead>
             <tr>
-              <th>Mã phòng</th>
+              <th>Mã đặt phòng</th>
               <th>Ngày đến</th>
               <th>Ngày đi</th>
               <th>Số lượng khách</th>
@@ -98,30 +75,37 @@ export default function BookingManagement() {
           <tbody>
             {
               currentPosts && currentPosts.map((booking: any) => {
+                const { ngayDen, ngayDi } = booking;
+                let newNgayDen = dayjs(new Date(ngayDen));
+                let newNgayDi = dayjs(new Date(ngayDi));
                 return (
-                  <tr>
-                    <td>{booking.id}</td>
-                    <td>{booking.ngayDen}</td>
-                    <td>{booking.ngayDi}</td>
-                    <td>{booking.soLuongKhach}</td>
-                    <td>{booking.maNguoiDung}</td>
-                    <td>
-                      <button onClick={() => handleDeleteUser(booking.id)}>Xóa</button>
-                      <Link to={`addAndeditBookingManagement/${booking.id}`}>
-                        <button>Sửa</button>
-                      </Link>
-                    </td>
-                  </tr>
+                  <>
+                    <tr>
+                      <td>{booking.id}</td>
+                      <td>{newNgayDen.format('DD-MM-YYYY')}</td>
+                      <td>{newNgayDi.format('DD-MM-YYYY')}</td>
+                      <td>{booking.soLuongKhach}</td>
+                      <td>{booking.maNguoiDung}</td>
+                      <td>
+                        <button onClick={() => handleDeleteBooking(booking.id)}>Xóa</button>
+                        <Link to={`addAndeditBookingManagement/${booking.id}`}>
+                          <button>Sửa</button>
+                        </Link>
+                      </td>
+                    </tr>
+                  </>
                 )
-              })}
-
+              })
+            }
           </tbody>
         </table>
         <div>
           <Pagination
-            current={current}
+            current={currentPage}
             onChange={onChange}
-            total={500} />
+            total={posts?.length}
+            showTotal={(posts) => `Total ${posts} items`}
+          />
         </div>
       </div>
     </div>

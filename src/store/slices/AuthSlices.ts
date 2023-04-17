@@ -3,6 +3,7 @@ import authAPI from 'services/authAPI';
 import axios, { AxiosError } from 'axios';
 
 declare interface initialState {
+    isSignIn: boolean
     //
     isStatusSignin: boolean,
     userCurrent: any,
@@ -16,6 +17,8 @@ declare interface initialState {
 }
 
 const initialState: initialState = {
+    isSignIn: false,
+    //
     isStatusSignin: false,
     userCurrent: {},
     roleUser: '',
@@ -40,7 +43,7 @@ export const postUserSignin = createAsyncThunk('auth/postSignin', async (user: a
     }
 });
 
-export const postUserSignup = createAsyncThunk('auth/postUserSignup', async(user: any) => {
+export const postUserSignup = createAsyncThunk('auth/postUserSignup', async (user: any) => {
     const response = await authAPI.postUserSignup(user);
     return response.data.content
 })
@@ -57,7 +60,10 @@ const AuthSlices = createSlice({
     },
     extraReducers(builder) {
         builder
-            .addCase(postUserSignin.pending, (state) => { })
+            .addCase(postUserSignin.pending, (state) => {
+                state.isSignIn = true;
+            })
+
             .addCase(postUserSignin.fulfilled, (state, action) => {
                 state.isStatusSignin = true;
                 state.userCurrent = action.payload;
@@ -68,12 +74,12 @@ const AuthSlices = createSlice({
                 state.error = action.payload
             })
             //
-            .addCase(postUserSignup.pending, (state) => {})
+            .addCase(postUserSignup.pending, (state) => { })
             .addCase(postUserSignup.fulfilled, (state, action) => {
                 state.isStatusSignup = true;
                 state.userCurrent = action.payload;
             })
-            .addCase(postUserSignup.rejected, (state, action) => {})
+            .addCase(postUserSignup.rejected, (state, action) => { })
     },
 });
 

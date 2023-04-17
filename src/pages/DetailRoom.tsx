@@ -9,7 +9,7 @@ import { getCommentsByIDRoom, postCommentsByIDRoom } from 'store/slices/Comments
 import { DatePicker, Space } from 'antd';
 import type { DatePickerProps } from 'antd';
 //
-import  moment  from 'moment';
+import moment from 'moment'; // Chỉ dùng dayjs
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 
@@ -24,7 +24,7 @@ export default function DetailRoom() {
     const { RangePicker } = DatePicker;
     const dateFormat = 'DD/MM/YYYY';
     const customFormat: DatePickerProps['format'] = (value) =>
-    `custom format: ${value.format(dateFormat)}`;
+        `custom format: ${value.format(dateFormat)}`;
 
     const { idRoom } = useParams<any>();
     const dispatch = useAppDispatch();
@@ -70,11 +70,11 @@ export default function DetailRoom() {
     const handleSubmitComment = (event: any) => {
         event.preventDefault();
         const idUser = localStorage.getItem('idUser')
-        const date = new Date();
-        let day = date.getDate();
+        const date = dayjs();
+        let day = date.format();
         dispatch(
             postCommentsByIDRoom({
-                'id': '0', 
+                'id': '0',
                 'maPhong': `${idRoom}`,
                 'maNguoiBinhLuan': `${idUser}`,
                 'ngayBinhLuan': `${day}`,
@@ -83,6 +83,7 @@ export default function DetailRoom() {
             }));
         dispatch(getCommentsByIDRoom(idRoom));
     }
+
     // Booking Room
     // const today = dayjs();
     // const tomorrow = dayjs().add(1, 'day');
@@ -93,65 +94,65 @@ export default function DetailRoom() {
     // }
     // console.log(departureDate)
 
-    const [dateFrom, setDateFrom] = useState<any | null>(null);
-    const [dateTo, setDateTo] = useState<any | null>(null);
 
-    const handleDepartureData = (date: any) => {
-        if (date) {
-          console.log('Date: ', date);
-          localStorage.setItem('dateNeed', date);
-        } else {
-          console.log('Clear');
-        }
-      };
+    // const handleDepartureData = (date: any) => {
+    //     if (date) {
+    //         console.log('Date: ', date);
+    //         localStorage.setItem('dateNeed', date);
+    //     } else {
+    //         console.log('Clear');
+    //     }
+    // };
+
+    const [dateFrom, setDateFrom] = useState<Dayjs | null>(null);
+    const [dateTo, setDateTo] = useState<Dayjs | null>(null);
 
     const handleDateArray = (dates: null | (Dayjs | null)[], dateStrings: string[]) => {
         if (dates) {
-          console.log('From: ', dates[0], ', to: ', dates[1]);
-          console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
+            console.log('From: ', dates[0], ', to: ', dates[1]);
+            console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
 
-          localStorage.setItem('dateFrom', dateStrings[0])
-          localStorage.setItem('dateTo', dateStrings[1])
-          
-          setDateFrom(dates[0]);
-          setDateTo(dates[1]);
+            localStorage.setItem('dateFrom', dateStrings[0])
+            localStorage.setItem('dateTo', dateStrings[1])
+
+            setDateFrom(dates[0]);
+            setDateTo(dates[1]);
+
         } else {
-          console.log('Clear');
+            console.log('Clear');
         }
-      };
+    };
 
 
 
     // --- --- ---
     const [returnDate, setReturnDate] = useState();
-    const handleReturnDate = (dateR: any) => {
-        setReturnDate(dateR);
-        let dateNN = returnDate;
-        let formattedDateNN = moment(dateNN).format('DD-MM-YYYY');
-        console.log(formattedDateNN)
-    }
-    
+    // const handleReturnDate = (dateR: any) => {
+    //     setReturnDate(dateR);
+    //     let dateNN = returnDate;
+    //     let formattedDateNN = moment(dateNN).format('DD-MM-YYYY');
+    //     console.log(formattedDateNN)
+    // }
+
     const firstDay = localStorage.getItem('dateNeed')
     console.log(firstDay);
-    
     const [count, setCount] = useState(1);
 
-    const postInfoBooking = () => {}
+
+
+    const postInfoBooking = () => {
         const idUser = localStorage.getItem('idUser')
-        const GetdateFrom = localStorage.getItem('dateFrom')
-        const GetdateTo = localStorage.getItem('dateTo')
-        // console.log('GetdateFrom:', GetdateFrom);
-        // console.log('GetdateTo:', GetdateTo);
-        useEffect(() => {
-            dispatch(postRoomBooking({
-                "id":"0", 
-                "maPhong":`${idRoom}`, 
-                "ngayDen": dateFrom, 
-                "ngayDi": dateTo, 
-                "soLuongKhach": `${count}`, 
-                "maNguoiDung":`${idUser}`}));
-        }, [dispatch])
-            
+        dispatch(postRoomBooking({
+            "id": "0",
+            "maPhong": `${idRoom}`,
+            "ngayDen": dateFrom,
+            "ngayDi": dateTo,
+            "soLuongKhach": `${count}`,
+            "maNguoiDung": `${idUser}`
+        }));
+     };
+    
+
     return (
         <>
             {/*Thong tin chi tiet cua phong  */}
@@ -199,24 +200,26 @@ export default function DetailRoom() {
             </div>
             {/* Dat phong */}
             <div>
-                <RangePicker 
-                defaultValue={[dayjs('11/04/2023', dateFormat), dayjs('11/04/2023', dateFormat)]}
-                format={dateFormat}
-                onChange={handleDateArray}
-                />
-            </div>
-            <div>
+                <div>
+                    <RangePicker
+                        format={dateFormat}
+                        onChange={handleDateArray}
+                    />
+                </div>
                 <div>
                     <div>
-                        <button onClick={() => setCount(count - 1)}>-</button>
-                    </div>
-                    <div><span>{count}</span></div>
-                    <div>
-                        <button onClick={() => setCount(count + 1)}>+</button>
+                        <div>
+                            <button onClick={() => setCount(count - 1)}>-</button>
+                        </div>
+                        <div><span>{count}</span></div>
+                        <div>
+                            <button onClick={() => setCount(count + 1)}>+</button>
+                        </div>
                     </div>
                 </div>
+                <button onClick={postInfoBooking}>Đặt phòng</button>
             </div>
-            <button onClick={() => postInfoBooking()}>Đặt phòng</button>
+
         </>
     )
 }

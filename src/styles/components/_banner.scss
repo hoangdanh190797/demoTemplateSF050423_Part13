@@ -7,25 +7,84 @@
             height: 320px;
         }
     }
-    .banner_search{
+    .banner_title_main{
+        position: absolute;
+        z-index: 1;
+        top: 33%;
+        left: 50%;
+        transform: translate(-50%,-33%);
+        background-color: #FFF;
+        width: 60%;
+        height: 60px;
+        border-radius: 0.5rem;
+        .banner_title{
+            display: flex;
+            justify-content: space-around;
+            div{
+                margin: 20px auto;
+            }
+            
+        }
+    }
+
+    .banner_search{ 
         border-radius: 0.5rem;
         position: absolute;
-        top: 60%;
+        top: 80%;
         left: 50%;
-        transform: translate(-50%,-50%);
-        height: 420px;
+        transform: translate(-50%,-80%);
+        height: 360px;
         width: 70%;
         background-color: #fee0e6;
+        .searchInput_content{
+            display: flex;
+            justify-content: center;
+            width: 80%;
+            margin: 60px auto 0px auto;
+        }
         .banner_form{
+            .datePicker{
+                display: flex;
+                justify-content: space-between;
+                margin: 40px auto 0px auto;
+                width: 80%;
+            }
             .fieldset_one{
                 .input_one{
                     width: 70%;
                 }
             }
+            .input_two{
+                width: 80%;
+                height: 30px;
+                margin: 20px auto 0px auto;
+                border-radius: 0.5rem;
+            }
             .fieldset_two{
-                .input_two{
-                    width: 30%;
+                width: 80%;
+                margin: 20px auto 0px auto;
+
+
+            }
+            .button_Search{
+                height: 60px;
+                width: 60%;
+                position: absolute;
+                bottom: -10%;
+                left: 50%;
+                transform: translate(-50%,-10%);
+                background-color: rgb(252 78 113);
+                border-radius: 0.5rem;
+                span{
+                    font-weight: 500;
+                    font-size: large;
                 }
+            }
+            .searchInput_content_two{
+                display: flex;
+                justify-content: center;
+                width: 80%;
+                margin: 30px auto 0px auto;
             }
         }
     }

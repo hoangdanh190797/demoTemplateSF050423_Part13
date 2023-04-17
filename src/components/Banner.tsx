@@ -19,7 +19,11 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import { useParams, useNavigate, Link, NavLink } from "react-router-dom";
 
+//
+
+
 export default function Banner() {
+
     const dispatch = useAppDispatch();
 
     const { isGetRooms, rooms } = useAppSelector((state: any) => {
@@ -44,7 +48,7 @@ export default function Banner() {
     const [statusID, setStatusID] = useState(false)
 
     console.log(valueOne);
-    
+
     // console.log(valueOne);
     // if(statusID){ 
     //     let { id } = valueOne;
@@ -67,11 +71,22 @@ export default function Banner() {
                 backgroundSize: 'cover',
 
             }}></div>
+                <div className='banner_title_main'>
+                    <div className='banner_title hover:bg-sky-700 border-around'>
+                        <div>Khách sạn & Nhà</div>
+                        <div>Chỗ ở riêng</div>
+                        <div>Máy bay + K.sạn</div>
+                        <div>Chuyến bay</div>
+                        <div>Ở dài ngày</div>
+                        <div>Hoạt động</div>
+                    </div>
+                </div>
+
                 <div className='banner_search'>
                     <form className='banner_form' onSubmit={handleSearch}>
                         {/* --- */}
                         <div>
-                            <Stack spacing={2} sx={{ width: 300 }} className='searchInput_content'>
+                            <Stack className='searchInput_content'>
                                 <Autocomplete
                                     freeSolo
                                     id="free-solo-2-demo"
@@ -104,33 +119,62 @@ export default function Banner() {
                             </Stack>
                         </div>
                         {/* --- */}
-                        <div>
+                        <div className='datePicker'>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <DemoContainer components={['DatePicker', 'DatePicker']}>
                                     <DatePicker
+                                        className='w-2/5'
                                         label="Controlled picker"
                                         value={value}
                                         onChange={(newValue) => setValue(newValue)}
                                     />
-                                </DemoContainer>
-                                <DemoContainer components={['DatePicker', 'DatePicker']}>
                                     <DatePicker
+                                        className='w-2/5'
                                         label="Controlled picker"
                                         value={value}
                                         onChange={(newValue) => setValue(newValue)}
                                     />
-                                </DemoContainer>
                             </LocalizationProvider>
                         </div>
                         {/* --- */}
-                        <fieldset className='fieldset_two'>
-                            <input className='input_two' type="text" placeholder='Nhập số lượng khách' />
+                        {/* <input className='input_two' type="text" placeholder='Nhập số lượng khách' /> */}
+                        <Stack className='searchInput_content_two'>
+                            <Autocomplete
+                                freeSolo
+                                id="free-solo-2-demo"
+                                disableClearable
+                                options={location.map((item: any) => item)}
+                                getOptionLabel={(item) => item.tinhThanh}
+                                // value={value}
+                                onChange={(event: any, newValue: any | null) => {
+                                    setValueOne(newValue);
+                                    setStatusID(true);
+                                }}
+                                // inputValue={inputValue}
+                                // onInputChange={(event, newInputValue) => {
+                                //     setInputValue(newInputValue);
+                                //   }}
+                                renderInput={(params) => (
+
+                                    <TextField
+                                        {...params}
+                                        label="Số lượng khách"
+                                        color="primary"
+                                        InputProps={{
+                                            ...params.InputProps,
+                                            type: 'search',
+                                        }}
+                                    />
+
+                                )}
+                            />
+                        </Stack>
+
+                        <fieldset className=''>
                         </fieldset>
                         {/* --- */}
                         {statusID ? <Link to={`/roomsByLocation/${valueOne.id}`}>
-                            <button>Tìm</button>
-                        </Link>: <button>Tìm</button>}
-                        
+                            <button className='button_Search '></button>
+                        </Link> : <button className='button_Search'><span>TÌM</span></button>}
                     </form>
                 </div>
             </div>

@@ -1,18 +1,33 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
-import { getRoomByIdForDetail, 
-    putRoomEditManagement, 
-    postRoomNewManagement, 
-    postImageRoomManagement} from '../../store/slices/RoomSlices';
+import {
+    getRoomByIdForDetail,
+    putRoomEditManagement,
+    postRoomNewManagement,
+    postImageRoomManagement
+} from '../../store/slices/RoomSlices';
 
-import { getByIDBookingManagement } from '../../store/slices/BookingSlices';
+import { getByIDBookingManagement, putEditBookingManagement } from '../../store/slices/BookingSlices';
 
 import { useParams, useNavigate, Link, NavLink } from "react-router-dom";
 import { Switch } from 'antd';
 
+import { DatePicker, Space } from 'antd';
+import type { DatePickerProps } from 'antd';
+
+import dayjs from 'dayjs';
+import type { Dayjs } from 'dayjs';
+
 
 export default function AddandEditBookingManagement() {
+
+    const { RangePicker } = DatePicker;
+    const dateFormat = 'DD-MM-YYYY';
+    const customFormat: DatePickerProps['format'] = (value) =>
+        `custom format: ${value.format(dateFormat)}`;
+
+
     const dispatch = useAppDispatch()
     let { idBooking } = useParams<any>();
     let newID: any = idBooking;
@@ -24,23 +39,23 @@ export default function AddandEditBookingManagement() {
         if (idBooking) {
             dispatch(getByIDBookingManagement(idBookingNum));
         }
-    }, [])
+    }, [dispatch])
 
     //Chỉ cần nạp data vào lại roomDetail vẫn render thông tin cần!
     const { isGetRoomDetail, roomDetail, isPutRoomEditManagement, roomEditManagement } = useAppSelector((state: any) => {
         return state.rooms
     })
-    const { isGetByIdBookingManagement, infoBooking} = useAppSelector((state: any) => {
+    const { isGetByIdBookingManagement, infoBooking } = useAppSelector((state: any) => {
         return state.booking
     })
 
     const initialValues = {
         id: '0',
-        maPhong:'',
-        ngayDen:'',
-        ngayDi:'',
-        soLuongKhach:'',
-        maNguoiDung:'',
+        maPhong: '',
+        ngayDen: '',
+        ngayDi: '',
+        soLuongKhach: '',
+        maNguoiDung: '',
     };
 
     const [values, setValues] = useState<any>(initialValues)
@@ -50,6 +65,13 @@ export default function AddandEditBookingManagement() {
         if (isGetByIdBookingManagement) {
             setValues(infoBooking)
         }
+        // let newNgayDen = dayjs(new Date(values.ngayDen), dateFormat)
+        // setValues({...values, ngayDen: newNgayDen})
+
+        // let newNgayDi = dayjs(new Date(values.ngayDi), dateFormat)
+        // setValues({...values, ngayDi: newNgayDi})
+
+
     }, [isGetByIdBookingManagement, infoBooking])
 
     const handleMayGiat = (checked: boolean) => {
@@ -60,8 +82,11 @@ export default function AddandEditBookingManagement() {
         console.log(checked);
     }
 
+
+
     const handleInputChange = (event: any) => {
         const { name, value } = event.target;
+
         setValues({
             ...values,
             [name]: value,
@@ -74,7 +99,7 @@ export default function AddandEditBookingManagement() {
             dispatch(postRoomNewManagement(values))
         }
         else {
-            dispatch(putRoomEditManagement(values))
+            dispatch(putEditBookingManagement(values))
         }
     }
 
@@ -90,6 +115,30 @@ export default function AddandEditBookingManagement() {
         // setAvatar(formData.get('formFile') as File);
         dispatch(postImageRoomManagement(formData))
     }
+
+
+    const [dateFrom, setDateFrom] = useState<Dayjs | null>(null);
+    const [dateTo, setDateTo] = useState<Dayjs | null>(null);
+
+    const handleDateArray = (dates: null | (Dayjs | null)[], dateStrings: string[]) => {
+        if (dates) {
+            console.log('From: ', dates[0], ', to: ', dates[1]);
+            console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
+
+            localStorage.setItem('dateFrom', dateStrings[0])
+            localStorage.setItem('dateTo', dateStrings[1])
+
+            setDateFrom(dates[0]);
+            setDateTo(dates[1]);
+
+        } else {
+            console.log('Clear');
+        }
+    };
+
+
+    // console.log(NgayDenFormat)
+
     return (
         <>
             <div>
@@ -121,6 +170,14 @@ export default function AddandEditBookingManagement() {
                             id=""
                             placeholder='Mã đặt phòng' />
                     </fieldset>
+                    {/* Edit */}
+                    {/* <div>
+                        <RangePicker
+                            // defaultValue={[newNgayDen, newNgayDen]}
+                            format={dateFormat}
+                            onChange={handleDateArray}
+                        />
+                    </div> */}
                     <fieldset>
                         <label htmlFor="">Ngày đến: </label>
                         <input

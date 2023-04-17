@@ -6,6 +6,13 @@ const bookingAPI = {
     },
     getByIDBookingManagement: (idBooking: any) => {
         return baseAPI.get(`/dat-phong/${idBooking}`)
+    },
+    putEditBookingManagement: (infoBookingEdit: any) => {
+        let idRoomEdit = localStorage.getItem('idRoomEdit')
+        return baseAPI.put(`/dat-phong/${idRoomEdit}`, infoBookingEdit)
+    },
+    deleteBookingManagement: (idBookingDelete:any) => {
+        return baseAPI.delete(`/dat-phong/${idBookingDelete}`)
     }
 
 }

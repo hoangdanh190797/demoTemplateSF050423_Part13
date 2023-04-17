@@ -37,14 +37,13 @@ export default function LocationComponent() {
         dots: true,
         infinite: true,
         speed: 500,
-        slidesToShow: 4,
+        slidesToShow: 6,
         slidesToScroll: 3
     };
     return (
         <div id="locationComponent_">
             <div className="locationComponent_container">
                 <h1>Các điểm đến thu hút nhất Việt Nam</h1>
-
                 <div><Slider {...settings}>
                     {location.map((item: any) => {
                         return (
@@ -53,8 +52,8 @@ export default function LocationComponent() {
                                     <div className='locationComponent_item'>
                                         <div
                                             style={{
-                                                height: '250px',
-                                                width: '250px',
+                                                height: '120px',
+                                                width: '120px',
                                                 margin: '0 auto',
                                                 borderRadius: "100%",
                                                 backgroundImage: `url(${item.hinhAnh})`,
@@ -67,7 +66,6 @@ export default function LocationComponent() {
                                     </div>
                                 </div>
                             </Link>
-
                         )
                     })}
                 </Slider>
