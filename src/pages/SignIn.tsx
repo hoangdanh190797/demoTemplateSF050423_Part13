@@ -7,8 +7,43 @@ import { getLocation } from 'store/slices/LocationSlices';
 import '../styles/pages/_signin.scss';
 import { Spin } from 'antd';
 
+import validator from 'validator';
 
 export default function SignIn() {
+
+  // interface Values {
+  //   email: String,
+  //   password: String
+  // }
+  // const schema = Yup.object().shape({
+  //   email: Yup.string()
+  //     .email('Invalid email')
+  //     .required('Email is required'),
+  //   password: Yup.string()
+  //     .required('Password is required')
+  //     .min(8, 'Password must be at least 8 characters')
+  //     .max(50, 'Password must be at most 50 characters')
+  //     .matches(
+  //       /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/,
+  //       'Password must contain at least one lowercase letter, one uppercase letter, one number, and one special character'
+  //     )
+  // });
+  // const formik = useFormik({
+  //   initialValues: {
+  //     name: '',
+  //     email: '',
+  //     age: 0,
+  //   },
+  //   validationSchema: schema,
+  //   onSubmit: (values) => {
+  //     console.log(values);
+  //   },
+  // });
+  // const initialValues = {
+  //   email: '',
+  //   password: '',
+  // };
+
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -19,6 +54,9 @@ export default function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [messagesError, setMessagesError] = useState('');
+  // const [errors, setErrors] = useState([]);
+  // const [errors, setErrors] = useState<{ email?: string, password?: string }>({});
+
 
   const handleEmail = (event: any) => {
     setEmail(event.target.value)
@@ -27,23 +65,26 @@ export default function SignIn() {
     setPassword(event.target.value)
   }
   const [loading, setLoading] = useState(false);
+  // const [errors, setErrors] = useState({});
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
+    if (!validator.isEmail(email)) {
+      // Handle invalid email
+      // setErrors('Invalid email')
+      return;
+    }
+    if (!validator.isStrongPassword(password)) {
+      // Handle weak password
+      // errors.push('Password must contain at least 8 characters including uppercase, lowercase, and special characters');
+      return;
+    }
     dispatch(postUserSignin({ email, password }))
     setLoading(true)
   }
-
   useEffect(() => {
     setMessagesError(error)
   })
-
-  // if (isSignIn) {
-  //   setTimeout(() => {
-  //     setLoading(false);
-  //   }, 8000)
-  // }
-
   if (isStatusSignin) {
     setTimeout(() => {
       navigate('/');
@@ -52,10 +93,13 @@ export default function SignIn() {
     localStorage.setItem('accessToken', userCurrent.token)
     localStorage.setItem('isRole', userCurrent.user.role)
   }
-  //       {loading ? <Spin tip="Loading" size="large">
-  // <div style={{ padding: '50px', backgroundColor: 'rgba(0, 0, 0, 0.05)', borderRadius: '4px' }} />
-  // </Spin > :
-
+  const errors = [];
+  if (!validator.isEmail(email)) {
+    errors.push('Invalid email');
+  }
+  if (!validator.isStrongPassword(password)) {
+    errors.push('Password must contain at least 8 characters including uppercase, lowercase, and special characters');
+  }
   return (
     <>
 
@@ -69,12 +113,12 @@ export default function SignIn() {
                   <a href=''>Have an account?</a>
                 </Link>
               </p>
-
-              <form onSubmit={handleSubmit}>
+              <form action="" onSubmit={handleSubmit}>
                 <fieldset className="form_group">
                   <input
                     className="form_control"
-                    type="text"
+                    type="email"
+                    name='email'
                     placeholder="Your Email"
                     onChange={handleEmail}
                   />
@@ -83,12 +127,16 @@ export default function SignIn() {
                   <input
                     className="form_control"
                     type="password"
+                    name='password'
                     placeholder="Password"
                     onChange={handlePassword}
                   />
                 </fieldset>
                 <div>
-                  {isError ? <p>{error.data.content}</p> : ""}
+                  {/* {isError ? <p>{error.data.content}</p> : ""} */}
+                  {errors.map((error) => (
+                    <div key={error}>{error}</div>
+                  ))}
                 </div>
                 <div className='btn_'>
                   <button type='submit' >Sign in
@@ -100,8 +148,14 @@ export default function SignIn() {
                     </Spin > : ""}
                   </button>
                 </div>
-
               </form>
+
+
+
+
+
+
+
             </div>
           </div>
         </div>

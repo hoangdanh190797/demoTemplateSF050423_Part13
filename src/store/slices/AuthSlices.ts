@@ -13,7 +13,9 @@ declare interface initialState {
     //use userCurrent agin
     //
     isError: boolean,
-    error: any
+    error: any,
+    //
+    isStatusSignupRejected:boolean
 }
 
 const initialState: initialState = {
@@ -27,6 +29,8 @@ const initialState: initialState = {
     //
     isError: false,
     error: {},
+    //
+    isStatusSignupRejected: false
 }
 
 export const postUserSignin = createAsyncThunk('auth/postSignin', async (user: any, thunkAPI) => {
@@ -79,7 +83,9 @@ const AuthSlices = createSlice({
                 state.isStatusSignup = true;
                 state.userCurrent = action.payload;
             })
-            .addCase(postUserSignup.rejected, (state, action) => { })
+            .addCase(postUserSignup.rejected, (state, action) => { 
+                state.isStatusSignupRejected = true;
+            })
     },
 });
 
