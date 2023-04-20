@@ -95,7 +95,6 @@ export default function SignIn() {
     setMessagesError(error)
 
   }, [setMessagesError, setLoading])
-
   if (isSignInpRejected) {
     setTimeout(() => {
       dispatch(checkSignInRejected())
@@ -110,13 +109,15 @@ export default function SignIn() {
     localStorage.setItem('accessToken', userCurrent.token)
     localStorage.setItem('isRole', userCurrent.user.role)
   }
-  const errors = [];
+  const errors :any = [];
+
   if (!validator.isEmail(email)) {
     errors.push('Invalid email');
   }
   if (!validator.isStrongPassword(password)) {
     errors.push('Password must contain at least 8 characters including uppercase, lowercase, and special characters');
   }
+  
   return (
     <>
       <div id='signin_pages'>
@@ -156,7 +157,7 @@ export default function SignIn() {
                 </fieldset>
                 <div>
                   {isError ? <p>{error.data.content}</p> : ""}
-                  {errors.map((error) => (
+                  {errors.map((error:any) => (
                     <div key={error}>{error}</div>
                   ))}
                 </div>

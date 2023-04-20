@@ -33,22 +33,24 @@ export default function Header() {
 
     interface DataN {
         hinhAnh: any,
+        role: any,
+
     }
 
-    const [dataN, setDataN] = useState<any | null>(null);
+    // const [dataN, setDataN] = useState<any | null>(null);
 
-    if (isStatusSignin) { setDataN(userCurrent) }
+    // if (isStatusSignin) { setDataN(userCurrent) }
 
 
 
     const [renderADMIN, setRenderADMIN] = useState(false)
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        // if (dataN.user.role === 'ADMIN') {
-        //     setRenderADMIN(true)
-        // }
-    }, [])
+    //     // if (dataN.user.role === 'ADMIN') {
+    //     //     setRenderADMIN(true)
+    //     // }
+    // }, [])
 
     return (
         <>
