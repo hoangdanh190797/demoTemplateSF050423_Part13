@@ -10,6 +10,7 @@ export default function PageAdmin() {
                 <div className='adminPage_block_left_'>
                     <div className='adminPage_title' >
                         <h1>DASHBOARD</h1>
+                        
                     </div>
                     <div className='adminPage_tag'>
                         <div className='tagRoute_'>
@@ -36,7 +37,9 @@ export default function PageAdmin() {
                 </div>
                 <div style={{ width: '80%' }}>
                     <div className='adminPage_title'>
-                        <h1>HEADER</h1>
+                        <Link to='/'>
+                                <h1>Home</h1>
+                            </Link>
                     </div>
                     <div>
                         <Outlet></Outlet>

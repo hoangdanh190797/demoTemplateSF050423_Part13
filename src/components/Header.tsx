@@ -14,6 +14,8 @@ import '../styles/components/_header.scss'
 import { set } from 'lodash';
 
 export default function Header() {
+    const navigate = useNavigate();
+
     const dispatch = useAppDispatch();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
@@ -31,27 +33,28 @@ export default function Header() {
     //     const { avatar, role } = userCurrent.user;
     // }
 
-    interface DataN {
-        hinhAnh: any,
-        role: any,
-
+    interface UserCurrent {
+        user: {
+            name: String,
+            avatar: String,
+            role: String,
+        },
     }
 
-    // const [dataN, setDataN] = useState<any | null>(null);
+    const [dataN, setDataN] = useState<UserCurrent | null | any>(null);
+    const [renderADMIN, setRenderADMIN] = useState<boolean>(false)
 
-    // if (isStatusSignin) { setDataN(userCurrent) }
+    
 
-
-
-    const [renderADMIN, setRenderADMIN] = useState(false)
-
-    // useEffect(() => {
-
-    //     // if (dataN.user.role === 'ADMIN') {
-    //     //     setRenderADMIN(true)
-    //     // }
-    // }, [])
-
+    useEffect(() => {
+        setDataN(userCurrent)
+        console.log(dataN);
+        
+        if (isStatusSignin) { 
+        // setDataN(userCurrent)
+            if (userCurrent?.user?.role === 'ADMIN') { setRenderADMIN(true) } else{ setRenderADMIN(false) }
+         }
+    }, [setDataN, setRenderADMIN])
     return (
         <>
             <div id='header_'>
@@ -96,12 +99,12 @@ export default function Header() {
                                         <div>
                                             <img src={threesf} alt="" width={25} />
                                         </div>
-                                        <div>
+                                        
+                                        {isStatusSignin ? <div>
+                                            <img src={userCurrent?.user?.avatar} alt='ImageER' width={25} />
+                                        </div> : <div>
                                             <img src={person} alt="" width={25} />
-                                        </div>
-                                        {/* {isStatusSignin ? <div>
-                                            <img src={dataN.user.avatar} alt='ImageER' width={25} />
-                                        </div> : ''} */}
+                                        </div>}
 
                                     </Button>
                                     <Menu
@@ -114,14 +117,15 @@ export default function Header() {
                                         }}
                                     >
                                         <MenuItem onClick={handleClose}><Link to={'/profile'}>Profile</Link></MenuItem>
-                                        {renderADMIN ? <MenuItem onClick={handleClose}>My account</MenuItem> : ''}
+
 
                                         {isStatusSignin ? '' : <>
                                             <MenuItem onClick={handleClose}><Link to={'/signin'}><button>Sign in</button></Link></MenuItem>
                                             <MenuItem onClick={handleClose}><Link to={'/signup'}><button>Sign up</button></Link></MenuItem>
                                         </>}
+                                        {userCurrent?.user?.role === 'ADMIN' ? <MenuItem onClick={handleClose}><Link to={'/admin'}><button>Admin</button></Link></MenuItem> : ''}
 
-                                        <MenuItem onClick={handleClose}><button onClick={() => dispatch(signOut())}>Sign Out</button></MenuItem>
+                                        <MenuItem onClick={handleClose}><button onClick={() => {dispatch(signOut()); navigate('/')}}>Sign Out</button></MenuItem>
                                     </Menu>
                                 </div>
                             </div>

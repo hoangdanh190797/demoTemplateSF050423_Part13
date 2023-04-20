@@ -60,6 +60,8 @@ const AuthSlices = createSlice({
     reducers: {
         signOut: (state) => {
             localStorage.removeItem("accessToken");
+            localStorage.removeItem('isRole');
+            localStorage.removeItem('idUser');
             state.isStatusSignin = false;
             state.userCurrent = {};
         },

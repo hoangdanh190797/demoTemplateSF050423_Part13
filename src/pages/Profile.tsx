@@ -70,19 +70,20 @@ export default function Profile() {
     const handleEditAvatar = () => {
         setStatusEditAvatar(true)
     }
+
     const handleAvatar = (event: any) => {
         const file = event.target.files[0];
         const formData = new FormData();
         formData.append('formFile', file, file.name);
-        // setAvatar(formData.get('formFile') as File);
         dispatch(postAvatarUserEditProfile(formData))
-
+        // setAvatar(formData.get('formFile') as File);
     }
+
     const handleSubmitEditAvatar = () => {
-    //     // setStatusEditAvatar(false)
-    //     // const newProfile = { ...profileUser }
-    //     // newProfile.avatar = avatar;
-    //     // dispatch(postAvatarUserEditProfile(avatar))
+        //     // setStatusEditAvatar(false)
+        //     // const newProfile = { ...profileUser }
+        //     // newProfile.avatar = avatar;
+        //     // dispatch(postAvatarUserEditProfile(avatar))
     }
     return (
         <>

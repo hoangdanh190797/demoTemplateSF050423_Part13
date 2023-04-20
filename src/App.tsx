@@ -38,7 +38,7 @@ function App() {
         <Route path='roomsByLocation/:idLocation' element={<SearchRoomByLocation />} />
       </Route >
       {/* --- */}
-      <Route path='/admin' element={<ProtectedTemplate isAuth={isRole} component={<PageAdmin />} />}>
+      <Route path='admin' element={<ProtectedTemplate isAuth={isRole} component={<PageAdmin />} />}>
           <Route path='userManagement' element={<UserManagement />} />
           <Route path='userManagement/addUserManagement/:idUser' element={<AddUserManagement />} />
           <Route path='locationManagement' element={<LocationManagement />} />
