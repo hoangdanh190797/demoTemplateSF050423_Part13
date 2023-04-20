@@ -13,6 +13,9 @@ const bookingAPI = {
     },
     deleteBookingManagement: (idBookingDelete:any) => {
         return baseAPI.delete(`/dat-phong/${idBookingDelete}`)
+    },
+    getBookingByIdUser:(idUser:any) => {
+        return baseAPI.get(`/dat-phong/lay-theo-nguoi-dung/${idUser}`)
     }
 
 }

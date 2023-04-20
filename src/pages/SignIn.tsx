@@ -103,7 +103,7 @@ export default function SignIn() {
   }
   if (isStatusSignin) {
     setTimeout(() => {
-      dispatch(checkSignInRejected())
+      // dispatch(checkSignInRejected())
       navigate('/');
     }, 3000)
     localStorage.setItem('accessToken', userCurrent.token)

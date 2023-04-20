@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from 'hooks/hooks'
 import { getUserByIdForProfile, putUserEditForProfile, postAvatarUserEditProfile } from 'store/slices/UserSlices'
+import { Outlet } from 'react-router-dom'
 import '../styles/pages/_profile.scss'
 
 export default function Profile() {
@@ -90,7 +91,6 @@ export default function Profile() {
             <div id='profile_'>
                 <div className='profile_content_left'>
                     <h1>Block left</h1>
-
                     <div className='profile_content_info'>
                         <div style={{ display: 'flex', justifyContent: 'center' }}>
                             <img src={profileUser.avatar} alt="" width={100}
@@ -105,14 +105,12 @@ export default function Profile() {
                                 <button type='submit'>Save</button>
                             </form> </> : ""}
                         </div>
-                        <form action="">
-
-                        </form>
-
                         <div className='content_info_button'><button onClick={handleEditAvatar}>Edit</button></div>
                     </div>
                 </div>
                 <div className='profile_content_right'>
+                        
+                    
                     <div>
                         <div>
                             <div className='profile_content_info'>
@@ -125,14 +123,14 @@ export default function Profile() {
                                 </div>
                                 <div className='content_info_button'><button onClick={handleEditName}>Edit</button></div>
                             </div>
-                            {/* --- */}
+                            
                             <div className='profile_content_info'>
                                 <div>
                                     <h3>Email: {profileUser.email}</h3>
                                 </div>
                                 <div className='content_info_button'><button disabled>Edit</button></div>
                             </div>
-                            {/* --- */}
+                            
                             <div className='profile_content_info'>
                                 <div>
                                     <h3>Phone: {profileUser.phone}</h3>
@@ -143,7 +141,7 @@ export default function Profile() {
                                 </div>
                                 <div className='content_info_button'><button onClick={handleEditPhone}>Edit</button></div>
                             </div>
-                            {/* --- */}
+                            
                             <div className='profile_content_info'>
                                 <div>
                                     <h3>Birthday: {profileUser.birthday}</h3>
@@ -156,7 +154,8 @@ export default function Profile() {
                             </div>
 
                         </div>
-                    </div>
+                    </div> 
+                    
                 </div>
             </div>
 

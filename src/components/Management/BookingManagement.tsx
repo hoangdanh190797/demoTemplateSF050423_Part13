@@ -7,10 +7,13 @@ import type { PaginationProps } from 'antd';
 import { Pagination } from 'antd';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
+import { checkDeleteBooking } from '../../store/slices/BookingSlices';
 
 export default function BookingManagement() {
   const dispatch = useAppDispatch();
-  const { isGetListBookingManagement, listBookingManagement } = useAppSelector((state: any) => {
+  const { isGetListBookingManagement, listBookingManagement, isDeleteBookingRejected, isDeleteBookingManagement } = useAppSelector((state: any) => {
     return state.booking
   })
 
@@ -33,9 +36,11 @@ export default function BookingManagement() {
   }, [dispatch]);
 
   const [statusSearch, setStatusSearch] = useState(false)
-
   const handleDeleteBooking = (idBookingDelete: number) => {
     dispatch(deleteBookingManagement(idBookingDelete))
+    setTimeout(() => {
+      dispatch(checkDeleteBooking())
+    }, 3000)
   }
 
   const [nameSearch, setNameSearch] = useState();
@@ -50,6 +55,13 @@ export default function BookingManagement() {
   return (
     <div>
       <div>
+        {/*  */}
+        {isDeleteBookingManagement ?<Stack sx={{ width: '20%' }} spacing={2} style={{position:'absolute', right:'0px'}}>
+              <Alert severity="success">Xóa thành công</Alert>
+            </Stack>: '' }
+        {isDeleteBookingRejected ?<Stack sx={{ width: '20%' }} spacing={2} style={{position:'absolute', right:'0px'}}>
+              <Alert severity="error">Xóa thất bại</Alert>
+            </Stack>: '' }
         <Link to='addAndeditRoomManagement/0'>
           <button>Thêm phòng mới</button>
         </Link>

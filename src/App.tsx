@@ -10,6 +10,7 @@ import HomeTemplate from './template/HomeTemplate';
 import Home from './pages/Home';
 import SignIn from 'pages/SignIn';
 import SignUp from 'pages/SignUp';
+import YourTrip from 'pages/YourTrip';
 import Profile from 'pages/Profile';
 import DetailRoom from 'pages/DetailRoom';
 import SearchRoomByLocation from 'pages/SearchRoomByLocation';
@@ -32,13 +33,14 @@ function App() {
       <Route path='/' element={<HomeTemplate />}>
         <Route index element={<Home />} />
         <Route path='profile' element={<Profile />} />
+        <Route path='yourtrip' element={<YourTrip />} />
         <Route path='signin' element={<SignIn />} />
         <Route path='signup' element={<SignUp />} />
         <Route path='detailRoom/:idRoom' element={<DetailRoom />} />
         <Route path='roomsByLocation/:idLocation' element={<SearchRoomByLocation />} />
       </Route >
       {/* --- */}
-      <Route path='admin' element={<ProtectedTemplate isAuth={isRole} component={<PageAdmin />} />}>
+      <Route path='/admin' element={<ProtectedTemplate isAuth={isRole} component={<PageAdmin />} />}>
           <Route path='userManagement' element={<UserManagement />} />
           <Route path='userManagement/addUserManagement/:idUser' element={<AddUserManagement />} />
           <Route path='locationManagement' element={<LocationManagement />} />

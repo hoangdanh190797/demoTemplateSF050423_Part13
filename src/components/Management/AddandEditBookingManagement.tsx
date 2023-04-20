@@ -26,13 +26,10 @@ export default function AddandEditBookingManagement() {
     const dateFormat = 'DD-MM-YYYY';
     const customFormat: DatePickerProps['format'] = (value) =>
         `custom format: ${value.format(dateFormat)}`;
-
-
     const dispatch = useAppDispatch()
     let { idBooking } = useParams<any>();
     let newID: any = idBooking;
     let idBookingNum = parseInt(newID)
-
     localStorage.setItem('idRoomEdit', newID);
 
     useEffect(() => {
@@ -42,9 +39,6 @@ export default function AddandEditBookingManagement() {
     }, [dispatch])
 
     //Chỉ cần nạp data vào lại roomDetail vẫn render thông tin cần!
-    const { isGetRoomDetail, roomDetail, isPutRoomEditManagement, roomEditManagement } = useAppSelector((state: any) => {
-        return state.rooms
-    })
     const { isGetByIdBookingManagement, infoBooking } = useAppSelector((state: any) => {
         return state.booking
     })
@@ -60,7 +54,6 @@ export default function AddandEditBookingManagement() {
 
     const [values, setValues] = useState<any>(initialValues)
 
-
     useEffect(() => {
         if (isGetByIdBookingManagement) {
             setValues(infoBooking)
@@ -70,8 +63,6 @@ export default function AddandEditBookingManagement() {
 
         // let newNgayDi = dayjs(new Date(values.ngayDi), dateFormat)
         // setValues({...values, ngayDi: newNgayDi})
-
-
     }, [isGetByIdBookingManagement, infoBooking])
 
     const handleMayGiat = (checked: boolean) => {
@@ -81,8 +72,6 @@ export default function AddandEditBookingManagement() {
         })
         console.log(checked);
     }
-
-
 
     const handleInputChange = (event: any) => {
         const { name, value } = event.target;
@@ -104,9 +93,7 @@ export default function AddandEditBookingManagement() {
     }
 
     const [statusEditAvatar, setStatusEditAvatar] = useState(false)
-    const handleEditAvatar = () => {
-        setStatusEditAvatar(true)
-    }
+    const handleEditAvatar = () => {setStatusEditAvatar(true)}
     const handleSubmitEditAvatar = () => { }
     const handleAvatar = (event: any) => {
         const file = event.target.files[0];
@@ -116,25 +103,24 @@ export default function AddandEditBookingManagement() {
         dispatch(postImageRoomManagement(formData))
     }
 
+    // const [dateFrom, setDateFrom] = useState<Dayjs | null>(null);
+    // const [dateTo, setDateTo] = useState<Dayjs | null>(null);
 
-    const [dateFrom, setDateFrom] = useState<Dayjs | null>(null);
-    const [dateTo, setDateTo] = useState<Dayjs | null>(null);
+    // const handleDateArray = (dates: null | (Dayjs | null)[], dateStrings: string[]) => {
+    //     if (dates) {
+    //         console.log('From: ', dates[0], ', to: ', dates[1]);
+    //         console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
 
-    const handleDateArray = (dates: null | (Dayjs | null)[], dateStrings: string[]) => {
-        if (dates) {
-            console.log('From: ', dates[0], ', to: ', dates[1]);
-            console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
+    //         localStorage.setItem('dateFrom', dateStrings[0])
+    //         localStorage.setItem('dateTo', dateStrings[1])
 
-            localStorage.setItem('dateFrom', dateStrings[0])
-            localStorage.setItem('dateTo', dateStrings[1])
+    //         setDateFrom(dates[0]);
+    //         setDateTo(dates[1]);
 
-            setDateFrom(dates[0]);
-            setDateTo(dates[1]);
-
-        } else {
-            console.log('Clear');
-        }
-    };
+    //     } else {
+    //         console.log('Clear');
+    //     }
+    // };
 
 
     // console.log(NgayDenFormat)

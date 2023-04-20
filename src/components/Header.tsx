@@ -37,24 +37,26 @@ export default function Header() {
         user: {
             name: String,
             avatar: String,
-            role: String,
+            role: String | null,
         },
     }
 
-    const [dataN, setDataN] = useState<UserCurrent | null | any>(null);
-    const [renderADMIN, setRenderADMIN] = useState<boolean>(false)
-
-    
+    const [roleUser, setRoleUser] = useState()
 
     useEffect(() => {
-        setDataN(userCurrent)
-        console.log(dataN);
-        
-        if (isStatusSignin) { 
-        // setDataN(userCurrent)
-            if (userCurrent?.user?.role === 'ADMIN') { setRenderADMIN(true) } else{ setRenderADMIN(false) }
-         }
-    }, [setDataN, setRenderADMIN])
+        setRoleUser(userCurrent?.user?.role)
+    })
+
+    // const [dataN, setDataN] = useState<UserCurrent | null | any>(null);
+    // const [renderADMIN, setRenderADMIN] = useState<boolean>(false)
+
+    // useEffect(() => {
+    //     setDataN(userCurrent)        
+    //     if (isStatusSignin) { 
+    //     // setDataN(userCurrent)
+    //         if (userCurrent?.user?.role === 'ADMIN') { setRenderADMIN(true) } else{ setRenderADMIN(false) }
+    //      }
+    // }, [setDataN, setRenderADMIN])
     return (
         <>
             <div id='header_'>
@@ -99,7 +101,7 @@ export default function Header() {
                                         <div>
                                             <img src={threesf} alt="" width={25} />
                                         </div>
-                                        
+
                                         {isStatusSignin ? <div>
                                             <img src={userCurrent?.user?.avatar} alt='ImageER' width={25} />
                                         </div> : <div>
@@ -116,16 +118,35 @@ export default function Header() {
                                             'aria-labelledby': 'basic-button',
                                         }}
                                     >
-                                        <MenuItem onClick={handleClose}><Link to={'/profile'}>Profile</Link></MenuItem>
-
-
-                                        {isStatusSignin ? '' : <>
-                                            <MenuItem onClick={handleClose}><Link to={'/signin'}><button>Sign in</button></Link></MenuItem>
-                                            <MenuItem onClick={handleClose}><Link to={'/signup'}><button>Sign up</button></Link></MenuItem>
-                                        </>}
-                                        {userCurrent?.user?.role === 'ADMIN' ? <MenuItem onClick={handleClose}><Link to={'/admin'}><button>Admin</button></Link></MenuItem> : ''}
-
-                                        <MenuItem onClick={handleClose}><button onClick={() => {dispatch(signOut()); navigate('/')}}>Sign Out</button></MenuItem>
+                                        <>
+                                            {isStatusSignin ? 
+                                            <>
+                                            <MenuItem onClick={handleClose}>
+                                                <Link to={'/profile'}>Profile</Link>
+                                            </MenuItem>
+                                            <MenuItem onClick={handleClose}>
+                                                <Link to={'/yourtrip'}>Your trip</Link>
+                                            </MenuItem></> : 
+                                            <>
+                                                <MenuItem onClick={handleClose}>
+                                                    <Link to={'/signin'}>Sign in</Link>
+                                                </MenuItem>
+                                                <MenuItem onClick={handleClose}>
+                                                    <Link to={'/signup'}>Sign up</Link>
+                                                </MenuItem>
+                                            </>}
+                                            {roleUser === 'ADMIN' ? 
+                                            <>
+                                            <MenuItem onClick={handleClose}>
+                                                <Link to={'/admin'}>Admin</Link>
+                                            </MenuItem> </> :
+                                            ''}
+                                            {
+                                            <MenuItem onClick={handleClose}>
+                                                <button onClick={() => { dispatch(signOut()); navigate('/') }}>Sign Out</button>
+                                            </MenuItem>
+                                            }
+                                        </>
                                     </Menu>
                                 </div>
                             </div>

@@ -9,7 +9,11 @@ const initialState = {
   //
   isPutEditBookingManagement: false,
   //
-  isDeleteBookingManagement: true,
+  isDeleteBookingRejected: false,
+  isDeleteBookingManagement: false,
+  //
+  isGetBookingByIdUser: false,
+  infoBookingByIdUser: [],
 }
 
 export const getListBookingManagement = createAsyncThunk('booking/getListBookingManagement', async () => {
@@ -28,11 +32,20 @@ export const deleteBookingManagement = createAsyncThunk('booking/deleteBookingMa
   const response = await bookingAPI.deleteBookingManagement(idBookingDelete)
   return response.data.content
 })
+export const getBookingByIdUser = createAsyncThunk('booking/getBookingByIdUser', async (idUser: any) => {
+  const response = await bookingAPI.getBookingByIdUser(idUser)
+  return response.data.content
+})
 
 const BookingSlices = createSlice({
   name: "booking",
   initialState,
-  reducers: {},
+  reducers: {
+    checkDeleteBooking:(state) => {
+      state.isDeleteBookingManagement = false;
+      state.isDeleteBookingRejected = false;
+    }
+  },
   extraReducers(builder) {
     builder
       .addCase(getListBookingManagement.pending, (state) => { })
@@ -60,10 +73,19 @@ const BookingSlices = createSlice({
       .addCase(deleteBookingManagement.fulfilled, (state, action) => {
         state.isDeleteBookingManagement = true;
       })
-      .addCase(deleteBookingManagement.rejected, (state, action) => { })
+      .addCase(deleteBookingManagement.rejected, (state, action) => {
+          state.isDeleteBookingRejected = true;
+       })
+      //--- --- ---
+      .addCase(getBookingByIdUser.pending, (state) => { })
+      .addCase(getBookingByIdUser.fulfilled, (state, action) => {
+        state.isGetBookingByIdUser = true;
+        state.infoBookingByIdUser = action.payload
+      })
+      .addCase(getBookingByIdUser.rejected, (state, action) => { })
   },
 });
 
-export const { } = BookingSlices.actions
+export const { checkDeleteBooking } = BookingSlices.actions
 
 export default BookingSlices.reducer

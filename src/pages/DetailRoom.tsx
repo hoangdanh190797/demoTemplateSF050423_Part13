@@ -66,22 +66,32 @@ export default function DetailRoom() {
     const handleComment = (event: any) => {
         setContentComment(event.target.value)
     }
+    const { isStatusSignin } = useAppSelector((state: any) => {
+        return state.auth
+    })
+
 
     const handleSubmitComment = (event: any) => {
         event.preventDefault();
-        const idUser = localStorage.getItem('idUser')
-        const date = dayjs();
-        let day = date.format();
-        dispatch(
-            postCommentsByIDRoom({
-                'id': '0',
-                'maPhong': `${idRoom}`,
-                'maNguoiBinhLuan': `${idUser}`,
-                'ngayBinhLuan': `${day}`,
-                'noiDung': `${contentComment}`,
-                'saoBinhLuan': '0'
-            }));
-        dispatch(getCommentsByIDRoom(idRoom));
+        if(isStatusSignin){
+            const idUser = localStorage.getItem('idUser')
+            const date = dayjs();
+            let day = date.format();
+            dispatch(
+                postCommentsByIDRoom({
+                    'id': '0',
+                    'maPhong': `${idRoom}`,
+                    'maNguoiBinhLuan': `${idUser}`,
+                    'ngayBinhLuan': `${day}`,
+                    'noiDung': `${contentComment}`,
+                    'saoBinhLuan': '0'
+                }));
+            dispatch(getCommentsByIDRoom(idRoom));
+        }
+        else{
+            console.log('Vui lòng đăng nhập')
+        }
+
     }
 
     // Booking Room
@@ -137,21 +147,24 @@ export default function DetailRoom() {
     const firstDay = localStorage.getItem('dateNeed')
     console.log(firstDay);
     const [count, setCount] = useState(1);
-
-
-
-    const postInfoBooking = () => {
-        const idUser = localStorage.getItem('idUser')
-        dispatch(postRoomBooking({
-            "id": "0",
-            "maPhong": `${idRoom}`,
-            "ngayDen": dateFrom,
-            "ngayDi": dateTo,
-            "soLuongKhach": `${count}`,
-            "maNguoiDung": `${idUser}`
-        }));
-     };
     
+    const postInfoBooking = () => {
+        if(isStatusSignin){
+            const idUser = localStorage.getItem('idUser')
+            dispatch(postRoomBooking({
+                "id": "0",
+                "maPhong": `${idRoom}`,
+                "ngayDen": dateFrom,
+                "ngayDi": dateTo,
+                "soLuongKhach": `${count}`,
+                "maNguoiDung": `${idUser}`
+            }));
+        }
+        else{
+            console.log('Vui lòng đăng nhập')
+        }
+    };
+
 
     return (
         <>
