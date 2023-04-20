@@ -10,11 +10,14 @@ import { isEmpty } from 'lodash';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 
+import { checkSignUpRejected, checkSignUpFulfilled } from '../store/slices/AuthSlices'
+import { Spin } from 'antd';
+
 export default function SignUp() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const { isStatusSignin, userCurrent, isError, error, isStatusSignup, isStatusSignupRejected } = useAppSelector((state: any) => {
+  const { isStatusSignin, userCurrent, isError, error, } = useAppSelector((state: any) => {
     return state.auth;
   })
 
@@ -77,12 +80,6 @@ export default function SignUp() {
   const handleRole = (event: any) => {
     setRole(event.target.value)
   }
-
-  const [SttSignUp, setSttSignUp] = useState(isStatusSignup)
-  const [SttSignUpRejected, setSttSignUpRejected] = useState(isStatusSignupRejected)
-
- 
-
   // useEffect(() => {
   //   // if(SttSignUp){
   //   //   const timerSignUp = setTimeout(() => {
@@ -100,20 +97,11 @@ export default function SignUp() {
   //   //   return () => clearTimeout(timerSignUpReject);
   //   // };
   // }, [SttSignUpRejected])
-  useEffect(() => {
-    if (SttSignUpRejected) {
-      const timer = setTimeout(() => {
-        setSttSignUpRejected(false);
-        // history.push("/home");
-      }, 3000);
-      return () => clearTimeout(timer);
-    }
-  },[SttSignUpRejected]);
-
+  const [isloading, setIsLoading] = useState(false)
   const handleSubmit = (event: any) => {
-
     event.preventDefault();
     //Check validation in here
+    
     const validationErrors = ValidateSignupForm(formData);
     let hasErrors = false;
     for (const key in validationErrors) {
@@ -126,35 +114,91 @@ export default function SignUp() {
     if (!hasErrors) {
       // submit the form
       dispatch(postUserSignup({ ...formData, id: '0', role: 'USER', }))
-
+      setIsLoading(true)
+      // setCheckSignUp(isSignupRejected)
     }
-    // if (Object.keys(validationErrors).length === 0) {
-    // }
-    // console.log(formData)
   }
-  
+  //Bị kẹt chỗ này là vầy nè: ban đầu nó lấy từ state luôn
+  const { isStatusSignup, isSignupRejected } = useAppSelector((state: any) => { return state.auth })
+  console.log(isSignupRejected)
+  // console.log(isStatusSignup)
+  const [checkSignUp, setCheckSignUp] = useState<any>()
+  // console.log(checkSignUp)
+
+  const [flag, setFlag] = useState(isSignupRejected)
+  console.log(flag)
+
+  useEffect(() => {
+    if(isStatusSignup){
+      setTimeout(() => {
+        setIsLoading(false)
+        dispatch(checkSignUpFulfilled())
+        navigate('/signin')
+      },3000)
+    }
+    if(isSignupRejected)
+    {
+      setTimeout(() =>{
+          setIsLoading(false)
+         dispatch(checkSignUpRejected())
+      },3000)
+    }
+  })
+  console.log(checkSignUp)
+  // useEffect(() => {
+  //   setCheckSignUp(isSignupRejected)
+  // })
+
+  // let checkSignUpAgain = isSignupRejected
+
+  // useEffect(() => {
+  //   if (checkSignUp) {
+  //     const timer =
+  //       setTimeout(() => {
+  //         setCheckSignUp(false);
+  //       }, 4000);
+  //     return () => clearTimeout(timer);
+  //   }
+  // }, [setTimeout, setCheckSignUp])
+
+  // useEffect(() => {
+  //   if (SttSignUpRejected) {
+  //     const timer =
+  //       setTimeout(() => {
+  //         setSttSignUpRejected(false);
+  //         //  history.push("/home");
+  //       }, 3000);
+  //     return () => clearTimeout(timer);
+  //   }
+  // }, [SttSignUpRejected, setSttSignUpRejected]);
 
   // useEffect(() => {
   //   setMessagesError(error)
   // })
   //useEffect sp get Error
 
-  if (isStatusSignin) {
-    navigate('/');
-    localStorage.setItem('accessToken', JSON.stringify(userCurrent.token))
-  }
+  // if (isStatusSignin) {
+  //   navigate('/');
+  //   localStorage.setItem('accessToken', JSON.stringify(userCurrent.token))
+  // }
+  // const [SttSignUpRejected, setSttSignUpRejected] = useState(isStatusSignupRejected)
+  // if(SttSignUpRejected){
+  //   setTimeout(() => {
+  //     setSttSignUpRejected(false);
+  //   }, 3000)
+  // }
 
   return (
     <div id='signup_pages'>
       <div className="signup_container">
         <div className="signup_box">
           <div className="signup_content">
-            {/* {SttSignUp ?<Stack sx={{ width: '20%' }} spacing={2} style={{position:'absolute', right:'0px'}}>
+            {isStatusSignup ?<Stack sx={{ width: '20%' }} spacing={2} style={{position:'absolute', right:'0px'}}>
               <Alert severity="success">Đăng ký thành công</Alert>
-            </Stack>: '' } */}
-            {SttSignUpRejected ? <Stack sx={{ width: '20%' }} spacing={2} style={{position:'absolute', right:'0px'}}>
+            </Stack>: '' }
+            {isSignupRejected ? <Stack sx={{ width: '20%' }} spacing={2} style={{ position: 'absolute', right: '0px' }}>
               <Alert severity="error">Đăng ký thất bại</Alert>
-            </Stack> : '' }
+            </Stack> : ''}
             <h1>Sign up</h1>
             <p>
               <Link to={'/signup'}>
@@ -242,7 +286,14 @@ export default function SignUp() {
               </div>
 
               <div className='btn_'>
-                <button type='submit'>Sign up</button>
+                <button type='submit'>Sign up
+                {isloading ? <Spin tip=" " size="large">
+                      <div style={{
+                        backgroundColor: 'rgba(0, 0, 0, 0.05)',
+                        borderRadius: '4px',
+                      }} />
+                    </Spin > : ""}
+                </button>
               </div>
 
             </form>

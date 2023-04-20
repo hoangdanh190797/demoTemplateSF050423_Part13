@@ -2,12 +2,15 @@ import React from 'react'
 import { useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 import { useParams, useNavigate, Link, NavLink } from "react-router-dom";
-import { postUserSignin } from 'store/slices/AuthSlices';
+import { postUserSignin, checkSignInRejected } from 'store/slices/AuthSlices';
 import { getLocation } from 'store/slices/LocationSlices';
 import '../styles/pages/_signin.scss';
 import { Spin } from 'antd';
 
 import validator from 'validator';
+
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
 
 export default function SignIn() {
 
@@ -47,7 +50,7 @@ export default function SignIn() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const { isStatusSignin, userCurrent, isError, error, isSignIn } = useAppSelector((state: any) => {
+  const { isStatusSignin, userCurrent, isError, error } = useAppSelector((state: any) => {
     return state.auth;
   })
 
@@ -80,15 +83,29 @@ export default function SignIn() {
       return;
     }
     dispatch(postUserSignin({ email, password }))
-    setLoading(true)
+    // setLoading(true)
   }
+
+  const { isSignInpRejected } = useAppSelector((state: any) => {
+    return state.auth;
+  })
+  console.log(isSignInpRejected)
+
   useEffect(() => {
     setMessagesError(error)
-  })
+
+  }, [setMessagesError, setLoading])
+
+  if (isSignInpRejected) {
+    setTimeout(() => {
+      dispatch(checkSignInRejected())
+      console.log(isSignInpRejected)
+    }, 3000)
+  }
   if (isStatusSignin) {
     setTimeout(() => {
+      dispatch(checkSignInRejected())
       navigate('/');
-      setLoading(false)
     }, 3000)
     localStorage.setItem('accessToken', userCurrent.token)
     localStorage.setItem('isRole', userCurrent.user.role)
@@ -102,11 +119,16 @@ export default function SignIn() {
   }
   return (
     <>
-
       <div id='signin_pages'>
         <div className="signin_container">
           <div className="signin_box">
             <div className="signin_content">
+            {isSignInpRejected ?<Stack sx={{ width: '20%' }} spacing={2} style={{position:'absolute', right:'0px'}}>
+              <Alert severity="error">Đăng nhập thất bại</Alert>
+            </Stack>: '' }
+            {isStatusSignin ? <Stack sx={{ width: '20%' }} spacing={2} style={{ position: 'absolute', right: '0px' }}>
+              <Alert severity="success">Đăng nhập thành công</Alert>
+            </Stack> : ''}
               <h1>Sign in</h1>
               <p>
                 <Link to={'/signup'}>
@@ -133,14 +155,14 @@ export default function SignIn() {
                   />
                 </fieldset>
                 <div>
-                  {/* {isError ? <p>{error.data.content}</p> : ""} */}
+                  {isError ? <p>{error.data.content}</p> : ""}
                   {errors.map((error) => (
                     <div key={error}>{error}</div>
                   ))}
                 </div>
                 <div className='btn_'>
                   <button type='submit' >Sign in
-                    {loading ? <Spin tip=" " size="large">
+                    {isSignInpRejected ? <Spin tip=" " size="large">
                       <div style={{
                         backgroundColor: 'rgba(0, 0, 0, 0.05)',
                         borderRadius: '4px',
@@ -149,13 +171,6 @@ export default function SignIn() {
                   </button>
                 </div>
               </form>
-
-
-
-
-
-
-
             </div>
           </div>
         </div>

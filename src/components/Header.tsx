@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import logoPNG from '../assets/images/logoPNG.png';
 import global from '../assets/images/global.svg'
 import threesf from '../assets/images/threesf.svg'
@@ -11,6 +11,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 
 import '../styles/components/_header.scss'
+import { set } from 'lodash';
 
 export default function Header() {
     const dispatch = useAppDispatch();
@@ -22,6 +23,32 @@ export default function Header() {
     const handleClose = () => {
         setAnchorEl(null);
     };
+    const { isStatusSignin, userCurrent } = useAppSelector((state: any) => {
+        return state.auth
+    })
+
+    // if (isStatusSignin) {
+    //     const { avatar, role } = userCurrent.user;
+    // }
+
+    interface DataN {
+        hinhAnh: any,
+    }
+
+    const [dataN, setDataN] = useState<any | null>(null);
+
+    if (isStatusSignin) { setDataN(userCurrent) }
+
+
+
+    const [renderADMIN, setRenderADMIN] = useState(false)
+
+    useEffect(() => {
+
+        // if (dataN.user.role === 'ADMIN') {
+        //     setRenderADMIN(true)
+        // }
+    }, [])
 
     return (
         <>
@@ -70,6 +97,10 @@ export default function Header() {
                                         <div>
                                             <img src={person} alt="" width={25} />
                                         </div>
+                                        {/* {isStatusSignin ? <div>
+                                            <img src={dataN.user.avatar} alt='ImageER' width={25} />
+                                        </div> : ''} */}
+
                                     </Button>
                                     <Menu
                                         id="basic-menu"
@@ -81,9 +112,13 @@ export default function Header() {
                                         }}
                                     >
                                         <MenuItem onClick={handleClose}><Link to={'/profile'}>Profile</Link></MenuItem>
-                                        <MenuItem onClick={handleClose}>My account</MenuItem>
-                                        <MenuItem onClick={handleClose}><Link to={'/signin'}><button>Sign in</button></Link></MenuItem>
-                                        <MenuItem onClick={handleClose}><Link to={'/signup'}><button>Sign up</button></Link></MenuItem>
+                                        {renderADMIN ? <MenuItem onClick={handleClose}>My account</MenuItem> : ''}
+
+                                        {isStatusSignin ? '' : <>
+                                            <MenuItem onClick={handleClose}><Link to={'/signin'}><button>Sign in</button></Link></MenuItem>
+                                            <MenuItem onClick={handleClose}><Link to={'/signup'}><button>Sign up</button></Link></MenuItem>
+                                        </>}
+
                                         <MenuItem onClick={handleClose}><button onClick={() => dispatch(signOut())}>Sign Out</button></MenuItem>
                                     </Menu>
                                 </div>

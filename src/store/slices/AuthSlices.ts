@@ -9,13 +9,14 @@ declare interface initialState {
     userCurrent: any,
     roleUser: string,
     //
+    isSignInpRejected?: boolean,
     isStatusSignup: boolean,
     //use userCurrent agin
     //
     isError: boolean,
     error: any,
     //
-    isStatusSignupRejected:boolean
+    isSignupRejected?:boolean
 }
 
 const initialState: initialState = {
@@ -25,12 +26,13 @@ const initialState: initialState = {
     userCurrent: {},
     roleUser: '',
     //
+    isSignInpRejected: undefined,
     isStatusSignup: false,
     //
     isError: false,
     error: {},
     //
-    isStatusSignupRejected: false
+    isSignupRejected: undefined,
 }
 
 export const postUserSignin = createAsyncThunk('auth/postSignin', async (user: any, thunkAPI) => {
@@ -61,6 +63,15 @@ const AuthSlices = createSlice({
             state.isStatusSignin = false;
             state.userCurrent = {};
         },
+        checkSignUpRejected: (state) => {
+            state.isSignupRejected = false
+        },
+        checkSignUpFulfilled: (state) => {
+            state.isStatusSignup = false
+        },
+        checkSignInRejected: (state) => {
+            state.isSignInpRejected = false
+        }
     },
     extraReducers(builder) {
         builder
@@ -71,11 +82,14 @@ const AuthSlices = createSlice({
             .addCase(postUserSignin.fulfilled, (state, action) => {
                 state.isStatusSignin = true;
                 state.userCurrent = action.payload;
+                state.isSignInpRejected = true;
+
             })
             .addCase(postUserSignin.rejected, (state, action) => {
                 state.isStatusSignin = false;
                 state.isError = true;
-                state.error = action.payload
+                state.error = action.payload;
+                state.isSignInpRejected = true;
             })
             //
             .addCase(postUserSignup.pending, (state) => { })
@@ -84,11 +98,11 @@ const AuthSlices = createSlice({
                 state.userCurrent = action.payload;
             })
             .addCase(postUserSignup.rejected, (state, action) => { 
-                state.isStatusSignupRejected = true;
+                state.isSignupRejected = true;
             })
     },
 });
 
-export const { signOut } = AuthSlices.actions
+export const { signOut, checkSignInRejected, checkSignUpRejected, checkSignUpFulfilled } = AuthSlices.actions
 
 export default AuthSlices.reducer
