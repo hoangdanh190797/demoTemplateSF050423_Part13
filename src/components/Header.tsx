@@ -118,7 +118,7 @@ export default function Header() {
                                             'aria-labelledby': 'basic-button',
                                         }}
                                     >
-                                        <>
+                                        <div>
                                             {isStatusSignin ? 
                                             <>
                                             <MenuItem onClick={handleClose}>
@@ -127,26 +127,26 @@ export default function Header() {
                                             <MenuItem onClick={handleClose}>
                                                 <Link to={'/yourtrip'}>Your trip</Link>
                                             </MenuItem></> : 
-                                            <>
+                                            <div>
                                                 <MenuItem onClick={handleClose}>
                                                     <Link to={'/signin'}>Sign in</Link>
                                                 </MenuItem>
                                                 <MenuItem onClick={handleClose}>
                                                     <Link to={'/signup'}>Sign up</Link>
                                                 </MenuItem>
-                                            </>}
+                                            </div>}
                                             {roleUser === 'ADMIN' ? 
-                                            <>
+                                            <div>
                                             <MenuItem onClick={handleClose}>
                                                 <Link to={'/admin'}>Admin</Link>
-                                            </MenuItem> </> :
+                                            </MenuItem> </div> :
                                             ''}
                                             {
                                             <MenuItem onClick={handleClose}>
                                                 <button onClick={() => { dispatch(signOut()); navigate('/') }}>Sign Out</button>
                                             </MenuItem>
                                             }
-                                        </>
+                                        </div>
                                     </Menu>
                                 </div>
                             </div>
