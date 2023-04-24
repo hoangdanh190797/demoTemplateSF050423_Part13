@@ -62,6 +62,9 @@ const AuthSlices = createSlice({
             localStorage.removeItem("accessToken");
             localStorage.removeItem('isRole');
             localStorage.removeItem('idUser');
+            localStorage.removeItem('dateTo');
+            localStorage.removeItem('dateFrom');
+            localStorage.removeItem('idRoomEdit');
             state.isStatusSignin = false;
             state.userCurrent = {};
         },

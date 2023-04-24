@@ -108,6 +108,7 @@ export default function SignIn() {
     }, 3000)
     localStorage.setItem('accessToken', userCurrent.token)
     localStorage.setItem('isRole', userCurrent.user.role)
+    localStorage.setItem('idUser', userCurrent.user.id)
   }
   const errors :any = [];
 
@@ -124,10 +125,10 @@ export default function SignIn() {
         <div className="signin_container">
           <div className="signin_box">
             <div className="signin_content">
-            {isSignInpRejected ?<Stack sx={{ width: '20%' }} spacing={2} style={{position:'absolute', right:'0px'}}>
+            {isSignInpRejected ?<Stack sx={{ width: '32%' }} spacing={2} style={{position:'absolute', right:'0px'}}>
               <Alert severity="error">Đăng nhập thất bại</Alert>
             </Stack>: '' }
-            {isStatusSignin ? <Stack sx={{ width: '20%' }} spacing={2} style={{ position: 'absolute', right: '0px' }}>
+            {isStatusSignin ? <Stack sx={{ width: '32%' }} spacing={2} style={{ position: 'absolute', right: '0px' }}>
               <Alert severity="success">Đăng nhập thành công</Alert>
             </Stack> : ''}
               <h1>Sign in</h1>

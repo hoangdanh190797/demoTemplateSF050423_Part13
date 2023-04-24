@@ -56,10 +56,10 @@ export default function BookingManagement() {
     <div>
       <div>
         {/*  */}
-        {isDeleteBookingManagement ?<Stack sx={{ width: '20%' }} spacing={2} style={{position:'absolute', right:'0px'}}>
+        {isDeleteBookingManagement ?<Stack sx={{ width: '32%' }} spacing={2} style={{position:'absolute', right:'0px'}}>
               <Alert severity="success">Xóa thành công</Alert>
             </Stack>: '' }
-        {isDeleteBookingRejected ?<Stack sx={{ width: '20%' }} spacing={2} style={{position:'absolute', right:'0px'}}>
+        {isDeleteBookingRejected ?<Stack sx={{ width: '32%' }} spacing={2} style={{position:'absolute', right:'0px'}}>
               <Alert severity="error">Xóa thất bại</Alert>
             </Stack>: '' }
         <Link to='addAndeditRoomManagement/0'>

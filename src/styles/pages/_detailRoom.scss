@@ -1,0 +1,87 @@
+#detailRoom_{
+    .detailRoom_title{
+        font-size: 24px;
+        padding-left: 20px;
+        font-weight: 600;
+        text-align: left;
+    }
+    .detailRoom_img{
+        width: 100%;
+        padding: 0 20px;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+    
+    // display: flex;
+    // flex-direction: row;
+    .detailRoom_content{
+        display: flex;
+        .detailRoom_info{
+            width: 60%;
+            .detailRoom_infoBase{
+                font-size: large;
+                text-align: left;
+                font-weight: 500;
+                padding-left: 20px;
+            }
+            .detailRoom_contentInfo{
+                text-align: justify;
+                padding-left: 20px;
+            }
+            .detailRoom_convenient{
+                display: flex;
+                margin: 0 60px;
+                justify-content: space-between;
+                .convenient_left{
+                    .convient_icon{
+                        display: flex;
+                        img{
+                            width: 30px;
+                            height: 30px;
+                        }
+                    }
+                }
+                .convenient_right{
+                    .convient_icon{
+                        display: flex;
+                        img{
+                            width: 30px;
+                            height: 30px;
+                        }
+                    }
+                }
+            }
+        }
+        .detailRoom_booking{
+            margin: 0 auto;
+            width: 30%;
+            .detailRoom_infoBooking{
+                .detailRoom_price{
+                    font-size: 20px;
+                    text-align: left;
+                    margin-bottom: 20px;
+                }
+                .detailRoom_datePicker{
+                    width: 100%;
+                    margin-bottom: 20px;
+                }
+                .detailRoom_day{
+                    margin-bottom: 20px;
+                    .detailRoom_countDay{
+                        display: flex;
+                        justify-content: space-between;
+                    }
+                }
+                .detailRoom_btnBooking{
+                    width: 100%;
+                    height: 40px;
+                    border-radius: 0.5rem;
+                    background-color: #fc4e71;
+
+                }
+            }
+        }
+
+    }
+
+}

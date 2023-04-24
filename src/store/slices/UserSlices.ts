@@ -4,6 +4,8 @@ import userAPI from 'services/userAPI'
 const initialState = {
     isGetProfileUser: false,
     profileUser: {},
+    newProfileUser:{},
+    isPosAvatarFulfulled: false,
     // --- --- ---
     isGetListUserManagement: false,
     listUserManagement: [],
@@ -47,7 +49,14 @@ export const getUserSearchManagement = createAsyncThunk('user/getUserSearchManag
 const UserSlices = createSlice({
     name: "user",
     initialState,
-    reducers: {},
+    reducers: {
+        getInfoUserAfterUpAvt: ( state ) => {
+            state.newProfileUser = state.profileUser
+        },
+        checkPostAvt: (state) => {
+            state.isPosAvatarFulfulled = false
+        }
+    },
     extraReducers(builder) {
         builder
             .addCase(getUserByIdForProfile.pending, (state) => { })
@@ -65,6 +74,7 @@ const UserSlices = createSlice({
             //--- --- ---
             .addCase(postAvatarUserEditProfile.pending, (state) => { })
             .addCase(postAvatarUserEditProfile.fulfilled, (state, action) => {
+                state.isPosAvatarFulfulled = true;
                 state.profileUser = action.payload
             })
             .addCase(postAvatarUserEditProfile.rejected, (state, action) => { })
@@ -96,6 +106,6 @@ const UserSlices = createSlice({
     },
 });
 
-export const { } = UserSlices.actions
+export const { getInfoUserAfterUpAvt, checkPostAvt } = UserSlices.actions
 
 export default UserSlices.reducer

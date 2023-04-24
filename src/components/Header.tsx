@@ -9,7 +9,8 @@ import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-
+import {getInfoUserAfterUpAvt} from '../store/slices/UserSlices'
+import {checkPostAvt, getUserByIdForProfile} from '../store/slices/UserSlices'
 import '../styles/components/_header.scss'
 import { set } from 'lodash';
 
@@ -25,27 +26,43 @@ export default function Header() {
     const handleClose = () => {
         setAnchorEl(null);
     };
+
     const { isStatusSignin, userCurrent } = useAppSelector((state: any) => {
         return state.auth
     })
+    const { isPosAvatarFulfulled, newProfileUser, profileUser } = useAppSelector((state: any) => {
+        return state.user
+    })
 
+    useEffect(() => {
+        let idUser = localStorage.getItem('idUser')
+        
+        if(isPosAvatarFulfulled){
+            dispatch(getUserByIdForProfile(idUser))
+        }
+        // dispatch(checkPostAvt())
+        dispatch(getInfoUserAfterUpAvt())
+    }, [dispatch])
+
+    console.log(profileUser)
+    let roleUser = localStorage.getItem('isRole')
     // if (isStatusSignin) {
     //     const { avatar, role } = userCurrent.user;
     // }
 
-    interface UserCurrent {
-        user: {
-            name: String,
-            avatar: String,
-            role: String | null,
-        },
-    }
+    // interface UserCurrent {
+    //     user: {
+    //         name: String,
+    //         avatar: String,
+    //         role: String | null,
+    //     },
+    // }
 
-    const [roleUser, setRoleUser] = useState()
+    // const [roleUser, setRoleUser] = useState()
 
-    useEffect(() => {
-        setRoleUser(userCurrent?.user?.role)
-    })
+    // useEffect(() => {
+    //     setRoleUser(userCurrent?.user?.role)
+    // },[setRoleUser])
 
     // const [dataN, setDataN] = useState<UserCurrent | null | any>(null);
     // const [renderADMIN, setRenderADMIN] = useState<boolean>(false)
@@ -57,6 +74,8 @@ export default function Header() {
     //         if (userCurrent?.user?.role === 'ADMIN') { setRenderADMIN(true) } else{ setRenderADMIN(false) }
     //      }
     // }, [setDataN, setRenderADMIN])
+
+
     return (
         <>
             <div id='header_'>
@@ -102,11 +121,17 @@ export default function Header() {
                                             <img src={threesf} alt="" width={25} />
                                         </div>
 
-                                        {isStatusSignin ? <div>
-                                            <img src={userCurrent?.user?.avatar} alt='ImageER' width={25} />
-                                        </div> : <div>
-                                            <img src={person} alt="" width={25} />
+                                        {isStatusSignin ?
+                                        <div>
+                                            {isPosAvatarFulfulled ?  <img src={profileUser?.avatar} alt='ImageER' width={25} /> :                                        <div>
+                                             <img src={userCurrent?.user?.avatar} alt='ImageER' width={25} />
                                         </div>}
+                                        </div>
+
+                                            :
+                                            <div>
+                                                <img src={person} alt="" width={25} />
+                                            </div>}
 
                                     </Button>
                                     <Menu
@@ -119,32 +144,32 @@ export default function Header() {
                                         }}
                                     >
                                         <div>
-                                            {isStatusSignin ? 
-                                            <>
-                                            <MenuItem onClick={handleClose}>
-                                                <Link to={'/profile'}>Profile</Link>
-                                            </MenuItem>
-                                            <MenuItem onClick={handleClose}>
-                                                <Link to={'/yourtrip'}>Your trip</Link>
-                                            </MenuItem></> : 
-                                            <div>
-                                                <MenuItem onClick={handleClose}>
-                                                    <Link to={'/signin'}>Sign in</Link>
-                                                </MenuItem>
-                                                <MenuItem onClick={handleClose}>
-                                                    <Link to={'/signup'}>Sign up</Link>
-                                                </MenuItem>
-                                            </div>}
-                                            {roleUser === 'ADMIN' ? 
-                                            <div>
-                                            <MenuItem onClick={handleClose}>
-                                                <Link to={'/admin'}>Admin</Link>
-                                            </MenuItem> </div> :
-                                            ''}
+                                            {isStatusSignin ?
+                                                <>
+                                                    <MenuItem onClick={handleClose}>
+                                                        <Link to={'/profile'}>Profile</Link>
+                                                    </MenuItem>
+                                                    <MenuItem onClick={handleClose}>
+                                                        <Link to={'/yourtrip'}>Your trip</Link>
+                                                    </MenuItem></> :
+                                                <div>
+                                                    <MenuItem onClick={handleClose}>
+                                                        <Link to={'/signin'}>Sign in</Link>
+                                                    </MenuItem>
+                                                    <MenuItem onClick={handleClose}>
+                                                        <Link to={'/signup'}>Sign up</Link>
+                                                    </MenuItem>
+                                                </div>}
+                                            {roleUser === 'ADMIN' ?
+                                                <div>
+                                                    <MenuItem onClick={handleClose}>
+                                                        <Link to={'/admin'}>Admin</Link>
+                                                    </MenuItem> </div> :
+                                                ''}
                                             {
-                                            <MenuItem onClick={handleClose}>
-                                                <button onClick={() => { dispatch(signOut()); navigate('/') }}>Sign Out</button>
-                                            </MenuItem>
+                                                <MenuItem onClick={handleClose}>
+                                                    <button onClick={() => { dispatch(signOut()); navigate('/') }}>Sign Out</button>
+                                                </MenuItem>
                                             }
                                         </div>
                                     </Menu>

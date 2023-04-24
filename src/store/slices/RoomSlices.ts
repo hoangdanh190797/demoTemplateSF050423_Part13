@@ -14,6 +14,7 @@ const initialState = {
       roomDetail: {},
       //
       isPostInfoBooking: false,
+      isPostBookingRejected: false,
       infoBooking: {},
       //
       isGetListRoomManagement: false,
@@ -79,7 +80,13 @@ const RoomSlices = createSlice({
       name: "rooms",
       initialState,
       reducers: {
-            getLocation: (state, action) => { }
+            getLocation: (state, action) => { },
+            checkPostInfoBooking: (state) => {
+                  state.isPostBookingRejected = false;
+            },
+            checkPostInfoBookingFulfiled: (state) => {
+                  state.isPostInfoBooking = false
+            }
       },
       extraReducers(builder) {
             builder
@@ -109,7 +116,9 @@ const RoomSlices = createSlice({
                         state.isPostInfoBooking = true;
                         state.infoBooking = action.payload
                   })
-                  .addCase(postRoomBooking.rejected, (state, action) => { })
+                  .addCase(postRoomBooking.rejected, (state, action) => {
+                        state.isPostBookingRejected = true;
+                   })
                   //--- --- --- --- --- --- --- --- --- --- --- ---
                   .addCase(getListRoomManagement.pending, (state) => { })
                   .addCase(getListRoomManagement.fulfilled, (state, action) => {
@@ -147,6 +156,6 @@ const RoomSlices = createSlice({
       },
 });
 
-export const { } = RoomSlices.actions
+export const {checkPostInfoBooking, checkPostInfoBookingFulfiled } = RoomSlices.actions
 
 export default RoomSlices.reducer

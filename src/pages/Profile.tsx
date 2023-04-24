@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from 'hooks/hooks'
-import { getUserByIdForProfile, putUserEditForProfile, postAvatarUserEditProfile } from 'store/slices/UserSlices'
+import { getUserByIdForProfile, putUserEditForProfile, postAvatarUserEditProfile, getInfoUserAfterUpAvt } from 'store/slices/UserSlices'
 import { Outlet } from 'react-router-dom'
 import '../styles/pages/_profile.scss'
 
@@ -10,14 +10,14 @@ export default function Profile() {
     const { userCurrent } = useAppSelector((state: any) => {
         return state.auth;
     })
-    const { isGetProfileUser, profileUser } = useAppSelector((state: any) => {
+    const { isGetProfileUser, profileUser, isPosAvatarFulfulled, newProfileUser } = useAppSelector((state: any) => {
         return state.user
     })
 
     const { user } = userCurrent;
-    localStorage.setItem('idUser', user.id);
+    // localStorage.setItem('idUser', user.id);
     useEffect(() => {
-        dispatch(getUserByIdForProfile(user.id))
+        dispatch(getUserByIdForProfile(user?.id))
     }, [dispatch])
 
     // Name
@@ -80,12 +80,15 @@ export default function Profile() {
         // setAvatar(formData.get('formFile') as File);
     }
 
-    const handleSubmitEditAvatar = () => {
-        //     // setStatusEditAvatar(false)
-        //     // const newProfile = { ...profileUser }
-        //     // newProfile.avatar = avatar;
-        //     // dispatch(postAvatarUserEditProfile(avatar))
-    }
+    // useEffect(() => {
+    //     dispatch(getInfoUserAfterUpAvt())
+    // },[dispatch])
+
+    // const handleSubmitEditAvatar = () => {
+    //     if(isPosAvatarFulfulled){
+    //         dispatch(newProfileUser)
+    //     }
+    // }
     return (
         <>
             <div id='profile_'>
@@ -95,14 +98,14 @@ export default function Profile() {
                         <div style={{ display: 'flex', justifyContent: 'center' }}>
                             <img src={profileUser.avatar} alt="" width={100}
                                 height={100} />
-                            {statusEditAvatar ? <> <form onSubmit={handleSubmitEditAvatar}>
+                            {statusEditAvatar ? <> <form >
                                 <label htmlFor="avatarE">Choose a profile picture:</label>
                                 <input type="file"
                                     multiple
                                     onChange={handleAvatar}
                                     id="avatarE" name="avatarE"
                                     accept="image/png, image/jpeg"></input>
-                                <button type='submit'>Save</button>
+                                {/* <button type='submit'>Save</button> */}
                             </form> </> : ""}
                         </div>
                         <div className='content_info_button'><button onClick={handleEditAvatar}>Edit</button></div>

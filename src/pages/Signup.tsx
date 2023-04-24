@@ -193,10 +193,10 @@ export default function SignUp() {
       <div className="signup_container">
         <div className="signup_box">
           <div className="signup_content">
-            {isStatusSignup ?<Stack sx={{ width: '20%' }} spacing={2} style={{position:'absolute', right:'0px'}}>
+            {isStatusSignup ?<Stack sx={{ width: '32%' }} spacing={2} style={{position:'absolute', right:'0px'}}>
               <Alert severity="success">Đăng ký thành công</Alert>
             </Stack>: '' }
-            {isSignupRejected ? <Stack sx={{ width: '20%' }} spacing={2} style={{ position: 'absolute', right: '0px' }}>
+            {isSignupRejected ? <Stack sx={{ width: '32%' }} spacing={2} style={{ position: 'absolute', right: '0px' }}>
               <Alert severity="error">Đăng ký thất bại</Alert>
             </Stack> : ''}
             <h1>Sign up</h1>
