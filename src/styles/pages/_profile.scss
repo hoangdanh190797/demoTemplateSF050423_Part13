@@ -1,23 +1,31 @@
-#profile_{
-    display: flex;
-    flex-direction: row;
-    height: 420px;
-    .profile_content_left{
-        width: 30%;
+#profile_ {
+  display: flex;
+  flex-direction: row;
+  height: 640px;
+  .profile_content_left {
+    width: 35%;
+    .content_info_button_left {
+      .profile_content_btn_img {
+        margin: 0px auto;
+      }
+      #avatarE {
+      }
     }
-    .profile_content_right{
-        width: 70%;
-        .profile_content_info{
-            display: flex;
-            justify-content: space-between;
-            .content_info_button{
-                display: flex;
-                align-items: center;
-                button{
-                    height: 20px;
-                    
-                }
-            }
+  }
+  .profile_content_right {
+    width: 65%;
+    .profile_content_info {
+      display: flex;
+      justify-content: space-between;
+      margin: 40px 40px;
+      .content_info_button {
+        display: flex;
+        align-items: center;
+        .profile_content_btn_img {
+          // margin-left: 20px;
         }
+        .profile_content_info {}
+      }
     }
+  }
 }

@@ -46,6 +46,7 @@ export default function Header() {
 
     console.log(profileUser)
     let roleUser = localStorage.getItem('isRole')
+
     // if (isStatusSignin) {
     //     const { avatar, role } = userCurrent.user;
     // }
@@ -160,12 +161,12 @@ export default function Header() {
                                                         <Link to={'/signup'}>Sign up</Link>
                                                     </MenuItem>
                                                 </div>}
-                                            {roleUser === 'ADMIN' ?
+                                            {roleUser && roleUser === 'ADMIN' ?
                                                 <div>
                                                     <MenuItem onClick={handleClose}>
                                                         <Link to={'/admin'}>Admin</Link>
                                                     </MenuItem> </div> :
-                                                ''}
+                                                <div></div>}
                                             {
                                                 <MenuItem onClick={handleClose}>
                                                     <button onClick={() => { dispatch(signOut()); navigate('/') }}>Sign Out</button>

@@ -15,14 +15,23 @@ export default function YourTrip() {
 
     return (
         <>
+            <h1>Danh sách phòng đã đặt</h1>
             {infoBookingByIdUser.map((item: any) => {
                 return (
                     <>
                         <div>
-                            <h1 style={{textAlign:'left'}}>{item.id}</h1>
-                            <h1 style={{textAlign:'left'}}>{item.maNguoiDung}</h1>
-                            <h1 style={{textAlign:'left'}}>{item.ngayDen}</h1>
-                            <h1 style={{textAlign:'left'}}>{item.ngayDi}</h1>
+                            <div style={{ border: 'solid', height: '180px', width: '350px', borderRadius: '0.5rem', margin: '20px' }}>
+                                <div style={{margin:'15px'}}>
+                                    <h2 style={{ fontWeight: '500' }}>Mã đặt phòng: <span>{item.id}</span></h2>
+                                    <h2 style={{ fontWeight: '500' }}>Mã phòng: <span>{item.maPhong}</span></h2>
+                                    <h2 style={{ fontWeight: '500' }}>Mã người dùng: <span>{item.maNguoiDung}</span></h2>
+                                    <h2 style={{ fontWeight: '500' }}>Ngày đến: <span>{item.ngayDen}</span></h2>
+                                    <h2 style={{ fontWeight: '500' }}>Ngày đi: <span>{item.ngayDi}</span></h2>
+                                    <h2 style={{ fontWeight: '500' }}>Số lượng khách <span>{item.soLuongKhach}</span></h2>
+
+                                </div>
+                            </div>
+
                         </div>
 
                     </>

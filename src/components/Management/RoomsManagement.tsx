@@ -13,30 +13,32 @@ export default function RoomsManagement() {
     return state.rooms
   })
 
+  const [dataRender, setDataRender] = useState<any>()
   const [current, setCurrent] = useState(1);
+  const [currentPageSize, setCurrentPageSize] = useState(10);
 
-  const onChange: PaginationProps['onChange'] = (page) => {
-    setCurrent(page)
-    dispatch(getListRoomManagement(
-      {
-        pageIndex: `${current}`,
-        pageSize: 10
-      }))
-  };
   useEffect(() => {
     dispatch(getListRoomManagement(
       {
-        pageIndex: `${current}`,
-        pageSize: 10
+        pageIndex: current,
+        pageSize: currentPageSize
       }))
-  }, [dispatch]);
+    setDataRender(listRoomManagement.data)
+    
+  }, [dispatch, setDataRender]);
 
-  const { data } = listRoomManagement
+  const onChange: PaginationProps['onChange'] = (page, pageSize) => {
+    setCurrent(page)
+    setCurrentPageSize(pageSize)
+    dispatch(getListRoomManagement(
+      {
+        pageIndex: `${page}`,
+        pageSize: `${pageSize}`
+      }))
+      setDataRender(listRoomManagement.data)
+  };
 
-  // const [contentRender, SetContentRender] = useState<any>();
-  // useEffect(() => {
-  //   SetContentRender(data)
-  // },[])
+  
 
   const [statusSearch, setStatusSearch] = useState(false)
 
@@ -62,18 +64,19 @@ export default function RoomsManagement() {
   return (
     <div>
       <div>
+      <h1>Quản lý phòng</h1>
         <Link to='addAndeditRoomManagement/0'>
-          <button>Thêm phòng mới</button>
+          <button style={{ height:'30px', width:'180px', backgroundColor:'#fc4e71', borderRadius:'0.25rem', fontWeight:'500', margin:'0px 20px'}}>Thêm phòng mới</button>
         </Link>
       </div>
       <div>
         <form action="" onSubmit={handleSubmitNameSearch}>
-          <input type="text" placeholder='Nhập vào họ tên người dùng' onChange={handleNameSearch} />
-          <button type='submit'>Tìm</button>
+          <input style={{width:'240px', margin:'20px', height:'30px', borderRadius:'0.25rem', color:'black'}}  type="text" placeholder='Vui lòng nhập mã phòng' onChange={handleNameSearch} />
+          <button style={{ height:'30px', width:'60px', backgroundColor:'#fc4e71', borderRadius:'0.25rem', fontWeight:'500'}} type='submit'>Tìm</button>
         </form>
       </div>
       <div>
-        <table style={{ border: '1px solid black', borderCollapse: 'collapse' }}>
+        <table style={{ border: '1px solid black', borderCollapse: 'collapse', width:'90%' }}>
           <thead>
             <tr>
               <th>Mã phòng</th>
@@ -83,33 +86,37 @@ export default function RoomsManagement() {
             </tr>
           </thead>
           <tbody>
-            {
-              data && data.map((rooom: any) => {
+            {isGetListRoomManagement ?
+            <>
+              {dataRender && dataRender?.map((rooom: any) => {
                 return (
                   <tr>
-                    <td>{rooom.id}</td>
-                    <td>{rooom.tenPhong}</td>
-                    <td>
-                      <img src={rooom.hinhAnh} alt="" width={50} height={50} />
+                    <td style={{textAlign:'center'}}>{rooom.id}</td>
+                    <td style={{textAlign:'left'}}>{rooom.tenPhong}</td>
+                    <td style={{textAlign:'center'}}>
+                      <img style={{margin:'0px auto'}} src={rooom.hinhAnh} alt="" width={75} height={75} />
                     </td>
-
-                    <td>
-                      <button onClick={() => handleDeleteUser(rooom.id)}>Xóa</button>
+                    <td style={{textAlign:'center'}}>
+                      <button style={{ height:'30px', width:'60px', backgroundColor:'#fc4e71', borderRadius:'0.25rem', fontWeight:'500', marginRight:'15px'}} onClick={() => handleDeleteUser(rooom.id)}>Xóa</button>
                       <Link to={`addAndeditRoomManagement/${rooom.id}`}>
-                        <button>Sửa</button>
+                        <button style={{ height:'30px', width:'60px', backgroundColor:'#fc4e71', borderRadius:'0.25rem', fontWeight:'500',}}>Sửa</button>
                       </Link>
                     </td>
                   </tr>
                 )
               })}
 
+            </>:
+            <></>}
+
           </tbody>
         </table>
-        <div>
+        <div style={{marginTop:'20px'}}>
           <Pagination
             current={current}
             onChange={onChange}
-            total={500} />
+            total={dataRender?.length} 
+            showTotal={(dataRender) => `Total ${dataRender} items`}/>
         </div>
       </div>
     </div>

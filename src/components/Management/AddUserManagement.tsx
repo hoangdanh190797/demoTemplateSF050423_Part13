@@ -9,10 +9,6 @@ import { getUserByIdForProfile, putUserEditForProfile, putUserEditForManagement 
 
 export default function AddUserManagement() {
     const dispatch = useAppDispatch()
-    //Khả năng cao là mình lấy được cái id trước, việc bất đồng bộ nó chạy trước
-    //sau đó useEffect nó mới chạy lần nữa thì data lần này mới về mà nó về chứ
-    //nó chưa được render lên => Giả thuyết này đúng nhưng không phải trường hợp
-    //của mình lí do Redux đã nhận về dữ liệu
     let { idUser } = useParams<any>();
     let newID: any = idUser;
     let idUserNum = parseInt(newID)

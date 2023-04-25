@@ -128,25 +128,24 @@ export default function AddandEditBookingManagement() {
     return (
         <>
             <div>
-                <h1>Quản lý đặt phòng</h1>
+                <h1>Quản lý đặt phòng (Chỉnh sửa)</h1>
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
-                    <img src={values.hinhAnh} alt="" width={100}
-                        height={100} />
-                    <div className='content_info_button'><button onClick={handleEditAvatar}>Edit</button></div>
-                    {statusEditAvatar ? <> <form onSubmit={handleSubmitEditAvatar}>
-                        <label htmlFor="avatarE">Choose a profile picture:</label>
-                        <input type="file"
-                            multiple
-                            onChange={handleAvatar}
-                            id="avatarE" name="avatarE"
-                            accept="image/png, image/jpeg"></input>
-                        <button type='submit'>Save</button>
-                    </form> </> : ""}
                 </div>
                 <br />
                 <form onSubmit={handleSubmitAddLocation}>
-                    <fieldset>
-                        <label htmlFor="">Mã đặt phòng: </label>
+                    <fieldset style={{display:'flex', justifyContent:'space-between', width:'40%', margin:'10px auto'}}>
+                        <label style={{fontWeight:'600'}} htmlFor="">Mã đặt phòng: </label>
+                        <input
+                            onChange={handleInputChange}
+                            disabled
+                            value={values.id}
+                            type="text"
+                            name="maPhong"
+                            id=""
+                            placeholder='Mã đặt phòng' />
+                    </fieldset>
+                    <fieldset style={{display:'flex', justifyContent:'space-between', width:'40%', margin:'10px auto'}}>
+                        <label style={{fontWeight:'600'}} htmlFor="">Mã phòng: </label>
                         <input
                             onChange={handleInputChange}
                             disabled
@@ -156,16 +155,8 @@ export default function AddandEditBookingManagement() {
                             id=""
                             placeholder='Mã đặt phòng' />
                     </fieldset>
-                    {/* Edit */}
-                    {/* <div>
-                        <RangePicker
-                            // defaultValue={[newNgayDen, newNgayDen]}
-                            format={dateFormat}
-                            onChange={handleDateArray}
-                        />
-                    </div> */}
-                    <fieldset>
-                        <label htmlFor="">Ngày đến: </label>
+                    <fieldset style={{display:'flex', justifyContent:'space-between', width:'40%', margin:'10px auto'}}>
+                        <label style={{fontWeight:'600'}} htmlFor="">Ngày đến: </label>
                         <input
                             onChange={handleInputChange}
                             value={values.ngayDen}
@@ -174,8 +165,8 @@ export default function AddandEditBookingManagement() {
                             id=""
                             placeholder='Ngày đến' />
                     </fieldset>
-                    <fieldset>
-                        <label htmlFor="">Ngày đi: </label>
+                    <fieldset style={{display:'flex', justifyContent:'space-between', width:'40%', margin:'10px auto'}}>
+                        <label style={{fontWeight:'600'}} htmlFor="">Ngày đi: </label>
                         <input
                             onChange={handleInputChange}
                             value={values.ngayDi}
@@ -184,8 +175,8 @@ export default function AddandEditBookingManagement() {
                             id=""
                             placeholder='Ngày đi' />
                     </fieldset>
-                    <fieldset>
-                        <label htmlFor="">Số lượng khách: </label>
+                    <fieldset style={{display:'flex', justifyContent:'space-between', width:'40%', margin:'10px auto'}}>
+                        <label style={{fontWeight:'600'}} htmlFor="">Số lượng khách: </label>
                         <input
                             onChange={handleInputChange}
                             value={values.soLuongKhach}
@@ -194,8 +185,8 @@ export default function AddandEditBookingManagement() {
                             id=""
                             placeholder='Số lượng khách' />
                     </fieldset>
-                    <fieldset>
-                        <label htmlFor="">Mã người dùng: </label>
+                    <fieldset style={{display:'flex', justifyContent:'space-between', width:'40%', margin:'10px auto'}}>
+                        <label style={{fontWeight:'600'}} htmlFor="">Mã người dùng: </label>
                         <input
                             onChange={handleInputChange}
                             disabled
@@ -205,10 +196,7 @@ export default function AddandEditBookingManagement() {
                             id=""
                             placeholder='Mã người dùng' />
                     </fieldset>
-                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <div>Máy giặt: </div><div> <Switch checked={values.mayGiat} onChange={handleMayGiat} /></div>
-                    </div>
-                    <button type='submit'>Thêm</button>
+                    <button style={{ height:'30px', width:'80px', backgroundColor:'#fc4e71', borderRadius:'0.25rem', fontWeight:'500', marginLeft:'30%'}} type='submit'>Lưu</button>
                 </form>
             </div>
         </>
