@@ -4,20 +4,21 @@ import global from '../assets/images/global.svg'
 import threesf from '../assets/images/threesf.svg'
 import person from '../assets/images/person.svg'
 import { useParams, useNavigate, Link, NavLink } from "react-router-dom";
-import { signOut } from '../store/slices/AuthSlices'
+import { signOut, getRole } from '../store/slices/AuthSlices'
 import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import {getInfoUserAfterUpAvt} from '../store/slices/UserSlices'
-import {checkPostAvt, getUserByIdForProfile} from '../store/slices/UserSlices'
+import { getInfoUserAfterUpAvt } from '../store/slices/UserSlices'
+import { checkPostAvt, getUserByIdForProfile } from '../store/slices/UserSlices'
 import '../styles/components/_header.scss'
 import { set } from 'lodash';
 
 export default function Header() {
     const navigate = useNavigate();
-
     const dispatch = useAppDispatch();
+
+
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -27,55 +28,26 @@ export default function Header() {
         setAnchorEl(null);
     };
 
-    const { isStatusSignin, userCurrent } = useAppSelector((state: any) => {
+    const { isStatusSignin, userCurrent, roleUser } = useAppSelector((state: any) => {
         return state.auth
     })
     const { isPosAvatarFulfulled, newProfileUser, profileUser } = useAppSelector((state: any) => {
         return state.user
     })
 
-    useEffect(() => {
-        let idUser = localStorage.getItem('idUser')
-        
-        if(isPosAvatarFulfulled){
-            dispatch(getUserByIdForProfile(idUser))
-        }
-        // dispatch(checkPostAvt())
-        dispatch(getInfoUserAfterUpAvt())
-    }, [dispatch])
-
-    console.log(profileUser)
-    let roleUser = localStorage.getItem('isRole')
+    // const [getRole, setGetRole] = useState<any>()
+    // let roleUser = localStorage.getItem('isRole')
 
     // if (isStatusSignin) {
-    //     const { avatar, role } = userCurrent.user;
     // }
 
-    // interface UserCurrent {
-    //     user: {
-    //         name: String,
-    //         avatar: String,
-    //         role: String | null,
-    //     },
-    // }
-
-    // const [roleUser, setRoleUser] = useState()
-
-    // useEffect(() => {
-    //     setRoleUser(userCurrent?.user?.role)
-    // },[setRoleUser])
-
-    // const [dataN, setDataN] = useState<UserCurrent | null | any>(null);
-    // const [renderADMIN, setRenderADMIN] = useState<boolean>(false)
-
-    // useEffect(() => {
-    //     setDataN(userCurrent)        
-    //     if (isStatusSignin) { 
-    //     // setDataN(userCurrent)
-    //         if (userCurrent?.user?.role === 'ADMIN') { setRenderADMIN(true) } else{ setRenderADMIN(false) }
-    //      }
-    // }, [setDataN, setRenderADMIN])
-
+    useEffect(() => {
+        let idUser = localStorage.getItem('idUser')
+        if (isPosAvatarFulfulled) {
+            dispatch(getUserByIdForProfile(idUser))
+        }
+        dispatch(getInfoUserAfterUpAvt())
+    }, [dispatch])
 
     return (
         <>
@@ -123,11 +95,11 @@ export default function Header() {
                                         </div>
 
                                         {isStatusSignin ?
-                                        <div>
-                                            {isPosAvatarFulfulled ?  <img src={profileUser?.avatar} alt='ImageER' width={25} /> :                                        <div>
-                                             <img src={userCurrent?.user?.avatar} alt='ImageER' width={25} />
-                                        </div>}
-                                        </div>
+                                            <div>
+                                                {isPosAvatarFulfulled ? <img src={profileUser?.avatar} alt='ImageER' width={25} /> : <div>
+                                                    <img src={userCurrent?.user?.avatar} alt='ImageER' width={25} />
+                                                </div>}
+                                            </div>
 
                                             :
                                             <div>
@@ -146,13 +118,22 @@ export default function Header() {
                                     >
                                         <div>
                                             {isStatusSignin ?
-                                                <>
+                                                <div>
                                                     <MenuItem onClick={handleClose}>
                                                         <Link to={'/profile'}>Profile</Link>
                                                     </MenuItem>
                                                     <MenuItem onClick={handleClose}>
                                                         <Link to={'/yourtrip'}>Your trip</Link>
-                                                    </MenuItem></> :
+                                                    </MenuItem>
+                                                    {userCurrent?.user?.role === 'ADMIN' ?
+                                                        <MenuItem onClick={handleClose}>
+                                                            <Link to={'/admin'}>Admin</Link>
+                                                        </MenuItem> :
+                                                        <div></div>}
+                                                    <MenuItem onClick={handleClose}>
+                                                        <button onClick={() => { dispatch(signOut()); navigate('/') }}>Sign Out</button>
+                                                    </MenuItem>
+                                                </div> :
                                                 <div>
                                                     <MenuItem onClick={handleClose}>
                                                         <Link to={'/signin'}>Sign in</Link>
@@ -161,17 +142,6 @@ export default function Header() {
                                                         <Link to={'/signup'}>Sign up</Link>
                                                     </MenuItem>
                                                 </div>}
-                                            {roleUser && roleUser === 'ADMIN' ?
-                                                <div>
-                                                    <MenuItem onClick={handleClose}>
-                                                        <Link to={'/admin'}>Admin</Link>
-                                                    </MenuItem> </div> :
-                                                <div></div>}
-                                            {
-                                                <MenuItem onClick={handleClose}>
-                                                    <button onClick={() => { dispatch(signOut()); navigate('/') }}>Sign Out</button>
-                                                </MenuItem>
-                                            }
                                         </div>
                                     </Menu>
                                 </div>

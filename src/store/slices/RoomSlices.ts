@@ -20,6 +20,9 @@ const initialState = {
       isGetListRoomManagement: false,
       listRoomManagement: [],
       //
+      isGetListRoomManagementTotal: false,
+      listRoomManagementTotal: [],
+      //
       isPutRoomEditManagement: false,
       roomEditManagement: {},
       //
@@ -52,6 +55,10 @@ export const postRoomBooking = createAsyncThunk('rooms/postRoomBooking', async (
 })
 //--- --- --- --- --- --- --- --- --- --- --- ---
 export const getListRoomManagement = createAsyncThunk('rooms/getListRoomManagement', async (objPage: any) => {
+      const response = await roomsAPI.getListRoomManagement(objPage);
+      return response.data.content
+})
+export const getListRoomManagementTotal = createAsyncThunk('rooms/getListRoomManagementTotal', async (objPage: any) => {
       const response = await roomsAPI.getListRoomManagement(objPage);
       return response.data.content
 })
@@ -118,7 +125,7 @@ const RoomSlices = createSlice({
                   })
                   .addCase(postRoomBooking.rejected, (state, action) => {
                         state.isPostBookingRejected = true;
-                   })
+                  })
                   //--- --- --- --- --- --- --- --- --- --- --- ---
                   .addCase(getListRoomManagement.pending, (state) => { })
                   .addCase(getListRoomManagement.fulfilled, (state, action) => {
@@ -126,6 +133,13 @@ const RoomSlices = createSlice({
                         state.listRoomManagement = action.payload;
                   })
                   .addCase(getListRoomManagement.rejected, (state, action) => { })
+                  //--- --- --- --- --- --- --- --- --- --- --- ---
+                  .addCase(getListRoomManagementTotal.pending, (state) => { })
+                  .addCase(getListRoomManagementTotal.fulfilled, (state, action) => {
+                        state.isGetListRoomManagementTotal = true;
+                        state.listRoomManagementTotal = action.payload;
+                  })
+                  .addCase(getListRoomManagementTotal.rejected, (state, action) => { })
                   //--- --- --- --- --- --- --- --- --- --- --- ---
                   .addCase(putRoomEditManagement.pending, (state) => { })
                   .addCase(putRoomEditManagement.fulfilled, (state, action) => {
@@ -156,6 +170,6 @@ const RoomSlices = createSlice({
       },
 });
 
-export const {checkPostInfoBooking, checkPostInfoBookingFulfiled } = RoomSlices.actions
+export const { checkPostInfoBooking, checkPostInfoBookingFulfiled } = RoomSlices.actions
 
 export default RoomSlices.reducer

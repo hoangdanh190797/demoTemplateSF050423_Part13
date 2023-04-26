@@ -27,7 +27,10 @@ import AddandEditBookingManagement from 'components/Management/AddandEditBooking
 
 
 function App() {
-  const isRole = localStorage.getItem('isRole');
+  const { isStatusSignin, userCurrent } = useAppSelector((state: any) => {
+    return state.auth
+})
+  const isRole = userCurrent?.user?.role;
   return (
     <Routes>
       <Route path='/' element={<HomeTemplate />}>
@@ -40,7 +43,7 @@ function App() {
         <Route path='roomsByLocation/:idLocation' element={<SearchRoomByLocation />} />
       </Route >
       {/* --- */}
-      <Route path='/admin' element={<ProtectedTemplate isAuth={isRole} component={<PageAdmin />} />}>
+      <Route path='admin' element={<ProtectedTemplate isAuth={isRole} component={<PageAdmin />} />}>
           <Route path='userManagement' element={<UserManagement />} />
           <Route path='userManagement/addUserManagement/:idUser' element={<AddUserManagement />} />
           <Route path='locationManagement' element={<LocationManagement />} />

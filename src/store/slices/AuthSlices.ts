@@ -24,7 +24,7 @@ const initialState: initialState = {
     //
     isStatusSignin: false,
     userCurrent: {},
-    roleUser: '',
+    roleUser: 'USER',
     //
     isSignInpRejected: undefined,
     isStatusSignup: false,
@@ -76,6 +76,9 @@ const AuthSlices = createSlice({
         },
         checkSignInRejected: (state) => {
             state.isSignInpRejected = false
+        },
+        getRole:(state) => {
+            state.roleUser = state.userCurrent?.user?.role
         }
     },
     extraReducers(builder) {
@@ -108,6 +111,6 @@ const AuthSlices = createSlice({
     },
 });
 
-export const { signOut, checkSignInRejected, checkSignUpRejected, checkSignUpFulfilled } = AuthSlices.actions
+export const { signOut, checkSignInRejected, checkSignUpRejected, checkSignUpFulfilled, getRole } = AuthSlices.actions
 
 export default AuthSlices.reducer

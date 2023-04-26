@@ -9,10 +9,9 @@ interface propsProtected {
 
 export default function ProtectedTemplate(props: propsProtected) {
     const{isAuth, component} = props
-    // const navigate = useNavigate();
     return (
         <>
-            {isAuth ==='ADMIN' ? component : <Navigate to="/" />}
+            {isAuth === 'ADMIN' ? component : <></>}
         </>
     )
 }
