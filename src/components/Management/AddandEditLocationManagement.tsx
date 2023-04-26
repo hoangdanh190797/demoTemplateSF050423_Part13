@@ -77,23 +77,21 @@ export default function AddandEditLocationManagement() {
     return (
         <>
             <div>
-                <div style={{ display: 'flex', justifyContent: 'center' }}>
-                    <img src={values.hinhAnh} alt="" width={100}
-                        height={100} />
-                    <div className='content_info_button'><button onClick={handleEditAvatar}>Edit</button></div>
+                <div style={{ }}>
+                    <img style={{width:'200px', height:'200px', margin:'20px auto'}} src={values.hinhAnh} alt="" />
+                    <div className='content_info_button'><button style={{ margin: '15px auto', backgroundColor: 'rgb(252 78 113)', marginTop: '20px', height: '40px', width: '120px', borderRadius: '0.5rem', display: 'flex', justifyContent: 'center', alignItems: 'center' }} onClick={handleEditAvatar}>Cập nhật ảnh</button></div>
                     {statusEditAvatar ? <> <form onSubmit={handleSubmitEditAvatar}>
-                        <label htmlFor="avatarE">Choose a profile picture:</label>
+                        <label htmlFor="avatarE">Chọn một ảnh từ máy tính của bạn:</label>
                         <input type="file"
                             multiple
                             onChange={handleAvatar}
                             id="avatarE" name="avatarE"
                             accept="image/png, image/jpeg"></input>
-                        <button type='submit'>Save</button>
                     </form> </> : ""}
                 </div>
-                <form onSubmit={handleSubmitAddLocation}>
+                <form style={{width:'30%', margin:'0px auto'}} onSubmit={handleSubmitAddLocation}>
                     <h1>THÊM VỊ TRÍ</h1>
-                    <fieldset>
+                    <fieldset style={{display:'flex', justifyContent:'space-between'}}>
                         <label htmlFor="">Tên vị trí: </label>
                         <input
                             onChange={handleInputChange}
@@ -103,7 +101,7 @@ export default function AddandEditLocationManagement() {
                             id=""
                             placeholder='Tên vị trí' />
                     </fieldset>
-                    <fieldset>
+                    <fieldset style={{display:'flex', justifyContent:'space-between'}}>
                         <label htmlFor="">Tỉnh thành: </label>
                         <input
                             name="tinhThanh"
@@ -113,7 +111,7 @@ export default function AddandEditLocationManagement() {
                             id=""
                             placeholder='Tình thành' />
                     </fieldset>
-                    <fieldset>
+                    <fieldset style={{display:'flex', justifyContent:'space-between'}}>
                         <label htmlFor="">Quốc gia: </label>
                         <input
                             name="quocGia"
@@ -123,39 +121,7 @@ export default function AddandEditLocationManagement() {
                             id=""
                             placeholder='Quốc gia' />
                     </fieldset>
-                    {/* <fieldset>
-                        <label htmlFor="">Hình ảnh: </label>
-                        <input
-                            name="phone"
-                            onChange={handleInputChange}
-                            value={values.hinhAnh}
-                            type="text" 
-                            id="" 
-                            placeholder='Hình ảnh' />
-                    </fieldset> */}
-                    {/* <fieldset>
-                        <label htmlFor="">Ngày tháng năm sinh: </label>
-                        <input
-                            name="birthday"
-                            onChange={handleInputChange}
-                            value={values.birthday}
-                            type="text" id="" placeholder='Ngày tháng năm sinh' />
-                    </fieldset>
-                    <fieldset>
-                        <label htmlFor="">Giới tính: </label>
-                        <select name="gender" value={values.gender} onChange={handleInputChange}>
-                            <option value='true'>Nam</option>
-                            <option value='false'>Nữ</option>
-                        </select>
-                    </fieldset>
-                    <fieldset>
-                        <label htmlFor="">Loại người dùng: </label>
-                        <select name="role" value={values.role} onChange={handleInputChange}>
-                            <option value="USER">User</option>
-                            <option value="ADMIN">Admin</option>
-                        </select>
-                    </fieldset> */}
-                    <button type='submit'>Thêm</button>
+                    <button style={{ height: '30px', width: '60px', backgroundColor: '#fc4e71', borderRadius: '0.25rem', fontWeight: '500' }}  type='submit'>Lưu</button>
                 </form>
             </div>
         </>

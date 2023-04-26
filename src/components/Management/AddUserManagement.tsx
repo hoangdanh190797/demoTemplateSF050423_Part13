@@ -65,66 +65,69 @@ export default function AddUserManagement() {
     return (
         <>
             <div>
-                <form onSubmit={handleSubmitAddUser}>
-                    <h1>THÊM QUẢN TRỊ VIÊN</h1>
-                    <fieldset>
-                        <label htmlFor="">Tên: </label>
-                        <input
-                            onChange={handleInputChange}
-                            value={values.name}
-                            type="text"
-                            name="name"
-                            id=""
-                            placeholder='Tên' />
-                    </fieldset>
-                    <fieldset>
-                        <label htmlFor="">Email: </label>
-                        <input
-                            name="email"
-                            onChange={handleInputChange}
-                            value={values.email}
-                            type="text"
-                            id=""
-                            placeholder='Email' />
-                    </fieldset>
-                    <fieldset>
-                        <label htmlFor="">Mật khẩu: </label>
-                        <input
-                            name="password"
-                            onChange={handleInputChange}
-                            value={values.password} type="text" id="" placeholder='Mật khẩu' />
-                    </fieldset>
-                    <fieldset>
-                        <label htmlFor="">Số điện thoại: </label>
-                        <input
-                            name="phone"
-                            onChange={handleInputChange}
-                            value={values.phone}
-                            type="text" id="" placeholder='Số điện thoại' />
-                    </fieldset>
-                    <fieldset>
-                        <label htmlFor="">Ngày tháng năm sinh: </label>
-                        <input
-                            name="birthday"
-                            onChange={handleInputChange}
-                            value={values.birthday}
-                            type="text" id="" placeholder='Ngày tháng năm sinh' />
-                    </fieldset>
-                    <fieldset>
-                        <label htmlFor="">Giới tính: </label>
-                        <select name="gender" value={values.gender} onChange={handleInputChange}>
-                            <option value='true'>Nam</option>
-                            <option value='false'>Nữ</option>
-                        </select>
-                    </fieldset>
-                    <fieldset>
-                        <label htmlFor="">Loại người dùng: </label>
-                        <select name="role" value={values.role} onChange={handleInputChange}>
-                            <option value="USER">User</option>
-                            <option value="ADMIN">Admin</option>
-                        </select>
-                    </fieldset>
-                    <button type='submit'>Tạo</button>
+                <form style={{ fontWeight: '600'}} onSubmit={handleSubmitAddUser}>
+                    <h1>THÊM NGƯỜI DÙNG</h1>
+                    <div style={{width:'40%', margin:'0px auto'}}>
+                        <fieldset style={{display:'flex', justifyContent:'space-between'}}>
+                            <label htmlFor="">Tên: </label>
+                            <input
+                                onChange={handleInputChange}
+                                value={values.name}
+                                type="text"
+                                name="name"
+                                id=""
+                                placeholder='Tên' />
+                        </fieldset>
+                        <fieldset style={{display:'flex', justifyContent:'space-between'}}>
+                            <label htmlFor="">Email: </label>
+                            <input
+                                name="email"
+                                onChange={handleInputChange}
+                                value={values.email}
+                                type="text"
+                                id=""
+                                placeholder='Email' />
+                        </fieldset>
+                        <fieldset style={{display:'flex', justifyContent:'space-between'}}>
+                            <label htmlFor="">Mật khẩu: </label>
+                            <input
+                                name="password"
+                                onChange={handleInputChange}
+                                value={values.password} type="text" id="" placeholder='Mật khẩu' />
+                        </fieldset>
+                        <fieldset style={{display:'flex', justifyContent:'space-between'}}>
+                            <label htmlFor="">Số điện thoại: </label>
+                            <input
+                                name="phone"
+                                onChange={handleInputChange}
+                                value={values.phone}
+                                type="text" id="" placeholder='Số điện thoại' />
+                        </fieldset>
+                        <fieldset style={{display:'flex', justifyContent:'space-between'}}>
+                            <label htmlFor="">Ngày tháng năm sinh: </label>
+                            <input
+                                name="birthday"
+                                onChange={handleInputChange}
+                                value={values.birthday}
+                                type="text" id="" placeholder='Ngày tháng năm sinh' />
+                        </fieldset>
+                        <fieldset style={{display:'flex', justifyContent:'space-between'}}>
+                            <label htmlFor="">Giới tính: </label>
+                            <select name="gender" value={values.gender} onChange={handleInputChange}>
+                                <option value='true'>Nam</option>
+                                <option value='false'>Nữ</option>
+                            </select>
+                        </fieldset>
+                        <fieldset style={{display:'flex', justifyContent:'space-between'}}>
+                            <label htmlFor="">Loại người dùng: </label>
+                            <select name="role" value={values.role} onChange={handleInputChange}>
+                                <option value="USER">User</option>
+                                <option value="ADMIN">Admin</option>
+                            </select>
+                        </fieldset>
+                        <button style={{ height: '30px', width: '60px', backgroundColor: '#fc4e71', borderRadius: '0.25rem', fontWeight: '500' }} type='submit'>Lưu</button>
+                    </div>
+
                 </form>
             </div>
         </>

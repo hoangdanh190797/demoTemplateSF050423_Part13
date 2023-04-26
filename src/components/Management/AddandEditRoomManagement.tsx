@@ -1,10 +1,12 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
-import { getRoomByIdForDetail, 
-    putRoomEditManagement, 
-    postRoomNewManagement, 
-    postImageRoomManagement} from '../../store/slices/RoomSlices';
+import {
+    getRoomByIdForDetail,
+    putRoomEditManagement,
+    postRoomNewManagement,
+    postImageRoomManagement
+} from '../../store/slices/RoomSlices';
 import { useParams, useNavigate, Link, NavLink } from "react-router-dom";
 import { Switch } from 'antd';
 
@@ -144,133 +146,146 @@ export default function AddandEditRoomManagement() {
     }
     return (
         <>
-            <div>
+            <div style={{ width: '60%', margin: '0px auto', fontWeight:'600' }}>
                 <h1>THÊM PHÒNG</h1>
-                <div style={{ display: 'flex', justifyContent: 'center' }}>
-                    <img src={values.hinhAnh} alt="" width={100}
-                        height={100} />
-                    <div className='content_info_button'><button onClick={handleEditAvatar}>Edit</button></div>
+                {/* style={{ display: 'flex', justifyContent: 'center' }} */}
+                <div >
+                    <img style={{ margin: '0px auto' }} src={values.hinhAnh} alt="" width={350}
+                        height={350} />
+                    <div className='content_info_button'>
+                        <button style={{ margin: '15px auto', backgroundColor: 'rgb(252 78 113)', marginTop: '20px', height: '40px', width: '120px', borderRadius: '0.5rem', display: 'flex', justifyContent: 'center', alignItems: 'center' }} onClick={handleEditAvatar}>Cập nhật ảnh</button></div>
                     {statusEditAvatar ? <> <form onSubmit={handleSubmitEditAvatar}>
-                        <label htmlFor="avatarE">Choose a profile picture:</label>
+                        <label htmlFor="avatarE">Chọn một ảnh từ máy tính của bạn: </label>
                         <input type="file"
                             multiple
                             onChange={handleAvatar}
                             id="avatarE" name="avatarE"
                             accept="image/png, image/jpeg"></input>
-                        <button type='submit'>Save</button>
                     </form> </> : ""}
                 </div>
                 <br />
-                <form onSubmit={handleSubmitAddLocation}>
-                    <fieldset>
-                        <label htmlFor="">Tên phòng: </label>
-                        <input
-                            onChange={handleInputChange}
-                            value={values.tenPhong}
-                            type="text"
-                            name="tenPhong"
-                            id=""
-                            placeholder='Tên phòng' />
-                    </fieldset>
-                    <fieldset>
-                        <label htmlFor="">Số khách: </label>
-                        <input
-                            name="khach"
-                            onChange={handleInputChange}
-                            value={values.khach}
-                            type="text"
-                            id=""
-                            placeholder='Số khách' />
-                    </fieldset>
-                    <fieldset>
-                        <label htmlFor="">Số phòng ngủ: </label>
-                        <input
-                            name="phongNgu"
-                            onChange={handleInputChange}
-                            value={values.phongNgu}
-                            type="text"
-                            id=""
-                            placeholder='Số phòng ngủ' />
-                    </fieldset>
-                    <fieldset>
-                        <label htmlFor="">Số giường ngủ: </label>
-                        <input
-                            name="giuong"
-                            onChange={handleInputChange}
-                            value={values.giuong}
-                            type="text"
-                            id=""
-                            placeholder='Số giường ngủ' />
-                    </fieldset>
-                    <fieldset>
-                        <label htmlFor="">Số phòng tắm: </label>
-                        <input
-                            name="phongTam"
-                            onChange={handleInputChange}
-                            value={values.phongTam}
-                            type="text"
-                            id=""
-                            placeholder='Số phòng tắm' />
-                    </fieldset>
-                    <fieldset>
-                        <label htmlFor="">Mô tả: </label>
-                        <input
-                            name="moTa"
-                            onChange={handleInputChange}
-                            value={values.moTa}
-                            type="text"
-                            id=""
-                            placeholder='Mô tả' />
-                    </fieldset>
-                    <fieldset>
-                        <label htmlFor="">Giá tiền: </label>
-                        <input
-                            name="giaTien"
-                            onChange={handleInputChange}
-                            value={values.giaTien}
-                            type="text"
-                            id=""
-                            placeholder='Giá tiền' />
-                    </fieldset>
-                    <fieldset>
-                        <label htmlFor="">Mã vị trí: </label>
-                        <input
-                            name="maViTri"
-                            onChange={handleInputChange}
-                            value={values.maViTri}
-                            type="text"
-                            id=""
-                            placeholder='Mã vị trí' />
-                    </fieldset>
-                    <h3>Tiện ích: </h3>
-                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <div>Máy giặt: </div><div> <Switch checked={values.mayGiat} onChange={handleMayGiat} /></div>
+                <form onSubmit={handleSubmitAddLocation} >
+                    <div style={{display:'flex'}}>
+                        <div style={{ width: '60%', margin: '0px auto' }}>
+                            <fieldset style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                <label htmlFor="">Tên phòng: </label>
+                                <input
+                                    onChange={handleInputChange}
+                                    value={values.tenPhong}
+                                    type="text"
+                                    name="tenPhong"
+                                    id=""
+                                    placeholder='Tên phòng' />
+                            </fieldset>
+                            <fieldset style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                <label htmlFor="">Số khách: </label>
+                                <input
+                                    name="khach"
+                                    onChange={handleInputChange}
+                                    value={values.khach}
+                                    type="text"
+                                    id=""
+                                    placeholder='Số khách' />
+                            </fieldset>
+                            <fieldset style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                <label htmlFor="">Số phòng ngủ: </label>
+                                <input
+                                    name="phongNgu"
+                                    onChange={handleInputChange}
+                                    value={values.phongNgu}
+                                    type="text"
+                                    id=""
+                                    placeholder='Số phòng ngủ' />
+                            </fieldset>
+                            <fieldset style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                <label htmlFor="">Số giường ngủ: </label>
+                                <input
+                                    name="giuong"
+                                    onChange={handleInputChange}
+                                    value={values.giuong}
+                                    type="text"
+                                    id=""
+                                    placeholder='Số giường ngủ' />
+                            </fieldset>
+                            <fieldset style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                <label htmlFor="">Số phòng tắm: </label>
+                                <input
+                                    name="phongTam"
+                                    onChange={handleInputChange}
+                                    value={values.phongTam}
+                                    type="text"
+                                    id=""
+                                    placeholder='Số phòng tắm' />
+                            </fieldset>
+                            <fieldset style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                <label htmlFor="">Mô tả: </label>
+                                <input
+                                    name="moTa"
+                                    onChange={handleInputChange}
+                                    value={values.moTa}
+                                    type="text"
+                                    id=""
+                                    placeholder='Mô tả' />
+                            </fieldset>
+                            <fieldset style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                <label htmlFor="">Giá tiền: </label>
+                                <input
+                                    name="giaTien"
+                                    onChange={handleInputChange}
+                                    value={values.giaTien}
+                                    type="text"
+                                    id=""
+                                    placeholder='Giá tiền' />
+                            </fieldset>
+                            <fieldset style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                <label htmlFor="">Mã vị trí: </label>
+                                <input
+                                    name="maViTri"
+                                    onChange={handleInputChange}
+                                    value={values.maViTri}
+                                    type="text"
+                                    id=""
+                                    placeholder='Mã vị trí' />
+                            </fieldset>
+                        </div>
+                        {/* --- */}
+                        <h3 style={{ fontSize: '24px', margin: '20px' }}>Tiện ích: </h3>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', width: '60%', margin: '0px auto' }}>
+                            <div>
+                                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                    <div>Máy giặt: </div><div> <Switch checked={values.mayGiat} onChange={handleMayGiat} /></div>
+                                </div>
+                                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                    <div>Bàn là: </div><div> <Switch checked={values.banLa} onChange={handleBanLa} /></div>
+                                </div >
+                                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                    <div>Tivi: </div><div> <Switch checked={values.tivi} onChange={handleTivi} /></div>
+                                </div>
+                                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                    <div>Điều hòa: </div><div> <Switch checked={values.dieuHoa} onChange={handleDieuhoa} /></div>
+                                </div>
+                                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                    <div>Wifi: </div><div> <Switch checked={values.wifi} onChange={handleWifi} /></div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                    <div>Bếp: </div><div> <Switch checked={values.bep} onChange={handleBep} /></div>
+                                </div>
+                                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                    <div>Bãi đổ xe: </div><div> <Switch checked={values.doXe} onChange={handleDoxe} /></div>
+                                </div>
+                                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                    <div>Hồ bơi: </div><div> <Switch checked={values.hoBoi} onChange={handleHoboi} /></div>
+                                </div>
+                                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                    <div>Bàn ủi: </div><div> <Switch checked={values.banUi} onChange={handleBanUi} /></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <div>Bàn là: </div><div> <Switch checked={values.banLa} onChange={handleBanLa} /></div>
-                    </div >
-                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <div>Tivi: </div><div> <Switch checked={values.tivi} onChange={handleTivi} /></div>
-                    </div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <div>Điều hòa: </div><div> <Switch checked={values.dieuHoa} onChange={handleDieuhoa} /></div>
-                    </div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <div>Wifi: </div><div> <Switch checked={values.wifi} onChange={handleWifi} /></div>
-                    </div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <div>Bếp: </div><div> <Switch checked={values.bep} onChange={handleBep} /></div>
-                    </div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <div>Bãi đổ xe: </div><div> <Switch checked={values.doXe} onChange={handleDoxe} /></div>
-                    </div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <div>Hồ bơi: </div><div> <Switch checked={values.hoBoi} onChange={handleHoboi} /></div>
-                    </div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <div>Bàn ủi: </div><div> <Switch checked={values.banUi} onChange={handleBanUi} /></div>
-                    </div>
-                    <button type='submit'>Thêm</button>
+                    <button style={{ height: '30px', width: '60px', backgroundColor: '#fc4e71', borderRadius: '0.25rem', fontWeight: '500' }} type='submit'>Lưu</button>
                 </form>
             </div>
         </>

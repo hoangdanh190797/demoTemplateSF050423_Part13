@@ -9,14 +9,17 @@ import { Link } from 'react-router-dom';
 
 export default function RoomsManagement() {
   const dispatch = useAppDispatch();
-  const { isGetListRoomManagement, listRoomManagement, isGetListRoomManagementTotal, listRoomManagementTotal } = useAppSelector((state: any) => {
-    return state.rooms
-  })
+  const { isGetListRoomManagement,
+    listRoomManagement,
+    isGetListRoomManagementTotal,
+    listRoomManagementTotal } = useAppSelector((state: any) => {
+      return state.rooms
+    })
 
   const [dataRender, setDataRender] = useState<any>()
 
   // const [totalItem, setTotalItem] = useState(1000)
-  
+
 
   const [dataTotal, setDataTotal] = useState<any>()
 
@@ -26,15 +29,15 @@ export default function RoomsManagement() {
         pageIndex: 1,
         pageSize: 100
       }))
-      if (isGetListRoomManagementTotal) {
-        const { data } = listRoomManagementTotal
-        setDataTotal(data) 
-      }
-  },[dispatch, setDataRender])
+    if (isGetListRoomManagementTotal) {
+      const { data } = listRoomManagementTotal
+      setDataTotal(data)
+    }
+  }, [dispatch, setDataRender])
 
   const [current, setCurrent] = useState(1);
   const [currentPageSize, setCurrentPageSize] = useState(10);
-  
+
   useEffect(() => {
     dispatch(getListRoomManagement(
       {
@@ -43,7 +46,7 @@ export default function RoomsManagement() {
       }))
     if (isGetListRoomManagement) {
       const { data } = listRoomManagement
-      setDataRender(data) 
+      setDataRender(data)
     }
   }, [dispatch, setDataRender]);
 
@@ -62,41 +65,28 @@ export default function RoomsManagement() {
       setDataRender(data)
     }
   })
-  
-
-  // useEffect(() => {
-  //   let { data } = listRoomManagement
-  //   if (isGetListRoomManagement) {
-  //     setDataRender(data)
-  //   }
-  // }, [setDataRender])
-
-  console.log(dataRender)
-
-
-
-
-
-  const [statusSearch, setStatusSearch] = useState(false)
 
   const handleDeleteUser = (idUserDelete: any) => {
     dispatch(deleteRoomManagement(idUserDelete))
   }
 
-  const [nameSearch, setNameSearch] = useState();
+  //Search by IdRoom
+  const [idRoom, setIdRoom] = useState<any>();
+  const [isloadingSearch, setIsLoadingSearch] = useState(false);
+  const [itemSearch, setItemSearch] = useState<any | null>();
+
   const handleNameSearch = (event: any) => {
-    setNameSearch(event.target.value)
+    setIdRoom(event.target.value)
   }
   const handleSubmitNameSearch = (event: any) => {
     event.preventDefault();
-    dispatch(getUserSearchManagement(nameSearch))
-    setStatusSearch(true);
+    listRoomManagementTotal?.data.map((items: any) => {
+      if (items.id === idRoom * 1) {
+        setItemSearch(items)
+        setIsLoadingSearch(true);
+      }
+    })
   }
-  // if(isGetUserSearchManagement){
-  //     console.log(listUserSearchManagement);
-  // }
-
-
 
   return (
     <div>
@@ -123,28 +113,46 @@ export default function RoomsManagement() {
             </tr>
           </thead>
           <tbody>
-            {isGetListRoomManagement ?
+            {isloadingSearch ? <>
+              <tr>
+                <td style={{ textAlign: 'center' }}>{itemSearch.id}</td>
+                <td style={{ textAlign: 'left' }}>{itemSearch.tenPhong}</td>
+                <td style={{ textAlign: 'center' }}>
+                  <img style={{ margin: '0px auto' }} src={itemSearch.hinhAnh} alt="" width={75} height={75} />
+                </td>
+                <td style={{ textAlign: 'center' }}>
+                  <button style={{ height: '30px', width: '60px', backgroundColor: '#fc4e71', borderRadius: '0.25rem', fontWeight: '500', marginRight: '15px' }} onClick={() => handleDeleteUser(itemSearch.id)}>Xóa</button>
+                  <Link to={`addAndeditRoomManagement/${itemSearch.id}`}>
+                    <button style={{ height: '30px', width: '60px', backgroundColor: '#fc4e71', borderRadius: '0.25rem', fontWeight: '500', }}>Sửa</button>
+                  </Link>
+                </td>
+              </tr>
+            </> :
               <>
-                {dataRender && dataRender?.map((rooom: any) => {
-                  return (
-                    <tr>
-                      <td style={{ textAlign: 'center' }}>{rooom.id}</td>
-                      <td style={{ textAlign: 'left' }}>{rooom.tenPhong}</td>
-                      <td style={{ textAlign: 'center' }}>
-                        <img style={{ margin: '0px auto' }} src={rooom.hinhAnh} alt="" width={75} height={75} />
-                      </td>
-                      <td style={{ textAlign: 'center' }}>
-                        <button style={{ height: '30px', width: '60px', backgroundColor: '#fc4e71', borderRadius: '0.25rem', fontWeight: '500', marginRight: '15px' }} onClick={() => handleDeleteUser(rooom.id)}>Xóa</button>
-                        <Link to={`addAndeditRoomManagement/${rooom.id}`}>
-                          <button style={{ height: '30px', width: '60px', backgroundColor: '#fc4e71', borderRadius: '0.25rem', fontWeight: '500', }}>Sửa</button>
-                        </Link>
-                      </td>
-                    </tr>
-                  )
-                })}
+                {isGetListRoomManagement ?
+                  <>
+                    {dataRender && dataRender?.map((rooom: any) => {
+                      return (
+                        <tr>
+                          <td style={{ textAlign: 'center' }}>{rooom.id}</td>
+                          <td style={{ textAlign: 'left' }}>{rooom.tenPhong}</td>
+                          <td style={{ textAlign: 'center' }}>
+                            <img style={{ margin: '0px auto' }} src={rooom.hinhAnh} alt="" width={75} height={75} />
+                          </td>
+                          <td style={{ textAlign: 'center' }}>
+                            <button style={{ height: '30px', width: '60px', backgroundColor: '#fc4e71', borderRadius: '0.25rem', fontWeight: '500', marginRight: '15px' }} onClick={() => handleDeleteUser(rooom.id)}>Xóa</button>
+                            <Link to={`addAndeditRoomManagement/${rooom.id}`}>
+                              <button style={{ height: '30px', width: '60px', backgroundColor: '#fc4e71', borderRadius: '0.25rem', fontWeight: '500', }}>Sửa</button>
+                            </Link>
+                          </td>
+                        </tr>
+                      )
+                    })}
 
-              </> :
-              <></>}
+                  </> :
+                  <></>}
+              </>}
+
           </tbody>
         </table>
         <div style={{ marginTop: '20px' }}>
@@ -154,15 +162,15 @@ export default function RoomsManagement() {
             onChange={onChange}
             total={dataTotal?.length}
             showTotal={(total) => `Total ${total} items`}
-            // onChange={(page, pageSize) => {
-            //   setCurrent(page);
-            //   setCurrentPageSize(pageSize);
-            //   dispatch(getListRoomManagement(
-            //     {
-            //       page,
-            //       pageSize
-            //     }))
-            // }}
+          // onChange={(page, pageSize) => {
+          //   setCurrent(page);
+          //   setCurrentPageSize(pageSize);
+          //   dispatch(getListRoomManagement(
+          //     {
+          //       page,
+          //       pageSize
+          //     }))
+          // }}
           />
         </div>
       </div>

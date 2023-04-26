@@ -4,11 +4,14 @@ import userAPI from 'services/userAPI'
 const initialState = {
     isGetProfileUser: false,
     profileUser: {},
-    newProfileUser:{},
+    newProfileUser: {},
     isPosAvatarFulfulled: false,
     // --- --- ---
     isGetListUserManagement: false,
     listUserManagement: [],
+    // --- --- ---
+    isGetListUserManagementTotal: false,
+    listUserManagementTotal: [],
     // --- --- ---
     isPutUserEditManagement: false,
     userEditManagement: {},
@@ -37,11 +40,15 @@ export const getListUserManagement = createAsyncThunk('user/getListUserManagemen
     const response = await userAPI.getListUserManagement(obj)
     return response.data.content;
 })
+export const getListUserManagementTotal = createAsyncThunk('user/getListUserManagementTotal', async (obj: any) => {
+    const response = await userAPI.getListUserManagement(obj)
+    return response.data.content;
+})
 export const deleteUserManagement = createAsyncThunk('user/deleteUserManagement', async (idUserDelete: any) => {
     const response = await userAPI.deleteUserManagement(idUserDelete)
     return response.data.content;
 })
-export const getUserSearchManagement = createAsyncThunk('user/getUserSearchManagement', async( nameUser: any) => {
+export const getUserSearchManagement = createAsyncThunk('user/getUserSearchManagement', async (nameUser: any) => {
     const response = await userAPI.getUserSearchManagement(nameUser)
     return response.data.content;
 })
@@ -50,7 +57,7 @@ const UserSlices = createSlice({
     name: "user",
     initialState,
     reducers: {
-        getInfoUserAfterUpAvt: ( state ) => {
+        getInfoUserAfterUpAvt: (state) => {
             state.newProfileUser = state.profileUser
         },
         checkPostAvt: (state) => {
@@ -78,13 +85,20 @@ const UserSlices = createSlice({
                 state.profileUser = action.payload
             })
             .addCase(postAvatarUserEditProfile.rejected, (state, action) => { })
-            //--- --- ---
+            //--- --- --- 
             .addCase(getListUserManagement.pending, (state) => { })
             .addCase(getListUserManagement.fulfilled, (state, action) => {
                 state.isGetListUserManagement = true;
                 state.listUserManagement = action.payload
             })
             .addCase(getListUserManagement.rejected, (state, action) => { })
+            //--- --- --- getListUserManagementTotal
+            .addCase(getListUserManagementTotal.pending, (state) => { })
+            .addCase(getListUserManagementTotal.fulfilled, (state, action) => {
+                state.isGetListUserManagementTotal = true;
+                state.listUserManagementTotal = action.payload
+            })
+            .addCase(getListUserManagementTotal.rejected, (state, action) => { })
             //--- --- ---
             .addCase(putUserEditForManagement.pending, (state) => { })
             .addCase(putUserEditForManagement.fulfilled, (state, action) => {
@@ -97,12 +111,12 @@ const UserSlices = createSlice({
             .addCase(deleteUserManagement.fulfilled, (state, action) => { })
             .addCase(deleteUserManagement.rejected, (state) => { })
             //--- --- ---
-            .addCase(getUserSearchManagement.pending, (state) => {})
+            .addCase(getUserSearchManagement.pending, (state) => { })
             .addCase(getUserSearchManagement.fulfilled, (state, aciton) => {
                 state.isGetUserSearchManagement = true;
                 state.listUserSearchManagement = aciton.payload
             })
-            .addCase(getUserSearchManagement.rejected, (state) => {})
+            .addCase(getUserSearchManagement.rejected, (state) => { })
     },
 });
 

@@ -2,7 +2,7 @@ import React from 'react'
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks'
 import { getListUserManagement, deleteUserManagement, getUserSearchManagement } from '../../store/slices/UserSlices'
-import { getListLocationManagement, deleteLocationManagement} from '../../store/slices/LocationSlices'
+import { getListLocationManagement, deleteLocationManagement, getListLocationManagementTotal } from '../../store/slices/LocationSlices'
 import type { PaginationProps } from 'antd';
 import { Pagination } from 'antd';
 import { Link } from 'react-router-dom';
@@ -10,75 +10,110 @@ import { Link } from 'react-router-dom';
 export default function LocationManagement() {
 
   const dispatch = useAppDispatch();
-  const { isGetListUserManagement, listUserManagement, isGetUserSearchManagement, listUserSearchManagement } = useAppSelector((state: any) => {
-    return state.user
-  })
+  const { isGetListUserManagement,
+    listUserManagement,
+    isGetUserSearchManagement,
+    listUserSearchManagement } = useAppSelector((state: any) => {
+      return state.user
+    })
 
-  const {isGetListLocationManagement ,listLocationManagement } = useAppSelector((state:any) => {
-    return state.location
-  })
+  const { isGetListLocationManagement,
+    listLocationManagement,
+    isGetListLocationManagementTotal,
+    listLocationManagementTotal } = useAppSelector((state: any) => {
+      return state.location
+    })
+
+  const [dataRender, setDataRender] = useState<any>()
+  const [dataTotal, setDataTotal] = useState<any>()
+
+  useEffect(() => {
+    dispatch(getListLocationManagementTotal(
+      {
+        pageIndex: 1,
+        pageSize: 100
+      }))
+    if (isGetListLocationManagementTotal) {
+      const { data } = listLocationManagementTotal
+      setDataTotal(data)
+    }
+  }, [dispatch, setDataRender])
 
   const [current, setCurrent] = useState(1);
+  const [currentPageSize, setCurrentPageSize] = useState(10);
 
-  const onChange: PaginationProps['onChange'] = (page) => {
-    setCurrent(page)
-    dispatch(getListLocationManagement(
-      {
-        pageIndex: `${current}`,
-        pageSize: 10
-      }))
-  };
   useEffect(() => {
     dispatch(getListLocationManagement(
       {
-        pageIndex: `${current}`,
+        pageIndex: 1,
         pageSize: 10
       }))
-  }, [dispatch]);
+    if (isGetListLocationManagement) {
+      const { data } = listLocationManagement
+      setDataRender(data)
+    }
+  }, [setDataRender]);
 
-  const { data } = listLocationManagement
+  const onChange: PaginationProps['onChange'] = (page, pageSize) => {
+    setCurrent(page);
+    setCurrentPageSize(pageSize)
+    dispatch(getListLocationManagement(
+      {
+        pageIndex: page,
+        pageSize: pageSize
+      }))
+    if (isGetListLocationManagementTotal) {
+      const { data } = listLocationManagement
+      setDataRender(data)
+    }
+  }
 
-  // const [contentRender, SetContentRender] = useState<any>();
-  // useEffect(() => {
-  //   SetContentRender(data)
-  // },[])
+  useEffect(() => {
+    let { data } = listLocationManagement
+    if (isGetListLocationManagement) {
+      setDataRender(data)
+    }
+  })
 
-  const [statusSearch, setStatusSearch] = useState(false)
-
+  // --- --- ---
   const handleDeleteUser = (idUserDelete: any) => {
     dispatch(deleteLocationManagement(idUserDelete))
   }
 
-  const [nameSearch, setNameSearch] = useState();
+  // --- --- ---
+  const [idLocation, setIdLocation] = useState<any>();
+  const [isloadingSearch, setIsLoadingSearch] = useState(false);
+  const [itemSearch, setItemSearch] = useState<any | null>();
+
   const handleNameSearch = (event: any) => {
-    setNameSearch(event.target.value)
+    setIdLocation(event.target.value)
   }
   const handleSubmitNameSearch = (event: any) => {
     event.preventDefault();
-    dispatch(getUserSearchManagement(nameSearch))
-    setStatusSearch(true);
+    listLocationManagementTotal?.data.map((items: any) => {
+      if (items.id === idLocation * 1) {
+        setItemSearch(items)
+        setIsLoadingSearch(true);
+      }
+    })
   }
-  // if(isGetUserSearchManagement){
-  //     console.log(listUserSearchManagement);
-  // }
-
-
 
   return (
     <div>
       <div>
+        <h1>Quản lý vị trí</h1>
         <Link to='addAndeditLocationManagement/0'>
-          <button>Thêm vị trí</button>
+          <button style={{ height: '30px', width: '180px', backgroundColor: '#fc4e71', borderRadius: '0.25rem', fontWeight: '500', margin: '0px 20px' }} >Thêm vị trí</button>
         </Link>
       </div>
       <div>
         <form action="" onSubmit={handleSubmitNameSearch}>
-          <input type="text" placeholder='Nhập vào họ tên người dùng' onChange={handleNameSearch} />
-          <button type='submit'>Tìm</button>
+          <input style={{ width: '240px', margin: '20px', height: '30px', borderRadius: '0.25rem', color: 'black' }} type="text" placeholder='Vui lòng nhập mã vị trí' onChange={handleNameSearch} />
+          <button style={{ height: '30px', width: '60px', backgroundColor: '#fc4e71', borderRadius: '0.25rem', fontWeight: '500' }} type='submit'>Tìm</button>
         </form>
       </div>
       <div>
-        <table style={{ border: '1px solid black', borderCollapse: 'collapse' }}>
+        <table style={{ border: '1px solid black', borderCollapse: 'collapse', width: '90%', tableLayout: 'auto' }}>
           <thead>
             <tr>
               <th>Mã vị trí</th>
@@ -90,40 +125,39 @@ export default function LocationManagement() {
             </tr>
           </thead>
           <tbody>
-            {statusSearch ?
-              listUserSearchManagement.map((user: any) => {
+            {isloadingSearch ?
+              <tr>
+                <td style={{ textAlign: 'center' }}>{itemSearch.id}</td>
+                <td style={{ textAlign: 'center' }}>{itemSearch.tenViTri}</td>
+                <td style={{ textAlign: 'center' }}>{itemSearch.tinhThanh}</td>
+                <td style={{ textAlign: 'center' }}>{itemSearch.quocGia}</td>
+                <td style={{ textAlign: 'center' }}>
+                  <img style={{ margin: '0px auto' }} src={itemSearch.hinhAnh} alt="" width={75} height={75} />
+                </td>
+                <td>{itemSearch.role}</td>
+                <td>
+                  <button style={{ height: '30px', width: '60px', backgroundColor: '#fc4e71', borderRadius: '0.25rem', fontWeight: '500', marginRight: '15px' }} onClick={() => handleDeleteUser(itemSearch.id)}>Xóa</button>
+                  <Link to={`addAndeditLocationManagement/${itemSearch.id}`}>
+                    <button style={{ height: '30px', width: '60px', backgroundColor: '#fc4e71', borderRadius: '0.25rem', fontWeight: '500', }}>Sửa</button>
+                  </Link>
+                </td>
+              </tr>
+              :
+              dataRender && dataRender.map((location: any) => {
                 return (
                   <tr>
-                    <td>{user.id}</td>
-                    <td>{user.name}</td>
-                    <td>{user.email}</td>
-                    <td>{user.phone}</td>
-                    <td>{user.birthday}</td>
-                    <td>{user.role}</td>
-                    <td>
-                      <button onClick={() => handleDeleteUser(user.id)}>Xóa</button>
-                      <Link to={`addAndeditLocationManagement/${user.id}`}>
-                        <button>Sửa</button>
-                      </Link>
+                    <td style={{ textAlign: 'center' }}>{location.id}</td>
+                    <td style={{ textAlign: 'center' }}>{location.tenViTri}</td>
+                    <td style={{ textAlign: 'center' }}>{location.tinhThanh}</td>
+                    <td style={{ textAlign: 'center' }}>{location.quocGia}</td>
+                    <td style={{ textAlign: 'center' }}>
+                      <img style={{ margin: '0px auto' }} src={location.hinhAnh} alt="" width={75} height={75} />
                     </td>
-                  </tr>
-                )
-              }) :
-              data && data.map((location: any) => {
-                return (
-                  <tr>
-                    <td>{location.id}</td>
-                    <td>{location.tenViTri}</td>
-                    <td>{location.tinhThanh}</td>
-                    <td>{location.quocGia}</td>
-                    <td>
-                      <img src={location.hinhAnh} alt="" width={50} height={50}/>
-                      </td>
 
                     <td>
-                      <button onClick={() => handleDeleteUser(location.id)}>Xóa</button>
+                      <button style={{ height: '30px', width: '60px', backgroundColor: '#fc4e71', borderRadius: '0.25rem', fontWeight: '500', marginRight: '15px' }} onClick={() => handleDeleteUser(location.id)}>Xóa</button>
                       <Link to={`addAndeditLocationManagement/${location.id}`}>
-                        <button>Sửa</button>
+                        <button style={{ height: '30px', width: '60px', backgroundColor: '#fc4e71', borderRadius: '0.25rem', fontWeight: '500', }}>Sửa</button>
                       </Link>
                     </td>
                   </tr>
@@ -132,11 +166,15 @@ export default function LocationManagement() {
 
           </tbody>
         </table>
-        <div>
+        <div style={{ marginTop: '20px' }}>
           <Pagination
             current={current}
+            pageSize={currentPageSize}
             onChange={onChange}
-            total={500} />
+            total={dataTotal?.length}
+            showTotal={(total) => `Total ${total} items`}
+          />
+
         </div>
       </div>
     </div>

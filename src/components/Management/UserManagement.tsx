@@ -1,82 +1,114 @@
 import React from 'react'
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks'
-import { getListUserManagement, deleteUserManagement, getUserSearchManagement } from '../../store/slices/UserSlices'
+import { getListUserManagement, deleteUserManagement, getUserSearchManagement, getListUserManagementTotal } from '../../store/slices/UserSlices'
 import type { PaginationProps } from 'antd';
 import { Pagination } from 'antd';
 import { Link } from 'react-router-dom';
 
 export default function UserManagement() {
   const dispatch = useAppDispatch();
-  const { 
-    isGetListUserManagement, 
-    listUserManagement, 
-    isGetUserSearchManagement, 
-    listUserSearchManagement } = useAppSelector((state: any) => {
+  const {
+    isGetListUserManagement,
+    listUserManagement,
+    isGetUserSearchManagement,
+    listUserSearchManagement,
+    isGetListUserManagementTotal,
+    listUserManagementTotal,
+  } = useAppSelector((state: any) => {
     return state.user
   })
 
-  const [current, setCurrent] = useState(1);
+  const [dataRender, setDataRender] = useState<any>()
+  const [dataTotal, setDataTotal] = useState<any>()
 
-  const onChange: PaginationProps['onChange'] = (page) => {
-    setCurrent(page)
-    dispatch(getListUserManagement(
+  useEffect(() => {
+    dispatch(getListUserManagementTotal(
       {
-        pageIndex: `${current}`,
-        pageSize: 10
+        pageIndex: 1,
+        pageSize: 999
       }))
-  };
+    if (isGetListUserManagementTotal) {
+      const { data } = listUserManagementTotal
+      setDataTotal(data)
+    }
+  }, [dispatch, setDataRender])
+
+  const [current, setCurrent] = useState(1);
+  const [currentPageSize, setCurrentPageSize] = useState(10);
+
   useEffect(() => {
     dispatch(getListUserManagement(
       {
-        pageIndex: `${current}`,
+        pageIndex: 1,
         pageSize: 10
       }))
-  }, [dispatch]);
+    if (isGetListUserManagement) {
+      const { data } = listUserManagement
+      setDataRender(data)
+    }
+  }, [dispatch, setDataRender]);
 
-  const { data } = listUserManagement
+  const onChange: PaginationProps['onChange'] = (page, pageSize) => {
+    setCurrent(page);
+    setCurrentPageSize(pageSize)
+    dispatch(getListUserManagement(
+      {
+        pageIndex: page,
+        pageSize: pageSize
+      }))
+    if (isGetListUserManagement) {
+      const { data } = listUserManagement
+      setDataRender(data)
+    }
+  };
 
-  // const [contentRender, SetContentRender] = useState<any>();
-  // useEffect(() => {
-  //   SetContentRender(data)
-  // },[])
+  useEffect(() => {
+    let { data } = listUserManagement
+    if (isGetListUserManagement) {
+      setDataRender(data)
+    }
+  });
 
-  const [statusSearch, setStatusSearch] = useState(false)
-
+  // --- --- ---
   const handleDeleteUser = (idUserDelete: any) => {
     dispatch(deleteUserManagement(idUserDelete))
   }
 
-  const [nameSearch, setNameSearch] = useState();
+  // --- --- ---
+  const [idUser, setIdUser] = useState<any>();
+  const [isloadingSearch, setIsLoadingSearch] = useState(false);
+  const [itemSearch, setItemSearch] = useState<any | null>();
+
   const handleNameSearch = (event: any) => {
-    setNameSearch(event.target.value)
+    setIdUser(event.target.value)
   }
   const handleSubmitNameSearch = (event: any) => {
     event.preventDefault();
-    dispatch(getUserSearchManagement(nameSearch))
-    setStatusSearch(true);
+    listUserManagementTotal?.data.map((items: any) => {
+      if (items.id === idUser * 1) {
+        setItemSearch(items)
+        setIsLoadingSearch(true);
+      }
+    })
   }
-  // if(isGetUserSearchManagement){
-  //     console.log(listUserSearchManagement);
-  // }
-
-  
 
   return (
     <div>
+      <h1>Quản lý người dùng</h1>
       <div>
         <Link to='addUserManagement/0'>
-          <button>Thêm quản trị viên</button>
+          <button style={{ height: '30px', width: '180px', backgroundColor: '#fc4e71', borderRadius: '0.25rem', fontWeight: '500', margin: '0px 20px' }}>Thêm người dùng</button>
         </Link>
       </div>
       <div>
         <form action="" onSubmit={handleSubmitNameSearch}>
-          <input type="text" placeholder='Nhập vào họ tên người dùng' onChange={handleNameSearch} />
-          <button type='submit'>Tìm</button>
+          <input style={{ width: '240px', margin: '20px', height: '30px', borderRadius: '0.25rem', color: 'black' }} type="text" placeholder='Nhập vào mã người dùng' onChange={handleNameSearch} />
+          <button style={{ height: '30px', width: '60px', backgroundColor: '#fc4e71', borderRadius: '0.25rem', fontWeight: '500' }} type='submit'>Tìm</button>
         </form>
       </div>
       <div>
-        <table style={{ border: '1px solid black', borderCollapse: 'collapse' }}>
+        <table style={{ border: '1px solid black', borderCollapse: 'collapse', width: '90%' }}>
           <thead>
             <tr>
               <th>Mã người dùng</th>
@@ -89,38 +121,35 @@ export default function UserManagement() {
             </tr>
           </thead>
           <tbody>
-            {statusSearch ?
-              listUserSearchManagement.map((user: any) => {
-                return (
+            {isloadingSearch ?
                   <tr>
-                    <td>{user.id}</td>
-                    <td>{user.name}</td>
-                    <td>{user.email}</td>
-                    <td>{user.phone}</td>
-                    <td>{user.birthday}</td>
-                    <td>{user.role}</td>
+                    <td>{itemSearch.id}</td>
+                    <td>{itemSearch.name}</td>
+                    <td>{itemSearch.email}</td>
+                    <td>{itemSearch.phone}</td>
+                    <td>{itemSearch.birthday}</td>
+                    <td>{itemSearch.role}</td>
                     <td>
-                      <button onClick={() => handleDeleteUser(user.id)}>Xóa</button>
-                      <Link to={`addUserManagement/${user.id}`}>
-                        <button>Sửa</button>
+                      <button style={{ height: '30px', width: '60px', backgroundColor: '#fc4e71', borderRadius: '0.25rem', fontWeight: '500', marginRight: '15px' }} onClick={() => handleDeleteUser(itemSearch.id)}>Xóa</button>
+                      <Link to={`addUserManagement/${itemSearch.id}`}>
+                        <button style={{ height: '30px', width: '60px', backgroundColor: '#fc4e71', borderRadius: '0.25rem', fontWeight: '500', }}>Sửa</button>
                       </Link>
                     </td>
                   </tr>
-                )
-              }) :
-              data && data.map((user: any) => {
+               :
+              dataRender && dataRender?.map((user: any) => {
                 return (
                   <tr>
-                    <td>{user.id}</td>
-                    <td>{user.name}</td>
-                    <td>{user.email}</td>
-                    <td>{user.phone}</td>
-                    <td>{user.birthday}</td>
-                    <td>{user.role}</td>
+                    <td style={{ textAlign: 'center' }}>{user.id}</td>
+                    <td style={{ textAlign: 'left' }}>{user.name}</td>
+                    <td style={{ textAlign: 'left' }}>{user.email}</td>
+                    <td style={{ textAlign: 'left' }}>{user.phone}</td>
+                    <td style={{ textAlign: 'center' }}>{user.birthday}</td>
+                    <td style={{ textAlign: 'center' }}>{user.role}</td>
                     <td>
-                      <button onClick={() => handleDeleteUser(user.id)}>Xóa</button>
+                      <button style={{ height: '30px', width: '60px', backgroundColor: '#fc4e71', borderRadius: '0.25rem', fontWeight: '500', marginRight: '15px' }} onClick={() => handleDeleteUser(user.id)}>Xóa</button>
                       <Link to={`addUserManagement/${user.id}`}>
-                        <button>Sửa</button>
+                        <button style={{ height: '30px', width: '60px', backgroundColor: '#fc4e71', borderRadius: '0.25rem', fontWeight: '500', }}>Sửa</button>
                       </Link>
                     </td>
                   </tr>
@@ -129,11 +158,14 @@ export default function UserManagement() {
             }
           </tbody>
         </table>
-        <div>
+        <div style={{ marginTop: '20px' }}>
           <Pagination
             current={current}
+            pageSize={currentPageSize}
             onChange={onChange}
-            total={500} />
+            total={dataTotal?.length}
+            showTotal={(total) => `Total ${total} items`}
+          />
         </div>
       </div>
     </div>

@@ -8,6 +8,9 @@ const initialState = {
     isGetListLocationManagement: false,
     listLocationManagement: [],
     //--- --- ---
+    isGetListLocationManagementTotal: false,
+    listLocationManagementTotal: [],
+    //--- --- ---
     isGetLocationByIDManagement: false,
     locationByIDManagement: {},
     //--- --- ---
@@ -27,6 +30,11 @@ export const getLocation = createAsyncThunk('location/getLocation', async () => 
 })
 
 export const getListLocationManagement = createAsyncThunk('location/getListLocationManagement', async (objPage: any) => {
+    const response = await locationAPI.getListLocationManagement(objPage);
+    return response.data.content
+})
+
+export const getListLocationManagementTotal = createAsyncThunk('location/getListLocationManagementTotal', async (objPage: any) => {
     const response = await locationAPI.getListLocationManagement(objPage);
     return response.data.content
 })
@@ -75,6 +83,13 @@ const LocationSlices = createSlice({
                 state.listLocationManagement = aciton.payload;
             })
             .addCase(getListLocationManagement.rejected, (state, action) => { })
+            // --- --- ---
+            .addCase(getListLocationManagementTotal.pending, (state) => { })
+            .addCase(getListLocationManagementTotal.fulfilled, (state, aciton) => {
+                state.isGetListLocationManagementTotal = true;
+                state.listLocationManagementTotal = aciton.payload;
+            })
+            .addCase(getListLocationManagementTotal.rejected, (state, action) => { })
             // --- --- ---
             .addCase(getLocationByIDManagement.pending, (state) => { })
             .addCase(getLocationByIDManagement.fulfilled, (state, action) => {
