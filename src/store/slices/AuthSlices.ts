@@ -1,5 +1,6 @@
-import authAPI from 'services/authAPI';
 import { createSlice, createAsyncThunk, PayloadAction, createAction } from '@reduxjs/toolkit'
+import authAPI from 'services/authAPI';
+import axios, { AxiosError } from 'axios';
 
 declare interface initialState {
     isSignIn: boolean

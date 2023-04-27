@@ -1,6 +1,5 @@
-import commentsAPI from "services/commentAPI";
 import { createSlice, createAsyncThunk, PayloadAction, createAction } from "@reduxjs/toolkit";
-
+import commentsAPI from "services/commentAPI";
 const initialState = {
     isGetComment: false,
     comments: [],

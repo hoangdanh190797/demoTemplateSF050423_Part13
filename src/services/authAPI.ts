@@ -1,5 +1,5 @@
 import axios from 'axios';
-import baseAPI from './baseAPI';
+import { baseAPI } from './baseAPI';
 
 const authAPI = {
     postUserSignin: (userCurrent: any) => {
