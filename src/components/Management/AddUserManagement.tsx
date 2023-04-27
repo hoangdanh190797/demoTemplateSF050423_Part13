@@ -81,6 +81,7 @@ export default function AddUserManagement() {
                         <fieldset style={{display:'flex', justifyContent:'space-between'}}>
                             <label htmlFor="">Email: </label>
                             <input
+                                disabled
                                 name="email"
                                 onChange={handleInputChange}
                                 value={values.email}
@@ -91,9 +92,14 @@ export default function AddUserManagement() {
                         <fieldset style={{display:'flex', justifyContent:'space-between'}}>
                             <label htmlFor="">Mật khẩu: </label>
                             <input
+                                disabled
                                 name="password"
+                                type='password'
                                 onChange={handleInputChange}
-                                value={values.password} type="text" id="" placeholder='Mật khẩu' />
+                                value={values.password}
+                                id="" 
+                                // placeholder='Mật khẩu' 
+                                />
                         </fieldset>
                         <fieldset style={{display:'flex', justifyContent:'space-between'}}>
                             <label htmlFor="">Số điện thoại: </label>

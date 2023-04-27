@@ -1,5 +1,5 @@
 import axios from "axios";
-import { baseAPI } from "./baseAPI";
+import baseAPI from "./baseAPI";
 
 const userAPI = {
     getUserByIdForProfile: (idUser: any) => {
@@ -12,12 +12,13 @@ const userAPI = {
     postAvatarUserEditProfile: (imgUser: any) => {
         let tokenUser = localStorage.getItem('accessToken');
         let headers = {}
-        if(tokenUser){
-            headers = {
-                token: tokenUser,
-            }
-        }
-        return baseAPI.post('/users/upload-avatar', imgUser, { headers })
+        // if(tokenUser){
+        //     headers = {
+        //         token: tokenUser,
+        //     }
+        // }
+        //, { headers }
+        return baseAPI.post('/users/upload-avatar', imgUser)
     },
     putUserEditForManagement: (userEdit: any) => {
         let idUserEdit = localStorage.getItem('idUserEdit') ;

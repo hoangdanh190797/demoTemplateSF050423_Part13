@@ -132,7 +132,7 @@ export default function SignIn() {
               <Alert severity="success">Đăng nhập thành công</Alert>
             </Stack> : ''}
               <h1>Sign in</h1>
-              <p>
+              <p style={{marginBottom:'10px'}}>
                 <Link to={'/signup'}>
                   <a href=''>Have an account?</a>
                 </Link>
@@ -157,9 +157,9 @@ export default function SignIn() {
                   />
                 </fieldset>
                 <div>
-                  {isError ? <p>{error.data.content}</p> : ""}
+                  {isError ? <p style={{color:'red'}}>{error.data.content}</p> : ""}
                   {errors.map((error:any) => (
-                    <div key={error}>{error}</div>
+                    <div style={{color:'red'}} key={error}>{error}</div>
                   ))}
                 </div>
                 <div className='btn_'>
