@@ -1,4 +1,4 @@
-import { baseAPI } from "./baseAPI";
+import  baseAPI from "./baseAPI";
 
 const bookingAPI = {
     getListBookingManagement: () => {

@@ -1,5 +1,6 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import bookingAPI from 'services/bookingAPI'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+
 const initialState = {
   isGetListBookingManagement: false,
   listBookingManagement: [],
