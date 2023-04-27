@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 import { useParams, useNavigate, Link, NavLink } from "react-router-dom";
 import { postUserSignup } from 'store/slices/AuthSlices';
-import '../styles/pages/_signup.scss';
 import ValidateSignupForm from 'components/ValidateSignupForm';
 import { isEmpty } from 'lodash';
 // import { Alert } from 'antd';
@@ -12,6 +11,7 @@ import Stack from '@mui/material/Stack';
 
 import { checkSignUpRejected, checkSignUpFulfilled } from '../store/slices/AuthSlices'
 import { Spin } from 'antd';
+import '../styles/pages/_signup.scss';
 
 export default function SignUp() {
   const dispatch = useAppDispatch();
@@ -200,61 +200,65 @@ export default function SignUp() {
               <Alert severity="error">Đăng ký thất bại</Alert>
             </Stack> : ''}
             <h1>Sign up</h1>
-            <p>
+            <p style={{marginBottom:'10px'}}>
               <Link to={'/signup'}>
                 <a href=''>Have an account?</a>
               </Link>
             </p>
 
-            <form onSubmit={handleSubmit}>
-
+            <form onSubmit={handleSubmit} >
               <fieldset className="form_group">
                 <input
+                  style={{height:"40px", marginBottom:'5px'}}
                   className="form_control"
                   type="text"
                   placeholder="Your Name"
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 />
-                {errors.name && <span>{errors.name}</span>}
+                {errors.name && <span style={{color:'red'}}>{errors.name}</span>}
               </fieldset>
               <fieldset className="form_group">
                 <input
+                  style={{height:"40px", marginBottom:'5px'}}
                   className="form_control"
                   type="text"
                   placeholder="Your Email"
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 />
-                {errors.email && <span>{errors.email}</span>}
+                {errors.email && <span style={{color:'red'}}>{errors.email}</span>}
 
               </fieldset>
               <fieldset className="form_group">
                 <input
+                  style={{height:"40px", marginBottom:'5px'}}
                   className="form_control"
                   type="password"
                   placeholder="Password"
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                 />
-                {errors.password && <span>{errors.password}</span>}
+                {errors.password && <span style={{color:'red'}}>{errors.password}</span>}
 
               </fieldset>
               <fieldset className="form_group">
                 <input
+                  style={{height:"40px", marginBottom:'5px'}}
                   className="form_control"
                   type="text"
                   placeholder="Your Phone"
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                 />
-                {errors.phone && <span>{errors.phone}</span>}
+                {errors.phone && <span style={{color:'red'}}>{errors.phone}</span>}
 
               </fieldset>
               <fieldset className="form_group">
                 <input
+                  style={{height:"40px", marginBottom:'5px'}}
                   className="form_control"
                   type="text"
                   placeholder="Your birthday"
                   onChange={(e) => setFormData({ ...formData, birthday: e.target.value })}
                 />
-                {errors.birthday && <span>{errors.birthday}</span>}
+                {errors.birthday && <span style={{color:'red'}}>{errors.birthday}</span>}
 
               </fieldset>
               <fieldset className="form_group">
@@ -268,7 +272,7 @@ export default function SignUp() {
                   <option value='true'>Male</option>
                   <option value='false'>Female</option>
                 </select>
-                {errors.gender && <span>{errors.gender}</span>}
+                {errors.gender && <span style={{color:'red'}}>{errors.gender}</span>}
 
               </fieldset>
               {/* <fieldset className="form_group">

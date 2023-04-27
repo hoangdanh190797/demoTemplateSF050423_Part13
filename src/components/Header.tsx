@@ -96,8 +96,8 @@ export default function Header() {
 
                                         {isStatusSignin ?
                                             <div>
-                                                {isPosAvatarFulfulled ? <img src={profileUser?.avatar} alt='ImageER' width={25} /> : <div>
-                                                    <img src={userCurrent?.user?.avatar} alt='ImageER' width={25} />
+                                                {isPosAvatarFulfulled ? <img style={{borderRadius:'100%'}} src={profileUser?.avatar} alt='ImageER' width={40} /> : <div>
+                                                    <img style={{borderRadius:'100%'}} src={userCurrent?.user?.avatar} alt='ImageER' width={40} />
                                                 </div>}
                                             </div>
 
