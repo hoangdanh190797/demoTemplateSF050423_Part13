@@ -1,5 +1,5 @@
 import axios from "axios";
-import  baseAPI  from "./baseAPI";
+import { baseAPI } from "./baseAPI";
 
 const commentsAPI = {
     getCommentsByIDRoom: (idRoom: any) => {
@@ -7,8 +7,7 @@ const commentsAPI = {
     },
     postCommentsByIDRoom: (contentComment: any) => {
         let tokenUser = localStorage.getItem('accessToken');
-        //{headers:{token:`${tokenUser}`}}
-        return baseAPI.post('/binh-luan', contentComment)
+        return baseAPI.post('/binh-luan', contentComment, {headers:{token:`${tokenUser}`}})
     }
 }
 

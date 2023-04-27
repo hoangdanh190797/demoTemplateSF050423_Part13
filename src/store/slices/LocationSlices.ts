@@ -1,5 +1,5 @@
-import locationAPI from '../../services/locationAPI';
 import { createSlice, createAsyncThunk, PayloadAction, createAction } from '@reduxjs/toolkit'
+import locationAPI from '../../services/locationAPI';
 
 const initialState = {
     isGetLocation: false,

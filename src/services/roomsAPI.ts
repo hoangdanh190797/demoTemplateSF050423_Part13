@@ -1,5 +1,5 @@
 import axios from 'axios'
-import baseAPI from './baseAPI';
+import { baseAPI } from './baseAPI';
 
 const roomsAPI = {
     getRooms: () => {
@@ -20,24 +20,20 @@ const roomsAPI = {
     putRoomEditManagement: (infoRoomEdit: any) => {
         let idRoomEdit = localStorage.getItem('idRoomEdit')
         let tokenUser = localStorage.getItem('accessToken')
-        //, { headers: { token: tokenUser } }
-        return baseAPI.put(`/phong-thue/${idRoomEdit}`, infoRoomEdit)
+        return baseAPI.put(`/phong-thue/${idRoomEdit}`, infoRoomEdit, { headers: { token: tokenUser } })
     },
     postNewRoomManagement: (infoRoomNew: any) => {
         let tokenUser = localStorage.getItem('accessToken')
-        //, { headers: { token: tokenUser } }
-        return baseAPI.post('/phong-thue', infoRoomNew)
+        return baseAPI.post('/phong-thue', infoRoomNew, { headers: { token: tokenUser } })
     },
     deleteRoomManagement: (idRoomDelete: any) => {
         let tokenUser = localStorage.getItem('accessToken')
-        //, { headers: { token: tokenUser } }
-        return baseAPI.delete(`/phong-thue/${idRoomDelete}`)
+        return baseAPI.delete(`/phong-thue/${idRoomDelete}`, { headers: { token: tokenUser } })
     },
     postImageRoomManagement: (imageRoom: any) => {
         let tokenUser = localStorage.getItem('accessToken')
         let idRoomEdit = localStorage.getItem('idRoomEdit')
-        //, { headers: { token: tokenUser } }
-        return baseAPI.post(`/phong-thue/upload-hinh-phong?maPhong=${idRoomEdit}`, imageRoom)
+        return baseAPI.post(`/phong-thue/upload-hinh-phong?maPhong=${idRoomEdit}`, imageRoom, { headers: { token: tokenUser } })
     }
 }
 export default roomsAPI;

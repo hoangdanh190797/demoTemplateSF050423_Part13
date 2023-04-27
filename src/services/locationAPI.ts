@@ -1,5 +1,5 @@
 import axios from "axios";
-import  baseAPI  from "./baseAPI";
+import { baseAPI } from "./baseAPI";
 
 const locationAPI = {
     getLocation: () => {
@@ -10,8 +10,7 @@ const locationAPI = {
     },
     postLocationManagement: (infoLocation: any) => {
         let tokenUser = localStorage.getItem('accessToken')
-        //, { headers: { token: tokenUser } }
-        return baseAPI.post(`/vi-tri`, infoLocation)
+        return baseAPI.post(`/vi-tri`, infoLocation, { headers: { token: tokenUser } })
     },
     getListLocationManagement: (obj: { pageIndex: any, pageSize: any }) => {
         return baseAPI.get(`/vi-tri/phan-trang-tim-kiem?pageIndex=${obj.pageIndex}&pageSize=${obj.pageSize}`)
@@ -19,19 +18,16 @@ const locationAPI = {
     putLocationByIDManagement: (locationEdit: any) => {
         let idLocationEdit = localStorage.getItem('idLocationEdit');
         let tokenUser = localStorage.getItem('accessToken');
-        //, { headers: { token: tokenUser } }
-        return baseAPI.put(`vi-tri/${idLocationEdit}`, locationEdit)
+        return baseAPI.put(`vi-tri/${idLocationEdit}`, locationEdit, { headers: { token: tokenUser } })
     },
     deleteLocationManagement: (idLocationDelete: any) => {
         let tokenUser = localStorage.getItem('accessToken');
-        //, { headers: { token: tokenUser } }
-        return baseAPI.delete(`/vi-tri/${idLocationDelete}`)
+        return baseAPI.delete(`/vi-tri/${idLocationDelete}`, { headers: { token: tokenUser } })
     },
     postImageForLocation: (imageLocation: any) => {
         let tokenUser = localStorage.getItem('accessToken');
         let idLocationEdit = localStorage.getItem('idLocationEdit');
-        //, { headers: { token: tokenUser } }
-        return baseAPI.post(`/vi-tri/upload-hinh-vitri?maViTri=${idLocationEdit}`,imageLocation)
+        return baseAPI.post(`/vi-tri/upload-hinh-vitri?maViTri=${idLocationEdit}`,imageLocation, { headers: { token: tokenUser } })
     }
 }
 

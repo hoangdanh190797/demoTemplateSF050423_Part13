@@ -1,5 +1,5 @@
-import roomsAPI from "../../services/roomsAPI";
 import { createSlice, createAsyncThunk, PayloadAction, createAction } from "@reduxjs/toolkit";
+import roomsAPI from "../../services/roomsAPI";
 
 const initialState = {
       isGetRooms: false,

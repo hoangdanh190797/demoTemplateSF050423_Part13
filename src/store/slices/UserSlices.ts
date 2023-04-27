@@ -1,5 +1,5 @@
-import userAPI from 'services/userAPI'
 import { createSlice, createAsyncThunk, PayloadAction, createAction } from '@reduxjs/toolkit'
+import userAPI from 'services/userAPI'
 
 const initialState = {
     isGetProfileUser: false,
