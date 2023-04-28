@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
-import '../styles/components/_banner.scss';
+import React, { useState } from 'react';
+import bannerJPG from '../assets/images/bannerJPG.jpg'
+// import '../styles/components/_banner.scss';
 //
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../hooks/hooks';
@@ -15,9 +16,8 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import Autocomplete from '@mui/material/Autocomplete';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-import { useParams, useNavigate, Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 //
 
@@ -26,53 +26,30 @@ export default function Banner() {
 
     const dispatch = useAppDispatch();
 
-    const { isGetRooms, rooms } = useAppSelector((state: any) => {
-        return state.rooms
-    })
-    const { isGetLocation, location } = useAppSelector((state: any) => {
+    const { location } = useAppSelector((state: any) => {
         return state.location
     })
-
-    const newRoomsEx = [...rooms];
-    const newArrMaViTri = [];
 
     useEffect(() => {
         dispatch(getLocation())
     }, [dispatch]);
 
-    // if (isGetLocation) {
-    //     console.log(location);
-    // }
     const [value, setValue] = React.useState<Dayjs | null>(dayjs('2022-04-17'));
     const [valueOne, setValueOne] = React.useState<any | null>(null);
     const [statusID, setStatusID] = useState(false)
 
-    console.log(valueOne);
-
-    // console.log(valueOne);
-    // if(statusID){ 
-    //     let { id } = valueOne;
-    //     return id
-    // }
-
-    const handleSearch = () => {
-
-    }
-
     return (
-        <div id='banner_'>
-            <div className='banner_background'
-            >   <div style={{
-                width: '100%',
-                height: '480px',
-                backgroundImage: "url('https://transcode-v2.app.engoo.com/image/fetch/f_auto,c_limit,w_1280,h_800,dpr_2/https://assets.app.engoo.com/images/5Z2eP5Tfe0anTWCtliOV2v.jpeg')",
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat',
-                backgroundSize: 'cover',
-
-            }}></div>
-                <div className='banner_title_main'>
-                    <div className='banner_title hover:bg-sky-700 border-around'>
+        <div>
+            <div>
+                <div className='relative'>
+                    <img className='w-full h-[320px]' src={bannerJPG} alt="" />
+                    <div className='absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] text-white'>
+                        <h1 className='text-[24px]'>KHÁCH SẠN, KHU NGHỈ DƯỠNG, NHÀ TRỌ & HƠN THẾ NỮA</h1>
+                        <h1 className='text-[20px]'>Nhận giá tốt nhất cho {`>`} 2.000.000 chỗ nghỉ, trên toàn cầu</h1>
+                    </div>
+                </div>
+                <div>
+                    <div>
                         <div>Khách sạn & Nhà</div>
                         <div>Chỗ ở riêng</div>
                         <div>Máy bay + K.sạn</div>
@@ -82,26 +59,21 @@ export default function Banner() {
                     </div>
                 </div>
 
-                <div className='banner_search'>
-                    <form className='banner_form' onSubmit={handleSearch}>
+                <div>
+                    <form>
                         {/* --- */}
                         <div>
-                            <Stack className='searchInput_content'>
+                            <Stack>
                                 <Autocomplete
                                     freeSolo
                                     id="free-solo-2-demo"
                                     disableClearable
                                     options={location.map((item: any) => item)}
                                     getOptionLabel={(item) => item.tinhThanh}
-                                    // value={value}
                                     onChange={(event: any, newValue: any | null) => {
                                         setValueOne(newValue);
                                         setStatusID(true);
                                     }}
-                                    // inputValue={inputValue}
-                                    // onInputChange={(event, newInputValue) => {
-                                    //     setInputValue(newInputValue);
-                                    //   }}
                                     renderInput={(params) => (
 
                                         <TextField
@@ -119,25 +91,24 @@ export default function Banner() {
                             </Stack>
                         </div>
                         {/* --- */}
-                        <div className='datePicker'>
+                        <div>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                    <DatePicker
-                                        className='w-2/5'
-                                        label="Controlled picker"
-                                        value={value}
-                                        onChange={(newValue) => setValue(newValue)}
-                                    />
-                                    <DatePicker
-                                        className='w-2/5'
-                                        label="Controlled picker"
-                                        value={value}
-                                        onChange={(newValue) => setValue(newValue)}
-                                    />
+                                <DatePicker
+                                    className='w-2/5'
+                                    label="Controlled picker"
+                                    value={value}
+                                    onChange={(newValue) => setValue(newValue)}
+                                />
+                                <DatePicker
+                                    className='w-2/5'
+                                    label="Controlled picker"
+                                    value={value}
+                                    onChange={(newValue) => setValue(newValue)}
+                                />
                             </LocalizationProvider>
                         </div>
                         {/* --- */}
-                        {/* <input className='input_two' type="text" placeholder='Nhập số lượng khách' /> */}
-                        <Stack className='searchInput_content_two'>
+                        <Stack>
                             <Autocomplete
                                 freeSolo
                                 id="free-solo-2-demo"
@@ -149,12 +120,7 @@ export default function Banner() {
                                     setValueOne(newValue);
                                     setStatusID(true);
                                 }}
-                                // inputValue={inputValue}
-                                // onInputChange={(event, newInputValue) => {
-                                //     setInputValue(newInputValue);
-                                //   }}
                                 renderInput={(params) => (
-
                                     <TextField
                                         {...params}
                                         label="Số lượng khách"
@@ -164,7 +130,6 @@ export default function Banner() {
                                             type: 'search',
                                         }}
                                     />
-
                                 )}
                             />
                         </Stack>
@@ -174,7 +139,7 @@ export default function Banner() {
                         {/* --- */}
                         {statusID ? <Link to={`/roomsByLocation/${valueOne.id}`}>
                             <button className='button_Search '></button>
-                        </Link> : <button className='button_Search'><span>TÌM</span></button>}
+                        </Link> : <button><span>TÌM</span></button>}
                     </form>
                 </div>
             </div>

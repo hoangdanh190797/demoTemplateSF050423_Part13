@@ -157,7 +157,7 @@ export default function SignIn() {
                   />
                 </fieldset>
                 <div>
-                  {isError ? <p style={{color:'red'}}>{error.data.content}</p> : ""}
+                  {isError ? <p style={{color:'red'}}>{error?.data?.content}</p> : ""}
                   {errors.map((error:any) => (
                     <div style={{color:'red'}} key={error}>{error}</div>
                   ))}

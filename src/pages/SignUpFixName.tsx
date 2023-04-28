@@ -286,7 +286,7 @@ export default function SignUp() {
               </fieldset> */}
 
               <div>
-                {isError ? <p>{error.data.content}</p> : ""}
+                {isError ? <p>{error?.data?.content}</p> : ""}
               </div>
 
               <div className='btn_'>

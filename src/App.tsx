@@ -9,7 +9,7 @@ import { Outlet, Navigate } from 'react-router-dom'
 import HomeTemplate from './template/HomeTemplate';
 import Home from './pages/Home';
 import SignIn from 'pages/SignIn';
-import SignUp from 'pages/SignUp';
+import SignUp from 'pages/SignUpFixName';
 import YourTrip from 'pages/YourTrip';
 import Profile from 'pages/Profile';
 import DetailRoom from 'pages/DetailRoom';
@@ -27,10 +27,9 @@ import AddandEditBookingManagement from 'components/Management/AddandEditBooking
 
 
 function App() {
-  const { isStatusSignin, userCurrent } = useAppSelector((state: any) => {
+  const { userCurrent } = useAppSelector((state: any) => {
     return state.auth
 })
-  const isRole = userCurrent?.user?.role;
   return (
     <Routes>
       <Route path='/' element={<HomeTemplate />}>
@@ -43,7 +42,7 @@ function App() {
         <Route path='roomsByLocation/:idLocation' element={<SearchRoomByLocation />} />
       </Route >
       {/* --- */}
-      <Route path='admin' element={<ProtectedTemplate isAuth={isRole} component={<PageAdmin />} />}>
+      <Route path='admin' element={<ProtectedTemplate isAuth={userCurrent?.user?.role} component={<PageAdmin />} />}>
           <Route path='userManagement' element={<UserManagement />} />
           <Route path='userManagement/addUserManagement/:idUser' element={<AddUserManagement />} />
           <Route path='locationManagement' element={<LocationManagement />} />

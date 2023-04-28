@@ -25,6 +25,7 @@ export default function SearchRoomByLocation() {
     if (isGetRoomsByLocation) {
         console.log(roomsByLocation);
     }
+
   return (
     <div>
     <h1>Những chỗ nghỉ nổi bật khuyến nghị cho bạn:</h1>
