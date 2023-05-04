@@ -128,7 +128,7 @@ export default function Header() {
                     <span>Chỗ ở</span>
                     <span>Chuyến bay</span>
                     <div className='relative'>
-                        <div className='absolute top-[-60%] left-0 bg-red-600 text-white px-0.5'>
+                        <div className='absolute top-[-80%] left-0 bg-red-600 text-white px-0.5'>
                             Mới!
                         </div>
                         <div>
@@ -136,7 +136,7 @@ export default function Header() {
                     </div>
                     <span>Căn hộ</span>
                     <div className='relative'>
-                        <div className='absolute top-[-60%] left-0 bg-red-600 text-white px-0.5'>
+                        <div className='absolute top-[-80%] left-0 bg-red-600 text-white px-0.5'>
                             Mới!
                         </div>
                         <div>
