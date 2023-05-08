@@ -11,18 +11,16 @@ export default function HomeTemplate() {
   const IS_BROWSER = typeof window !== 'undefined';
 
   useEffect(() => {
-    // if (IS_BROWSER) {
+    if (IS_BROWSER) {
       const handler = (event: any) => {
         event.preventDefault();
         setPromptEvent(event);
         console.log(event)
       };
       window.addEventListener("beforeinstallprompt", handler);
-    // }
-
-
-    return () => {
-      window.removeEventListener("beforeinstallprompt", handler);
+      return () => {
+        window.removeEventListener("beforeinstallprompt", handler);
+      }
     };
   });
 
