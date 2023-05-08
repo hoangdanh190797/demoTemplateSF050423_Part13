@@ -13,6 +13,7 @@ export default function HomeTemplate() {
     const handler = (event: any) => {
       event.preventDefault();
       setPromptEvent(event);
+      console.log(event)
     };
 
     window.addEventListener("beforeinstallprompt", handler);
@@ -23,9 +24,9 @@ export default function HomeTemplate() {
   }, []);
   return (
     <>
-      {/* {promptEvent && ( */}
+      {promptEvent && (
         <ButtonAddToHomeScreen promptEvent={promptEvent} />
-      {/* )} */}
+      )}
       {/* Header */}
       <Header />
 
