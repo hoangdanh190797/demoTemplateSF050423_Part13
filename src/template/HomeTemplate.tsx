@@ -8,25 +8,29 @@ import ButtonAddToHomeScreen from '../components/ButtonAddToHomeScreen'
 
 export default function HomeTemplate() {
   const [promptEvent, setPromptEvent] = useState<any>(null);
+  const IS_BROWSER = typeof window !== 'undefined';
 
   useEffect(() => {
-    const handler = (event: any) => {
-      event.preventDefault();
-      setPromptEvent(event);
-      console.log(event)
-    };
+    if (IS_BROWSER) {
+      const handler = (event: any) => {
+        event.preventDefault();
+        setPromptEvent(event);
+        console.log(event)
+      };
+      window.addEventListener("beforeinstallprompt", handler);
+    }
 
-    window.addEventListener("beforeinstallprompt", handler);
 
-    return () => {
-      window.removeEventListener("beforeinstallprompt", handler);
-    };
+    // return () => {
+    //   window.removeEventListener("beforeinstallprompt", handler);
+    // };
   }, []);
+
   return (
     <>
-      {promptEvent && (
+      {promptEvent ? (
         <ButtonAddToHomeScreen promptEvent={promptEvent} />
-      )}
+      ) : <div>pla pla</div>}
       {/* Header */}
       <Header />
 
