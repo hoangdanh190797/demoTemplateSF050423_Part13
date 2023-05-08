@@ -5,6 +5,7 @@ import React from 'react';
 import { Route, Routes } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from 'hooks/hooks'
 import { Outlet, Navigate } from 'react-router-dom'
+import { useState, useEffect } from 'react';
 
 import HomeTemplate from './template/HomeTemplate';
 import Home from './pages/Home';
@@ -29,7 +30,8 @@ import AddandEditBookingManagement from 'components/Management/AddandEditBooking
 function App() {
   const { userCurrent } = useAppSelector((state: any) => {
     return state.auth
-})
+  })
+
   return (
     <Routes>
       <Route path='/' element={<HomeTemplate />}>
@@ -43,14 +45,14 @@ function App() {
       </Route >
       {/* --- */}
       <Route path='admin' element={<ProtectedTemplate isAuth={userCurrent?.user?.role} component={<PageAdmin />} />}>
-          <Route path='userManagement' element={<UserManagement />} />
-          <Route path='userManagement/addUserManagement/:idUser' element={<AddUserManagement />} />
-          <Route path='locationManagement' element={<LocationManagement />} />
-          <Route path='locationManagement/addAndeditLocationManagement/:idLocation' element={<AddandEditLocationManagement />} />
-          <Route path='roomsManagement' element={<RoomsManagement />} />
-          <Route path='roomsManagement/addAndeditRoomManagement/:idRoom' element={<AddandEditRoomManagement/>}/>
-          <Route path='bookingManagement' element={<BookingManagement />} />
-          <Route path='bookingManagement/addAndeditBookingManagement/:idBooking' element={<AddandEditBookingManagement />} />
+        <Route path='userManagement' element={<UserManagement />} />
+        <Route path='userManagement/addUserManagement/:idUser' element={<AddUserManagement />} />
+        <Route path='locationManagement' element={<LocationManagement />} />
+        <Route path='locationManagement/addAndeditLocationManagement/:idLocation' element={<AddandEditLocationManagement />} />
+        <Route path='roomsManagement' element={<RoomsManagement />} />
+        <Route path='roomsManagement/addAndeditRoomManagement/:idRoom' element={<AddandEditRoomManagement />} />
+        <Route path='bookingManagement' element={<BookingManagement />} />
+        <Route path='bookingManagement/addAndeditBookingManagement/:idBooking' element={<AddandEditBookingManagement />} />
       </Route>
 
       {/* Catch all */}

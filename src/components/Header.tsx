@@ -16,10 +16,25 @@ import type { MenuProps } from 'antd';
 import { Button, Dropdown, Space } from 'antd';
 import { useNavigate, Link } from "react-router-dom";
 // import '../styles/components/_header.scss'
+import ButtonAddToHomeScreen from './ButtonAddToHomeScreen'
 
 export default function Header() {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
+
+    const [promptEvent, setPromptEvent] = useState<any>(null);
+    useEffect(() => {
+        const handler = (event: any) => {
+            event.preventDefault();
+            setPromptEvent(event);
+        };
+
+        window.addEventListener("beforeinstallprompt", handler);
+
+        return () => {
+            window.removeEventListener("beforeinstallprompt", handler);
+        };
+    }, []);
 
     const items: MenuProps['items'] = [
         {
@@ -117,6 +132,12 @@ export default function Header() {
 
     return (
         <div className='h-[60px] flex justify-around items-center'>
+            <div>
+                {promptEvent && (
+                    <ButtonAddToHomeScreen promptEvent={promptEvent} />
+                )}
+                {/* Nội dung ứng dụng */}
+            </div>
             <div className='flex justify-around w-7/12'>
                 <div className='w-2/12 flex justify-center'>
                     <Link to={`/`}>
@@ -170,6 +191,7 @@ export default function Header() {
                     </button>
                 </div>
                 <div>
+
                     <button>
                         <div>
                             <div>
