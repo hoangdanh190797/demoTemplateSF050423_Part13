@@ -29,7 +29,8 @@
     {
       "src": "fvi256.png",
       "type": "image/png",
-      "sizes": "256x256"
+      "sizes": "256x256",
+      "purpose": "any maskable"
     },
     {
       "src": "fvi512.png",
