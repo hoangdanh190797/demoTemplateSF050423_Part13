@@ -132,7 +132,7 @@ export default function Banner() {
                         </div>
                         {/* --- */}
                         {statusID ? <Link to={`/roomsByLocation/${valueOne.id}`}>
-                        <button className='absolute z-10 top-0 translate-y-[280%] h-[64px] w-[490px] bg-[#5392f9] rounded-[8px] text-white text-[20px] leading-5 hover:bg-[#7babfb]'>TÌM</button>
+                        <button className='absolute z-10 top-0 left-1/2 translate-x-[-60%] translate-y-[280%] h-[64px] w-[490px] bg-[#5392f9] rounded-[8px] text-white text-[20px] leading-5 hover:bg-[#7babfb]'>TÌM</button>
                         </Link> : <button className='absolute z-10 top-0 translate-y-[280%] h-[64px] w-[490px] bg-[#5392f9] rounded-[8px] text-white text-[20px] leading-5 hover:bg-[#7babfb]'>TÌM</button>}
                     </div>
                 </div>
