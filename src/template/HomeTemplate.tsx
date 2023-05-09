@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
+import { useAddToHomescreenPrompt } from 'hooks/useAddToHomescreenPrompt'
+
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { Outlet } from 'react-router-dom'
 import ButtonAddToHomeScreen from '../components/ButtonAddToHomeScreen'
-import { useAddToHomescreenPrompt } from 'hooks/useAddToHomescreenPrompt'
 
 
 export default function HomeTemplate() {
