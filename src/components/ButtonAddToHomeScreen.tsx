@@ -1,12 +1,10 @@
 import React from "react";
 
-interface Props {
-  promptEvent: any;
-}
-
-const AddToHomeScreenButton: React.FC<Props> = ({ promptEvent }) => {
+const AddToHomeScreenButton= ({promptEvent}:any) => {
   const handleClick = () => {
-    promptEvent.prompt();
+    if(promptEvent){
+      promptEvent.prompt();
+    }
   };
 
   return (
