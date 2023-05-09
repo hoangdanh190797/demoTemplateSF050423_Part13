@@ -41,9 +41,9 @@ export default function HomeTemplate() {
     [prompt]
   );
 
-  if (!isVisible) {
-    return <div />;
-  }
+  // if (!isVisible) {
+  //   return <div />;
+  // }
 
 
   return (
