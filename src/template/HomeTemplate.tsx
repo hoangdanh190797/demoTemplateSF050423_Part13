@@ -8,25 +8,6 @@ import ButtonAddToHomeScreen from '../components/ButtonAddToHomeScreen'
 
 
 export default function HomeTemplate() {
-  // const [promptEvent, setPromptEvent] = useState<any>(null);
-  // const IS_BROWSER = typeof window !== 'undefined';
-
-  // const handleClick = () => {
-  //   promptEvent.prompt();
-  // };
-
-  // useEffect(() => {
-  //   if (promptEvent !== null) {
-  //     const handler = (event: any) => {
-  //       event.preventDefault();
-  //       setPromptEvent(event);
-  //     };
-  //     window.addEventListener("beforeinstallprompt", handler);
-  //     return () => {
-  //       window.removeEventListener("beforeinstallprompt", handler);
-  //     }
-  //   };
-  // },[setPromptEvent, promptEvent]);
 
   const [prompt, promptToInstall] = useAddToHomescreenPrompt();
   const [isVisible, setVisibleState] = React.useState(false);
@@ -41,7 +22,6 @@ export default function HomeTemplate() {
     },
     [prompt]
   );
-
   // if (!isVisible) {
   //   return <div />;
   // }
@@ -49,10 +29,6 @@ export default function HomeTemplate() {
 
   return (
     <>
-      {/* {promptEvent && (
-        <button style={{position:'fixed', bottom:'20px', right:'20px', backgroundColor:'#007bff', color:'#fff', border:'none', padding:'10px 20px', fontSize:'16px', cursor:'pointer', zIndex:'999'}} onClick={handleClick}>Add to Home Screen</button>
-      )} */}
-
       <div onClick={hide}>
         <button onClick={hide}>Close</button>
         Hello! Wanna add to homescreen?

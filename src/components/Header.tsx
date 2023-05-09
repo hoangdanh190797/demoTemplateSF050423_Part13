@@ -170,10 +170,10 @@ export default function Header() {
                 </div>
 
                 <div>
-                    <Button className='text-blue-600 border-none hover:bg-blue-600 hover:text-white'>Đăng nhập</Button>
+                    <Button className='text-blue-600 border-none hover:bg-blue-600 hover:text-white'><Link to={'/signin'}>Đăng nhập</Link> </Button>
                 </div>
                 <div>
-                    <Button className='text-blue-600 border-blue-600 hover:text-white hover:bg-blue-600'>Tạo tài khoản</Button>
+                    <Button className='text-blue-600 border-blue-600 hover:text-white hover:bg-blue-600'><Link to={'/signup'}>Tạo tài khoản</Link></Button>
                 </div>
                 <div>
                     <button>

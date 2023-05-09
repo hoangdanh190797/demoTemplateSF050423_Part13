@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-// import bannerJPG from '../assets/images/bannerJPG.jpg'
-// import '../styles/components/_banner.scss';
+//
 import HotelHome from '../assets/images/Hotel&Home.svg'
 import SpaceAtOwn from '../assets/images/SpaceAtOwn.svg'
 import PlaneHotel from '../assets/images/Plane&Hotel.svg'
@@ -11,12 +10,7 @@ import Activite from '../assets/images/Activite.svg'
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 import { getLocation } from '../store/slices/LocationSlices';
-//
-import dayjs, { Dayjs } from 'dayjs';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+
 
 //---
 import TextField from '@mui/material/TextField';
@@ -40,13 +34,12 @@ export default function Banner() {
         dispatch(getLocation())
     }, [dispatch]);
 
-    const [value, setValue] = React.useState<Dayjs | null>(dayjs('2022-04-17'));
     const [valueOne, setValueOne] = React.useState<any | null>(null);
     const [statusID, setStatusID] = useState(false)
 
     return (
         <div>
-            <div className='relative'>
+            <div className='relative h-[555px]'>
                 <div className='relative'>
                     <img className='w-full h-[320px]' src='https://cdn6.agoda.net/images/MVC/default/background_image/illustrations/bg-agoda-homepage.png' alt="" />
                     <div className='absolute top-1/4 left-1/2 translate-x-[-50%] translate-y-[-80%] text-white'>
@@ -54,133 +47,94 @@ export default function Banner() {
                         <h1 className='text-[20px] leading-[10px]'>Nhận giá tốt nhất cho {`>`} 2.000.000 chỗ nghỉ, trên toàn cầu</h1>
                     </div>
                 </div>
-                <div className='flex items-center justify-center flex-col absolute z-auto top-2/5 left-1/2 translate-x-[-50%] translate-y-[-75%] bg-white rounded-[8px]'>
-
-                
-                        <ul className='flex round-[8px] h-[88px] w-[1064px]'>
-                            <li>
-                                <img src={HotelHome} alt="" />
+                <div className='relative h-[389px]'>
+                    <div className='bg-inherit flex items-center justify-center flex-col absolute z-auto top-2/5 left-1/2 translate-x-[-50%] translate-y-[-50%] bg-white rounded-[8px]'>
+                        {/* --- */}
+                        <div className='absolute z-10 bottom-0 translate-y-[-100%]'>
+                            <ul className='rounded-[8px] bg-white flex justify-around round-[8px] h-[88px] w-[1064px] '>
+                                <li className='m-auto '>
+                                    <img className='h-[32px] w-[32px] mx-auto' src={HotelHome} alt="" />                                    
+                                    <div className='text-[16px] text-blue-500'>
+                                        Khách sạn & Nhà
+                                    </div>
+                                </li>
+                                <li className='m-auto '>
+                                    <img className='h-[32px] w-[32px] sepia-[16%] invert-[32%] saturate-[240%] hue-rotate-[179deg] brightness-[88%] contrast-[94%)] mx-auto' src={SpaceAtOwn} alt="" />
+                                    <div className='text-[16px]'>
+                                        Chỗ ở riêng
+                                    </div>
+                                </li>
+                                <li className='m-auto '>
+                                    <img className='h-[32px] w-[32px] sepia-[16%] invert-[32%] saturate-[240%] hue-rotate-[179deg] brightness-[88%] contrast-[94%)] mx-auto' src={PlaneHotel} alt="" />
+                                    <div className='text-[16px]'>
+                                        Máy bay + K.sạn
+                                    </div>
+                                </li>
+                                <li className='m-auto '>
+                                    <img className='h-[32px] w-[32px] sepia-[16%] invert-[32%] saturate-[240%] hue-rotate-[179deg] brightness-[88%] contrast-[94%)] mx-auto' src={Plane} alt="" />
+                                    <div className='text-[16px]'>
+                                        Chuyến bay
+                                    </div>
+                                </li>
+                                <li className='m-auto '>
+                                    <img className='h-[32px] w-[32px] sepia-[16%] invert-[32%] saturate-[240%] hue-rotate-[179deg] brightness-[88%] contrast-[94%)] mx-auto' src={LongStay} alt="" />
+                                    <div className='text-[16px]'>
+                                        Ở dài ngày
+                                    </div>
+                                </li>
+                                <li className='m-auto '>
+                                    <img className='h-[32px] w-[32px] sepia-[16%] invert-[32%] saturate-[240%] hue-rotate-[179deg] brightness-[88%] contrast-[94%)] mx-auto' src={Activite} alt="" />
+                                    <div className='text-[16px]'>
+                                        Hoạt động
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        {/* --- */}
+                        <div className='absolute top-0 translate-y-[-40%] rounded-[16px] bg-[#f8f7f9] h-[359px] w-[1124px] py-[84px] px-[32px]'>
+                            <form>
                                 <div>
-                                    Khách sạn & Nhà
-                                </div>
-                            </li>
-                            <li>
-                                <img src={SpaceAtOwn} alt="" />
-                                <div>
-                                    Chỗ ở riêng
-                                </div>
-                            </li>
-                            <li>
-                                <img src={PlaneHotel} alt="" />
-                                <div>
-                                    Máy bay + K.sạn
-                                </div>
-                            </li>
-                            <li>
-                                <img src={Plane} alt="" />
-                                <div>
-                                    Chuyến bay
-                                </div>
-                            </li>
-                            <li>
-                                <img src={LongStay} alt="" />
-                                <div>
-                                    Ở dài ngày
-                                </div>
-                            </li>
-                            <li>
-                                <img src={Activite} alt="" />
-                                <div>
-                                    Hoạt động
-                                </div>
-                            </li>
-                        </ul>
-                    
-
-                    <div>
-                        <form>
-                            {/* --- */}
-                            <div>
-                                <Stack>
-                                    <Autocomplete
-                                        freeSolo
-                                        id="free-solo-2-demo"
-                                        disableClearable
-                                        options={location.map((item: any) => item)}
-                                        getOptionLabel={(item) => item.tinhThanh}
-                                        onChange={(event: any, newValue: any | null) => {
-                                            setValueOne(newValue);
-                                            setStatusID(true);
-                                        }}
-                                        renderInput={(params) => (
-
-                                            <TextField
-                                                {...params}
-                                                label="Nhập điểm du lịch hoặc tên khách sạn"
-                                                color="primary"
-                                                InputProps={{
-                                                    ...params.InputProps,
-                                                    type: 'search',
-                                                }}
-                                            />
-
-                                        )}
-                                    />
-                                </Stack>
-                            </div>
-                            {/* --- */}
-                            <div>
-                                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                    <DatePicker
-                                        className='w-2/5'
-                                        label="Controlled picker"
-                                        value={value}
-                                        onChange={(newValue) => setValue(newValue)}
-                                    />
-                                    <DatePicker
-                                        className='w-2/5'
-                                        label="Controlled picker"
-                                        value={value}
-                                        onChange={(newValue) => setValue(newValue)}
-                                    />
-                                </LocalizationProvider>
-                            </div>
-                            {/* --- */}
-                            <Stack>
-                                <Autocomplete
-                                    freeSolo
-                                    id="free-solo-2-demo"
-                                    disableClearable
-                                    options={location.map((item: any) => item)}
-                                    getOptionLabel={(item) => item.tinhThanh}
-                                    // value={value}
-                                    onChange={(event: any, newValue: any | null) => {
-                                        setValueOne(newValue);
-                                        setStatusID(true);
-                                    }}
-                                    renderInput={(params) => (
-                                        <TextField
-                                            {...params}
-                                            label="Số lượng khách"
-                                            color="primary"
-                                            InputProps={{
-                                                ...params.InputProps,
-                                                type: 'search',
+                                    <div>
+                                        <button className='my-[10px] rounded-[4px] h-[47px] w-[132px] bg-[#5392f9] hover:bg-[#87b3fb] text-white text-[14px] font-bold leading-5 mr-[5px]'>Chỗ Ở Qua Đêm</button>
+                                        <button className='my-[10px] rounded-[4px] h-[47px] w-[132px] bg-white hover:bg-[#87b3fb] hover:text-[#ffffff] text-[#5392f9] border-blue-600 border text-[14px] font-medium leading-5 '>Chỗ Ở Trong Ngày</button>
+                                    </div>
+                                    <Stack className='my-[10px]'>
+                                        <Autocomplete
+                                            freeSolo
+                                            id="free-solo-2-demo"
+                                            disableClearable
+                                            options={location.map((item: any) => item)}
+                                            getOptionLabel={(item) => item.tinhThanh}
+                                            onChange={(event: any, newValue: any | null) => {
+                                                setValueOne(newValue);
+                                                setStatusID(true);
                                             }}
+                                            renderInput={(params) => (
+
+                                                <TextField
+                                                    {...params}
+                                                    label="Nhập điểm du lịch hoặc tên khách sạn"
+                                                    color="primary"
+                                                    InputProps={{
+                                                        ...params.InputProps,
+                                                        type: 'search',
+                                                    }}
+                                                />
+
+                                            )}
                                         />
-                                    )}
-                                />
-                            </Stack>
+                                    </Stack>
+                                </div>
+                                <fieldset className=''>
+                                </fieldset>
 
-                            <fieldset className=''>
-                            </fieldset>
-                            {/* --- */}
-                            {statusID ? <Link to={`/roomsByLocation/${valueOne.id}`}>
-                                <button className='button_Search '></button>
-                            </Link> : <button><span>TÌM</span></button>}
-                        </form>
+                            </form>
+                        </div>
+                        {/* --- */}
+                        {statusID ? <Link to={`/roomsByLocation/${valueOne.id}`}>
+                            <button className='h-[64px] w-[490px] bg-[#5392f9] rounded-[8px] text-white text-[20px] leading-5 hover:bg-[#7babfb]'>TÌM</button>
+                        </Link> : <button className='absolute z-10 top-0 translate-y-[280%] h-[64px] w-[490px] bg-[#5392f9] rounded-[8px] text-white text-[20px] leading-5 hover:bg-[#7babfb]'>TÌM</button>}
                     </div>
-
                 </div>
 
             </div>
