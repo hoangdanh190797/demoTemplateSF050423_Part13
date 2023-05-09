@@ -19,7 +19,7 @@ export default function HomeTemplate() {
         window.removeEventListener("beforeinstallprompt", handler);
       }
     };
-  }, [setPromptEvent, promptEvent]);
+  });
 
   return (
     <>
