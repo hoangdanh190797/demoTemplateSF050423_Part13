@@ -28,9 +28,9 @@ export default function HomeTemplate() {
 
   return (
     <>
-      {promptEvent ? (
+      {promptEvent && (
         <ButtonAddToHomeScreen promptEvent={promptEvent} />
-      ) : <div>pla pla</div>}
+      )}
 
       {/* Header */}
       <Header />
