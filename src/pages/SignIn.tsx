@@ -6,46 +6,16 @@ import { postUserSignin, checkSignInRejected } from 'store/slices/AuthSlices';
 import { getLocation } from 'store/slices/LocationSlices';
 import '../styles/pages/_signin.scss';
 import { Spin } from 'antd';
+import { Tabs } from 'antd';
 
 import validator from 'validator';
 
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 
-export default function SignIn() {
+import Check from '../assets/images/Check.svg'
 
-  // interface Values {
-  //   email: String,
-  //   password: String
-  // }
-  // const schema = Yup.object().shape({
-  //   email: Yup.string()
-  //     .email('Invalid email')
-  //     .required('Email is required'),
-  //   password: Yup.string()
-  //     .required('Password is required')
-  //     .min(8, 'Password must be at least 8 characters')
-  //     .max(50, 'Password must be at most 50 characters')
-  //     .matches(
-  //       /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/,
-  //       'Password must contain at least one lowercase letter, one uppercase letter, one number, and one special character'
-  //     )
-  // });
-  // const formik = useFormik({
-  //   initialValues: {
-  //     name: '',
-  //     email: '',
-  //     age: 0,
-  //   },
-  //   validationSchema: schema,
-  //   onSubmit: (values) => {
-  //     console.log(values);
-  //   },
-  // });
-  // const initialValues = {
-  //   email: '',
-  //   password: '',
-  // };
+export default function SignIn() {
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -83,7 +53,6 @@ export default function SignIn() {
       return;
     }
     dispatch(postUserSignin({ email, password }))
-    // setLoading(true)
   }
 
   const { isSignInpRejected } = useAppSelector((state: any) => {
@@ -103,14 +72,13 @@ export default function SignIn() {
   }
   if (isStatusSignin) {
     setTimeout(() => {
-      // dispatch(checkSignInRejected())
       navigate('/');
     }, 3000)
     localStorage.setItem('accessToken', userCurrent.token)
     localStorage.setItem('isRole', userCurrent.user.role)
     localStorage.setItem('idUser', userCurrent.user.id)
   }
-  const errors :any = [];
+  const errors: any = [];
 
   if (!validator.isEmail(email)) {
     errors.push('Invalid email');
@@ -118,38 +86,188 @@ export default function SignIn() {
   if (!validator.isStrongPassword(password)) {
     errors.push('Password must contain at least 8 characters including uppercase, lowercase, and special characters');
   }
-  
+
   return (
     <>
-      <div id='signin_pages'>
-        <div className="signin_container">
-          <div className="signin_box">
-            <div className="signin_content">
-            {isSignInpRejected ?<Stack sx={{ width: '32%' }} spacing={2} style={{position:'absolute', right:'0px'}}>
-              <Alert severity="error">Đăng nhập thất bại</Alert>
-            </Stack>: '' }
-            {isStatusSignin ? <Stack sx={{ width: '32%' }} spacing={2} style={{ position: 'absolute', right: '0px' }}>
-              <Alert severity="success">Đăng nhập thành công</Alert>
-            </Stack> : ''}
-              <h1>Sign in</h1>
-              <p style={{marginBottom:'10px'}}>
+      <div className='w-[50%] mx-auto'>
+        <div className="">
+          <div className="">
+            <div className="">
+              {isSignInpRejected ? <Stack sx={{ width: '32%' }} spacing={2} style={{ position: 'absolute', right: '0px' }}>
+                <Alert severity="error">Đăng nhập thất bại</Alert>
+              </Stack> : ''}
+              {isStatusSignin ? <Stack sx={{ width: '32%' }} spacing={2} style={{ position: 'absolute', right: '0px' }}>
+                <Alert severity="success">Đăng nhập thành công</Alert>
+              </Stack> : ''}
+
+              <div className='flex w-full'>
+                {/*  */}
+                <div className='w-1/2 p-4'>
+                  <h3 className='text-[24px] leading-2 font-[500]'>Đăng nhập</h3>
+                  <h6 className=''>Để đảm bảo an toàn, xin vui lòng đăng nhập để truy cập vào thông tin</h6>
+                  {/* <p style={{marginBottom:'10px'}}>
                 <Link to={'/signup'}>
                   <a href=''>Have an account?</a>
                 </Link>
-              </p>
-              <form action="" onSubmit={handleSubmit}>
-                <fieldset className="form_group">
+              </p> */}
+
+                  <Tabs
+                    defaultActiveKey="1"
+                    centered
+                    items={[
+                      {
+                        label: <div className='w-[120px] text-center' >EMAIL</div>,
+                        key: '1',
+                        children:
+                          <form action="" onSubmit={handleSubmit}>
+                            <div>
+                              <span className='inline-block mb-2'>Email</span>
+                              <fieldset className="mb-2">
+                                <input
+                                  className="w-full h-[40px] border border-[1px] rounded-[4px]"
+                                  type="email"
+                                  name='email'
+                                  placeholder="Email"
+                                  onChange={handleEmail}
+                                />
+                              </fieldset>
+                            </div>
+
+                            <div>
+                              <span className='inline-block mb-2'>Mật khẩu</span>
+                              <fieldset className="mb-2">
+                                <input
+                                  className="w-full h-[40px] border border-[1px] rounded-[4px]"
+                                  type="password"
+                                  name='password'
+                                  placeholder="Mật khẩu"
+                                  onChange={handlePassword}
+                                />
+                              </fieldset>
+                            </div>
+
+                            <div>
+                              {isError ? <p style={{ color: 'red' }}>{error?.data?.content}</p> : ""}
+                              {errors.map((error: any) => (
+                                <div style={{ color: 'red' }} key={error}>{error}</div>
+                              ))}
+                            </div>
+                            <div className='mb-2'>
+                              <button className='w-full h-[44px] rounded-[4px] bg-[#5392f9] text-[14px] font-[500] text-[#ffffff] hover:bg-[#7babfb]' type='submit' >Đăng nhập
+                                {isSignInpRejected ? <Spin tip=" " size="large">
+                                  <div style={{
+                                    backgroundColor: 'rgba(0, 0, 0, 0.05)',
+                                    borderRadius: '4px',
+                                  }} />
+                                </Spin > : ""}
+                              </button>
+                            </div>
+                            <div className='mb-2'>
+                              <ul className='text-[#5392f9] flex justify-between'>
+                                <li>Tạo tài khoản</li>
+                                <li>Quên mật khẩu</li>
+                              </ul>
+                            </div>
+
+                          </form>,
+                      },
+                      {
+                        label: <div className='w-[120px] text-center' >DI ĐỘNG</div>,
+                        key: '2',
+                        children: 'Tab 3',
+                      },
+                    ]}
+                  />
+                  <div className='flex flex-row items-center mb-2'>
+                    <div className='w-[30%]'><hr /></div>
+                    <span className='w-[40%] text-center text-[14px]'>
+                      hoặc đăng nhập bằng
+                    </span>
+                    <div className='w-[30%]'><hr /></div>
+                  </div>
+                  <div>
+                    <button className='w-full h-[48px] border border-[#5392f9] rounded-[4px] mb-2 bg-white text-[14px] font-[500] text-[#5392f9] hover:bg-[#7babfb]'>Google
+                    </button>
+                    <div className='flex justify-between'>
+                      <button className='w-[49%] h-[48px] border border-[#5392f9] rounded-[4px] bg-white text-[14px] font-[500] text-[#5392f9] hover:bg-[#7babfb]'>Facebook
+                      </button>
+                      <button className='w-[49%] h-[48px] border border-[#5392f9] rounded-[4px] bg-white text-[14px] font-[500] text-[#5392f9] hover:bg-[#7babfb]'>Apple
+                      </button>
+                    </div>
+                    <div>
+                      <p>Khi đăng nhập, tôi đồng ý với các <a href="" className='text-blue-500'>Điều khoản sử dụng</a> và <a href="" className='text-blue-500'>Chính sách bảo mật</a> của Agoda</p>
+                    </div>
+                  </div>
+                </div>
+                {/*  */}
+                <div className='w-1/2 h-[700px] bg-[#f8f7f9]'>
+                  <div className='bg-[#dde9fd] flex justify-center'>
+                    <img className='' src="https://cdn0.agoda.net/images/agodavip/signupcage.svg" alt="" />
+                  </div>
+                  <div className='flex flex-col items-center justify-around'>
+                    <div>
+                      <span className='text-[24px] leading-1 font-[500]'>Đăng nhập để mở khóa nhiều lợi ích hơn!</span>
+                    </div>
+                    <ul>
+                      <li className='flex items-center'>
+                        <div className='mr-2'>
+                          <img className='w-6 h-6' src={Check} alt="" />
+                        </div>
+
+                        <div>
+                          Đảm Bảo Giá Tốt Nhất cho các đơn đặt phòng
+                        </div>
+                      </li>
+                      <li className='flex items-center'>
+                        <div className='mr-2'>
+                          <img className='w-6 h-6' src={Check} alt="" />
+                        </div>
+
+                        <div>
+                          Tiếp cận các ưu đãi Nội bộ và VIP tốt nhất của chúng tôi
+                        </div>
+                      </li>
+                      <li className='flex items-center'>
+                        <div className='mr-2'>
+                          <img className='w-6 h-6' src={Check} alt="" />
+                        </div>
+
+                        <div>
+                          Kiếm Tiền Agoda để tiết kiệm hơn nữa
+                        </div>
+                      </li>
+                      <li className='flex items-center'>
+                        <div className='mr-2'>
+                          <img className='w-6 h-6' src={Check} alt="" />
+                        </div>
+
+                        <div>
+                          Thu thập các lượt đặt phòng, tiến đến hạng VIP kế tiếp của quý khách
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+
+                </div>
+              </div>
+
+
+
+
+
+              {/* <form action="" onSubmit={handleSubmit}>
+                <fieldset className="">
                   <input
-                    className="form_control"
+                    className=""
                     type="email"
                     name='email'
                     placeholder="Your Email"
                     onChange={handleEmail}
                   />
                 </fieldset>
-                <fieldset className="form_group">
+                <fieldset className="">
                   <input
-                    className="form_control"
+                    className=""
                     type="password"
                     name='password'
                     placeholder="Password"
@@ -157,9 +275,9 @@ export default function SignIn() {
                   />
                 </fieldset>
                 <div>
-                  {isError ? <p style={{color:'red'}}>{error?.data?.content}</p> : ""}
-                  {errors.map((error:any) => (
-                    <div style={{color:'red'}} key={error}>{error}</div>
+                  {isError ? <p style={{ color: 'red' }}>{error?.data?.content}</p> : ""}
+                  {errors.map((error: any) => (
+                    <div style={{ color: 'red' }} key={error}>{error}</div>
                   ))}
                 </div>
                 <div className='btn_'>
@@ -172,7 +290,7 @@ export default function SignIn() {
                     </Spin > : ""}
                   </button>
                 </div>
-              </form>
+              </form> */}
             </div>
           </div>
         </div>

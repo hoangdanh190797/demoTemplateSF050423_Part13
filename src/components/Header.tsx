@@ -1,21 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 import logoPNG from '../assets/images/logoPNG.png';
-import global from '../assets/images/global.svg';
 import menuSVG from '../assets/images/menuSVG.svg'
 import vietnam from "../assets/images/vietnam.svg";
 import cartSVG from '../assets/images/cartSVG.svg'
-import threesf from '../assets/images/threesf.svg'
-import person from '../assets/images/person.svg'
 import { signOut } from '../store/slices/AuthSlices'
 import { getInfoUserAfterUpAvt, getUserByIdForProfile } from '../store/slices/UserSlices'
-// import Button from '@mui/material/Button';
-// import Menu from '@mui/material/Menu';
-// import MenuItem from '@mui/material/MenuItem';
+
 import type { MenuProps } from 'antd';
 import { Button, Dropdown, Space } from 'antd';
 import { useNavigate, Link } from "react-router-dom";
-// import '../styles/components/_header.scss'
+
 import ButtonAddToHomeScreen from './ButtonAddToHomeScreen'
 
 interface IBeforeInstallPromptEvent extends Event {

@@ -28,25 +28,25 @@ export default function HomeTemplate() {
 
 
   return (
-    <>
+    <div className=''>
       <div onClick={hide}>
         <button onClick={hide}>Close</button>
         Hello! Wanna add to homescreen?
         <button onClick={promptToInstall}>Add to homescreen</button>
       </div>
 
-      {/* <div onClick={hide}>
-        <button style={{ position: 'fixed', bottom: '20px', right: '20px', backgroundColor: '#007bff', color: '#fff', border: 'none', padding: '10px 20px', fontSize: '16px', cursor: 'pointer', zIndex: '999' }} onClick={promptToInstall}>Add to homescreen</button>
-      </div> */}
-
       {/* Header */}
       <Header />
 
       {/* Content */}
-      <Outlet />
+      <div className=''>
+        <Outlet />
+      </div>
 
       {/* Footer */}
-      <Footer />
-    </>
+      <div className=''>
+        <Footer />
+      </div>
+    </div>
   )
 }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 //
 import HotelHome from '../assets/images/Hotel&Home.svg'
+import HotelHomeBlack from '../assets/images/Hotel&HomeBlack.svg'
 import SpaceAtOwn from '../assets/images/SpaceAtOwn.svg'
 import PlaneHotel from '../assets/images/Plane&Hotel.svg'
 import Plane from '../assets/images/Plane.svg'
@@ -48,12 +49,12 @@ export default function Banner() {
                     </div>
                 </div>
                 <div className='relative h-[389px]'>
-                    <div className='bg-inherit flex items-center justify-center flex-col absolute z-auto top-2/5 left-1/2 translate-x-[-50%] translate-y-[-50%] bg-white rounded-[8px]'>
+                    <div className='bg-inherit flex items-center justify-center flex-col absolute z-10 top-2/5 left-1/2 translate-x-[-50%] translate-y-[-50%] bg-white rounded-[8px]'>
                         {/* --- */}
                         <div className='absolute z-10 bottom-0 translate-y-[-100%]'>
                             <ul className='rounded-[8px] bg-white flex justify-around round-[8px] h-[88px] w-[1064px] '>
                                 <li className='m-auto '>
-                                    <img className='h-[32px] w-[32px] mx-auto' src={HotelHome} alt="" />                                    
+                                    <img className='h-[32px] w-[32px] mx-auto' src={HotelHome} alt="" />
                                     <div className='text-[16px] text-blue-500'>
                                         Khách sạn & Nhà
                                     </div>
@@ -64,7 +65,10 @@ export default function Banner() {
                                         Chỗ ở riêng
                                     </div>
                                 </li>
-                                <li className='m-auto '>
+                                <li className='m-auto relative'>
+                                    <div className='absolute w-32 top-0 left-0 translate-x-[-5%]  translate-y-[-110%] bg-red-600 text-white px-0.5 z-10'>
+                                        Đặt Gói Tiết Kiệm
+                                    </div>
                                     <img className='h-[32px] w-[32px] sepia-[16%] invert-[32%] saturate-[240%] hue-rotate-[179deg] brightness-[88%] contrast-[94%)] mx-auto' src={PlaneHotel} alt="" />
                                     <div className='text-[16px]'>
                                         Máy bay + K.sạn
@@ -76,13 +80,19 @@ export default function Banner() {
                                         Chuyến bay
                                     </div>
                                 </li>
-                                <li className='m-auto '>
+                                <li className='m-auto relative'>
+                                    <div className='absolute w-8 top-0 left-1/2 translate-x-[-50%]  translate-y-[-110%] bg-red-600 text-white px-0.5 z-10'>
+                                        Mới
+                                    </div>
                                     <img className='h-[32px] w-[32px] sepia-[16%] invert-[32%] saturate-[240%] hue-rotate-[179deg] brightness-[88%] contrast-[94%)] mx-auto' src={LongStay} alt="" />
                                     <div className='text-[16px]'>
                                         Ở dài ngày
                                     </div>
                                 </li>
-                                <li className='m-auto '>
+                                <li className='m-auto relative'>
+                                    <div className='absolute w-8 top-0 left-1/2 translate-x-[-50%]  translate-y-[-110%] bg-red-600 text-white px-0.5 z-10'>
+                                        Mới
+                                    </div>
                                     <img className='h-[32px] w-[32px] sepia-[16%] invert-[32%] saturate-[240%] hue-rotate-[179deg] brightness-[88%] contrast-[94%)] mx-auto' src={Activite} alt="" />
                                     <div className='text-[16px]'>
                                         Hoạt động
@@ -124,15 +134,31 @@ export default function Banner() {
                                             )}
                                         />
                                     </Stack>
+                                    <div className='flex flex-row items-center'>
+                                        <div className='w-32 h-6 bg-red-600 text-white px-0.5 z-auto mr-3'>
+                                            Đặt Gói Tiết Kiệm
+                                        </div>
+                                        <div className='mr-3'>
+                                            <button className='w-[225px] h-[50px] border border-gray-500 bg-white rounded-[4px] inline-flex items-center justify-center'><span className='mr-1'>+ Bổ sung chuyến bay</span>
+                                                <img className='' src={Plane} alt="" />
+                                            </button>
+                                        </div>
+                                        <div>
+                                            <button className='w-[225px] h-[50px] border border-gray-500 bg-white rounded-[4px] inline-flex items-center justify-center'><span className='mr-1'>+ Bổ sung khách sạn</span>
+                                                <img className='' src={HotelHomeBlack} alt="" />
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                                 <fieldset className=''>
                                 </fieldset>
 
                             </form>
+
                         </div>
                         {/* --- */}
                         {statusID ? <Link to={`/roomsByLocation/${valueOne.id}`}>
-                        <button className='absolute z-10 top-0 left-1/2 translate-x-[-60%] translate-y-[280%] h-[64px] w-[490px] bg-[#5392f9] rounded-[8px] text-white text-[20px] leading-5 hover:bg-[#7babfb]'>TÌM</button>
+                            <button className='absolute z-10 top-0 left-1/2 translate-x-[-60%] translate-y-[280%] h-[64px] w-[490px] bg-[#5392f9] rounded-[8px] text-white text-[20px] leading-5 hover:bg-[#7babfb]'>TÌM</button>
                         </Link> : <button className='absolute z-10 top-0 translate-y-[280%] h-[64px] w-[490px] bg-[#5392f9] rounded-[8px] text-white text-[20px] leading-5 hover:bg-[#7babfb]'>TÌM</button>}
                     </div>
                 </div>

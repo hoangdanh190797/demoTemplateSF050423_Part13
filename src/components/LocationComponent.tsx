@@ -1,10 +1,11 @@
 import React from "react";
-import { useEffect } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 import { Link } from 'react-router-dom';
 import { getLocation } from '../store/slices/LocationSlices';
-import Slider from 'react-slick';
+
 import '../styles/components/_locationComponent.scss';
+import { Carousel } from 'antd';
 
 
 
@@ -19,9 +20,6 @@ export default function LocationComponent() {
         return state.location
     })
 
-    const newRoomsEx = [...rooms];
-    const newArrMaViTri = [];
-
     useEffect(() => {
         dispatch(getLocation())
             .unwrap()
@@ -29,73 +27,53 @@ export default function LocationComponent() {
             .catch((error) => console.error('rejected', error));
     }, [dispatch]);
 
-    // if (isGetLocation) {
-    //     console.log(location);
-    // }
-
-    const settings = {
-        dots: true,
-        infinite: false,
-        speed: 500,
-        slidesToShow: 4,
-        slidesToScroll: 4,
-        initialSlide: 0,
+    var settings = {
         responsive: [
-            {
-              breakpoint: 1024,
-              settings: {
-                slidesToShow: 3,
-                slidesToScroll: 3,
-                infinite: true,
-                dots: true
-              }
-            },
-            {
-              breakpoint: 600,
-              settings: {
-                slidesToShow: 2,
-                slidesToScroll: 2,
-                initialSlide: 2
-              }
-            },
-            {
-              breakpoint: 480,
-              settings: {
-                slidesToShow: 1,
-                slidesToScroll: 1
-              }
+          {
+            breakpoint: 1024,
+            settings: {
+              slidesToShow: 3,
+              slidesToScroll: 3,
+              infinite: true,
+              dots: true
             }
-          ]
-    };
+          },
+          {
+            breakpoint: 600,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 2,
+              initialSlide: 2
+            }
+          },
+          {
+            breakpoint: 480,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1
+            }
+          }
+        ]
+      };
+
     return (
-        <div id="locationComponent_">
-            <div className="locationComponent_container">
-                <h1>Các điểm đến thu hút nhất Việt Nam</h1>
-                <div><Slider {...settings}>
+        <div id="" className="flex justify-center items-center h-[400px]">
+            <div className="w-[60%]">
+                <h1 className="text-[24px] font-[500]">Các điểm đến thu hút nhất Việt Nam</h1>
+                <div><Carousel autoplay {...settings} slidesToShow={6}>
                     {location.map((item: any) => {
                         return (
                             <Link to={`/roomsByLocation/${item.id}`}>
                                 <div>
-                                    <div className='locationComponent_item'>
-                                        <div
-                                            style={{
-                                                height: '120px',
-                                                width: '120px',
-                                                margin: '0 auto',
-                                                borderRadius: "100%",
-                                                backgroundImage: `url(${item.hinhAnh})`,
-                                                backgroundPosition: 'center',
-                                                backgroundRepeat: 'no-repeat',
-                                                backgroundSize: 'cover'
-                                            }}>
-                                        </div>
-                                        <h1 style={{ color: '#fc4e71', fontSize: '24px', fontWeight: '600' }}>{item.tinhThanh}</h1>
+                                    <div className='text-center' key={item.id}>
+                                        <img className="h-[124px] w-[124px] mx-auto my-0 rounded-[100%] bg-center bg-no-repeat bg-cover" src={item.hinhAnh} alt="" />
+                                        <h1 className="font-[500] text-[16px]">{item.tinhThanh}</h1>
                                     </div>
                                 </div>
                             </Link>
                         )
                     })}
-                </Slider>
+                </Carousel>
                 </div>
             </div>
         </div>
