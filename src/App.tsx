@@ -10,7 +10,7 @@ import { useState, useEffect } from 'react';
 import HomeTemplate from './template/HomeTemplate';
 import Home from './pages/Home';
 import SignIn from 'pages/SignIn';
-import SignUp from 'pages/SignUpFixName';
+import SignUp from 'pages/SignUp';
 import YourTrip from 'pages/YourTrip';
 import Profile from 'pages/Profile';
 import DetailRoom from 'pages/DetailRoom';

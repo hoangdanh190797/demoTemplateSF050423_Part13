@@ -100,23 +100,17 @@ export default function SignIn() {
                 <Alert severity="success">Đăng nhập thành công</Alert>
               </Stack> : ''}
 
-              <div className='flex w-full'>
+              <div className='flex w-full border border-[2px] m-5'>
                 {/*  */}
                 <div className='w-1/2 p-4'>
                   <h3 className='text-[24px] leading-2 font-[500]'>Đăng nhập</h3>
                   <h6 className=''>Để đảm bảo an toàn, xin vui lòng đăng nhập để truy cập vào thông tin</h6>
-                  {/* <p style={{marginBottom:'10px'}}>
-                <Link to={'/signup'}>
-                  <a href=''>Have an account?</a>
-                </Link>
-              </p> */}
-
                   <Tabs
                     defaultActiveKey="1"
                     centered
                     items={[
                       {
-                        label: <div className='w-[120px] text-center' >EMAIL</div>,
+                        label: <div className='w-[180px] text-center' >EMAIL</div>,
                         key: '1',
                         children:
                           <form action="" onSubmit={handleSubmit}>
@@ -172,7 +166,7 @@ export default function SignIn() {
                           </form>,
                       },
                       {
-                        label: <div className='w-[120px] text-center' >DI ĐỘNG</div>,
+                        label: <div className='w-[180px] text-center' >DI ĐỘNG</div>,
                         key: '2',
                         children: 'Tab 3',
                       },
@@ -180,7 +174,7 @@ export default function SignIn() {
                   />
                   <div className='flex flex-row items-center mb-2'>
                     <div className='w-[30%]'><hr /></div>
-                    <span className='w-[40%] text-center text-[14px]'>
+                    <span className='w-[35%] text-center text-[14px]'>
                       hoặc đăng nhập bằng
                     </span>
                     <div className='w-[30%]'><hr /></div>
@@ -200,48 +194,48 @@ export default function SignIn() {
                   </div>
                 </div>
                 {/*  */}
-                <div className='w-1/2 h-[700px] bg-[#f8f7f9]'>
+                <div className='w-1/2 h-[700px] bg-[#f8f7f9] relative'>
                   <div className='bg-[#dde9fd] flex justify-center'>
                     <img className='' src="https://cdn0.agoda.net/images/agodavip/signupcage.svg" alt="" />
                   </div>
-                  <div className='flex flex-col items-center justify-around'>
+                  <div className='absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-5%] w-full p-5'>
                     <div>
                       <span className='text-[24px] leading-1 font-[500]'>Đăng nhập để mở khóa nhiều lợi ích hơn!</span>
                     </div>
-                    <ul>
+                    <ul className=''>
                       <li className='flex items-center'>
-                        <div className='mr-2'>
-                          <img className='w-6 h-6' src={Check} alt="" />
+                        <div className='mr-2 w-1/12'>
+                          <img className='w-8 h-8' src={Check} alt="" />
                         </div>
 
-                        <div>
+                        <div className='text-[16px]'>
                           Đảm Bảo Giá Tốt Nhất cho các đơn đặt phòng
                         </div>
                       </li>
                       <li className='flex items-center'>
-                        <div className='mr-2'>
-                          <img className='w-6 h-6' src={Check} alt="" />
+                        <div className='mr-2 w-1/12'>
+                          <img className='w-8 h-8' src={Check} alt="" />
                         </div>
 
-                        <div>
+                        <div className='text-[16px]'>
                           Tiếp cận các ưu đãi Nội bộ và VIP tốt nhất của chúng tôi
                         </div>
                       </li>
                       <li className='flex items-center'>
-                        <div className='mr-2'>
-                          <img className='w-6 h-6' src={Check} alt="" />
+                        <div className='mr-2 w-1/12'>
+                          <img className='w-8 h-8' src={Check} alt="" />
                         </div>
 
-                        <div>
+                        <div className='text-[16px]'>
                           Kiếm Tiền Agoda để tiết kiệm hơn nữa
                         </div>
                       </li>
                       <li className='flex items-center'>
-                        <div className='mr-2'>
-                          <img className='w-6 h-6' src={Check} alt="" />
+                        <div className='mr-2 w-1/12'>
+                          <img className='w-8 h-8' src={Check} alt="" />
                         </div>
 
-                        <div>
+                        <div className='text-[16px]'>
                           Thu thập các lượt đặt phòng, tiến đến hạng VIP kế tiếp của quý khách
                         </div>
                       </li>
@@ -255,7 +249,18 @@ export default function SignIn() {
 
 
 
-              {/* <form action="" onSubmit={handleSubmit}>
+              
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  )
+}
+
+//--------
+{/* <form action="" onSubmit={handleSubmit}>
                 <fieldset className="">
                   <input
                     className=""
@@ -291,10 +296,3 @@ export default function SignIn() {
                   </button>
                 </div>
               </form> */}
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
-  )
-}

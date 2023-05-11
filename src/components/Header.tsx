@@ -14,88 +14,18 @@ import { useNavigate, Link } from "react-router-dom";
 import ButtonAddToHomeScreen from './ButtonAddToHomeScreen'
 
 interface IBeforeInstallPromptEvent extends Event {
-  readonly platforms: string[];
-  readonly userChoice: Promise<{
-    outcome: "accepted" | "dismissed";
-    platform: string;
-  }>;
-  prompt(): Promise<void>;
+    readonly platforms: string[];
+    readonly userChoice: Promise<{
+        outcome: "accepted" | "dismissed";
+        platform: string;
+    }>;
+    prompt(): Promise<void>;
 }
 
 
 export default function Header() {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-
-    const items: MenuProps['items'] = [
-        {
-            key: '1',
-            label: (
-                // <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
-                //     My bookings
-                // </a>
-                <div className='h-[20px] w-[200px]'>
-                    <span>My booking</span>
-                </div>
-            ),
-        },
-        {
-            key: '2',
-            label: (
-                <div className='h-[20px] w-[100%]'>
-                    Đăng nhập
-                </div>
-            ),
-        },
-        {
-            key: '3',
-            label: (
-                <Button className='text-blue-600 border-blue-600 h-[40px] w-[100%] hover:text-white hover:bg-blue-600'>Đăng nhập</Button>
-            ),
-        },
-        {
-            key: '4',
-            label: (
-                <Button className='text-white-600 bg-blue-600 border-none h-[40px] w-[100%] hover:text-white'>Tạo tài khoản</Button>
-            ),
-        },
-        {
-            key: '5',
-            label: (
-                <div className='h-[20px] w-[100%]'>
-                    Cài đặt
-                </div>
-            ),
-        },
-        {
-            key: '6',
-            label: (
-                <div className='h-[20px] w-[100%]'>
-                    <img src={vietnam} alt="" className='w-[25px] h-[20px] bg-cover bg-no-repeat bg-center' />
-                </div>
-            ),
-        },
-        {
-            key: '7',
-            label: (
-                <div className='h-[20px] w-[100%]'>
-                    đ Đồng Việt Nam
-                </div>
-            ),
-        },
-        {
-            key: '8',
-            label: (
-                <div className='h-[80px] w-[100%] text-center'>
-                    <span className='text-[#737373] '>GHI DANH NƠI BẠN Ở TRÊN AGODA</span>
-                    <br />
-                    <span className='text-[#737373] '>Hãy kiếm tiền để trả cho <br /> chuyến đi của bạn!</span>
-                    <br />
-                    <span className='text-left text-red-600'>Đăng ký cho thuê nhà</span>
-                </div>
-            ),
-        },
-    ];
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
@@ -121,8 +51,89 @@ export default function Header() {
         dispatch(getInfoUserAfterUpAvt())
     }, [dispatch])
 
+    const items: MenuProps['items'] = [
+        {
+            key: '0',
+            label: (
+                <div className=''>
+                    {isStatusSignin ? <div className='h-[40px] w-full'><span className='text-[#000000]'>Tài khoản của tôi</span></div> : <div className='h-[40px] w-full text-[#000000] enable:hover'><span>My booking</span></div>}
+                </div>
+            ),
+        },
+        {
+            key: '1',
+            label: (
+                <div className=''>
+                    {userCurrent?.user?.role === 'ADMIN' ? <Link to={'/admin'}><div className='h-[40px] w-full'>Admin</div></Link> : <div></div>}
+                </div>
+            ),
+        },
+        {
+            key: '2',
+            label: (
+                <div>
+                    {isStatusSignin ? <Link to={'/yourtrip'}><div className='h-[40px] w-full'>Đơn đặt chỗ của tôi</div></Link> : <div className='h-[40px] w-full'>
+                        Đăng nhập
+                    </div>}
+                </div>
+
+            ),
+        },
+        {
+            key: '3',
+            label: (
+                <div>
+                    {isStatusSignin ? <Link to={'/profile'}><div className='h-[40px] w-full'>Hồ sơ chỗ của tôi</div></Link> : <Button className='text-blue-600 border-blue-600 h-[40px] w-[100%] hover:text-white hover:bg-blue-600'>Đăng nhập</Button>}
+                </div>
+            ),
+        },
+        {
+            key: '4',
+            label: (
+                <div>
+                    {isStatusSignin ? <Button onClick={() => { dispatch(signOut()); navigate('/') }} className='text-white-600 bg-blue-600 border-none h-[40px] w-[100%] hover:text-white'>Thoát</Button> : <Button className='text-white-600 bg-blue-600 border-none h-[40px] w-[100%] hover:text-white'>Tạo tài khoản</Button>}
+                </div>
+            ),
+        },
+        {
+            key: '5',
+            label: (
+                <div className='h-[40px] w-full'>
+                    Cài đặt
+                </div>
+            ),
+        },
+        {
+            key: '6',
+            label: (
+                <div className='h-[20px] w-full'>
+                    <img src={vietnam} alt="" className='w-[20px] h-[20px] bg-cover bg-no-repeat bg-center' />
+                </div>
+            ),
+        },
+        {
+            key: '7',
+            label: (
+                <div className='h-[40px] w-full'>
+                    đ Đồng Việt Nam
+                </div>
+            ),
+        },
+        {
+            key: '8',
+            label: (
+                <div className='h-[80px] w-[100%] text-center'>
+                    <span className='text-[#737373] '>GHI DANH NƠI BẠN Ở TRÊN AGODA</span>
+                    <br />
+                    <span className='text-[#737373] '>Hãy kiếm tiền để trả cho <br /> chuyến đi của bạn!</span>
+                    <br />
+                    <span className='text-left text-red-600'>Đăng ký cho thuê nhà</span>
+                </div>
+            ),
+        },
+    ];
     return (
-        <div className='h-[60px] flex justify-around items-center'>
+        <div className='h-[60px] flex justify-around items-center border border-[1px]'>
             <div className='flex justify-around w-7/12'>
                 <div className='w-2/12 flex justify-center'>
                     <Link to={`/`}>
@@ -165,11 +176,23 @@ export default function Header() {
                 </div>
 
                 <div>
-                    <Button className='text-blue-600 border-none hover:bg-blue-600 hover:text-white'><Link to={'/signin'}>Đăng nhập</Link> </Button>
+                    {isStatusSignin ?
+                        <div>
+                            {isPosAvatarFulfulled ? <img className='rounded-[100%]' src={profileUser?.avatar} alt='ImageER' width={40} /> : <div>
+                                <img style={{ borderRadius: '100%' }} src={userCurrent?.user?.avatar} alt='ImageER' width={40} />
+                            </div>}
+                        </div>
+                        :
+                        <div className='flex justify-around items-center w-full'>
+                            <div>
+                                <Button className='text-blue-600 border-none hover:bg-blue-600 hover:text-white'><Link to={'/signin'}>Đăng nhập</Link> </Button>
+                            </div>
+                            <div>
+                                <Button className='text-blue-600 border-blue-600 hover:text-white hover:bg-blue-600'><Link to={'/signup'}>Tạo tài khoản</Link></Button>
+                            </div>
+                        </div>}
                 </div>
-                <div>
-                    <Button className='text-blue-600 border-blue-600 hover:text-white hover:bg-blue-600'><Link to={'/signup'}>Tạo tài khoản</Link></Button>
-                </div>
+
                 <div>
                     <button>
                         <img src={cartSVG} alt="" width={25} />
@@ -197,17 +220,7 @@ export default function Header() {
                                             <img src={threesf} alt="" width={25} />
                                         </div>
 
-                                        {isStatusSignin ?
-                                            <div>
-                                                {isPosAvatarFulfulled ? <img style={{borderRadius:'100%'}} src={profileUser?.avatar} alt='ImageER' width={40} /> : <div>
-                                                    <img style={{borderRadius:'100%'}} src={userCurrent?.user?.avatar} alt='ImageER' width={40} />
-                                                </div>}
-                                            </div>
 
-                                            :
-                                            <div>
-                                                <img src={person} alt="" width={25} />
-                                            </div>}
 
                                     </Button>
                                     <Menu

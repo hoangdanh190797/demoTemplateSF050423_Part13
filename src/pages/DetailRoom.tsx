@@ -26,11 +26,6 @@ import Stack from '@mui/material/Stack';
 import {checkPostInfoBooking} from '../store/slices/RoomSlices'
 import '../styles/pages/_detailRoom.scss'
 
-// import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-// import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-// import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-// import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-// import { TextFields } from '@mui/icons-material';
 
 
 export default function DetailRoom() {

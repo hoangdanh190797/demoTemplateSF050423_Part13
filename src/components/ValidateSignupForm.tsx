@@ -22,41 +22,32 @@ export default function ValidateSignupForm({ name, email, password, phone, birth
     const errors: ValidationErrors = { };
 
     if (!name) {
-        errors.name = 'Name is required';
+        errors.name = 'Tên không được bỏ trống';
     }
 
     if (!email) {
-        errors.email = 'Email is required';
+        errors.email = 'Email không được bỏ trống';
     } else if (!validator.isEmail(email)) {
-        errors.email = 'Invalid email';
+        errors.email = 'Email không đúng định dạng';
     }
 
     if (!password) {
-        errors.password = 'Password is required';
+        errors.password = 'Mật khẩu không được bỏ trống';
     } else if (!validator.isLength(password, { min: 6 })) {
-        errors.password = 'Password must be at least 6 characters long';
+        errors.password = 'Mật khẩu phải ít nhất 6 ký tự';
     }
 
     if (!phone) {
-        errors.phone = 'Phone is required';
+        errors.phone = 'Số điện thoại không được bỏ trống';
     }
-    // else if(!validator.isEmpty(phone)){
-    //     errors.phone = 'Please full in'
-    // }
 
     if (!birthday) {
-        errors.birthday = 'Birthday is required'
+        errors.birthday = 'Ngày sinh không được bỏ trống'
     }
 
     if (!gender) {
-        errors.gender = 'Gender is required'
+        errors.gender = 'Giới tính chưa được chọn'
     }
-
-    // if (!confirmPassword) {
-    //   errors.confirmPassword = 'Confirm password is required';
-    // } else if (password !== confirmPassword) {
-    //   errors.confirmPassword = 'Passwords do not match';
-    // }
 
     return errors;
 }
