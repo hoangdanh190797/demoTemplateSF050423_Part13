@@ -12,7 +12,16 @@ import { clientsClaim } from 'workbox-core';
 import { ExpirationPlugin } from 'workbox-expiration';
 import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
-import { StaleWhileRevalidate } from 'workbox-strategies';
+import { StaleWhileRevalidate, CacheFirst, NetworkFirst } from 'workbox-strategies';
+import {CacheableResponsePlugin} from 'workbox-cacheable-response';
+
+//
+// import { syncFiles, UPLOAD_SYNC_NAME } from "./services/indexdb.service";
+import { UPLOAD_SYNC_NAME } from "./services/indexdb.service";
+//
+// importScripts('https://cdnjs.cloudflare.com/ajax/libs/workbox-sw/6.5.4/workbox-sw.js');
+
+
 
 declare const self: ServiceWorkerGlobalScope;
 
@@ -53,6 +62,9 @@ registerRoute(
   createHandlerBoundToURL(process.env.PUBLIC_URL + '/index.html')
 );
 
+
+
+
 // An example runtime caching route for requests that aren't handled by the
 // precache, in this case same-origin .png requests like those from in public/
 registerRoute(
@@ -69,6 +81,19 @@ registerRoute(
   })
 );
 
+registerRoute(
+  new RegExp('^https://airbnbnew.cybersoft.edu.vn/api'),
+  new NetworkFirst({
+    cacheName: 'apis',
+    plugins: [
+      new ExpirationPlugin({
+        maxEntries: 16,
+        maxAgeSeconds: 24 * 60 * 60, // 24 hours
+      }),
+    ],
+  })
+);
+
 // This allows the web app to trigger skipWaiting via
 // registration.waiting.postMessage({type: 'SKIP_WAITING'})
 self.addEventListener('message', (event) => {
@@ -79,7 +104,105 @@ self.addEventListener('message', (event) => {
 
 // Any other custom service worker logic can go here.
 
-self.addEventListener('install', (event) => {
-  console.log(event);
-  
-} )
+const CACHE_NAME = "cache_sample";
+const urlsToCache = ["index.html", "offline.html"];
+const version = "v0.0.1";
+//install sw
+self.addEventListener("install", (event: any) => {
+  console.log("sw install event");
+  event.waitUntil(
+    caches.open(version + CACHE_NAME).then((cache) => {
+      console.log("opened cache");
+      return cache.addAll(urlsToCache);
+    })
+  );
+});
+
+//Activate the sw after install
+//Place where old caches are cleared
+// self.addEventListener("activate", (event: any) => {
+//   console.log("sw activate event");
+//   event.waitUntil(
+//     caches.keys().then((cacheNames) =>
+//       Promise.all(
+//         cacheNames
+//           .filter((cacheName) => {
+//             return cacheName.indexOf(version) !== 0;
+//           })
+//           .map(function (cachName) {
+//             return caches.delete(cachName);
+//           })
+//       )
+//     )
+//   );
+// });
+
+//listen for requests
+// self.addEventListener("fetch", (event: any) => {
+//   event.respondWith(
+//     caches.match(event.request).then((response) => {
+//       return response || fetch(event.request);
+//     })
+//   );
+// });
+
+// self.addEventListener("sync", function (event: any) {
+//   if (event.tag == UPLOAD_SYNC_NAME) {
+//     console.log("sync event fired in if");
+//     //waitUntil method is to ensure our uploadData method is performed without interrupt
+//     event.waitUntil(
+//       syncFiles()
+//         .then(() => {
+//           console.log("sync completed");
+//           self.clients
+//             .matchAll({
+//               includeUncontrolled: true,
+//             })
+//             .then(function (clients) {
+//               for (const client of clients) {
+//                 client.postMessage({
+//                   // Put whatever info you want here.
+//                   type: "MSG_ID",
+//                 });
+//               }
+//             });
+//         })
+//         .catch((err:any) => {
+//           console.log("sync error", err);
+//         })
+//     );
+//   }
+// });
+
+
+
+// registerRoute(
+//   ({ request }) => request.url.startsWith('https://airbnbnew.cybersoft.edu.vn/api'),
+//   new NetworkFirst({
+//     cacheName: 'room-api-response',
+//     plugins: [
+//       new CacheableResponsePlugin({
+//         statuses: [0, 200],
+//       }),
+//       new ExpirationPlugin({maxEntries: 10}), // Will cache maximum 1 requests.
+//     ]
+//   })
+// );
+
+// registerRoute(
+//   // Cache image files
+//   new RegExp('?:jpg|gif|png|jpeg|svg|ico|webp'),
+//   // Use the cache if it's available
+//   new CacheFirst({
+//     // Use a custom cache name
+//     cacheName: 'image-cache-',
+//     plugins: [
+//       new ExpirationPlugin({
+//         // Cache only 20 images
+//         maxEntries: 20,
+//         // Cache for a maximum of a week
+//         maxAgeSeconds: 7 * 24 * 60 * 60,
+//       })
+//     ],
+//   })
+// );
